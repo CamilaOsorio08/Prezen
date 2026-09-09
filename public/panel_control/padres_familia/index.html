@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Padres - PREZEN</title>
+    <!-- FontAwesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <style>
+        .view-content {
+            display: none;
+            animation: fadeInView 0.3s ease forwards;
+        }
+        .view-content.active {
+            display: block;
+        }
+        @keyframes fadeInView {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="mainSidebar">
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div class="logo-container">
+                <div class="logo-box">
+                    <span class="logo-z">Z</span>
+                    <span class="logo-text">COLEGIO</span>
+                </div>
+            </div>
+
+            <div class="brand-btn-container">
+                <button class="brand-btn">
+                    <span class="z-purple">Z</span> <span class="brand-text">PREZEN</span>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active" data-view="view-panel">
+                        <a href="#" class="nav-link">
+                            <i class="fa-solid fa-house"></i> <span>Inicio</span>
+                        </a>
+                    </li>
+                    <li data-view="view-hijo">
+                        <a href="#" class="nav-link">
+                            <i class="fa-regular fa-user"></i> <span>Mi Hijo</span>
+                        </a>
+                    </li>
+                    <li data-view="view-asistencia">
+                        <a href="#" class="nav-link">
+                            <i class="fa-regular fa-calendar-check"></i> <span>Asistencia y Reportes</span>
+                        </a>
+                    </li>
+                    <li data-view="view-reportes">
+                        <a href="#" class="nav-link">
+                            <i class="fa-regular fa-clock"></i> <span>Asistencia</span>
+                        </a>
+                    </li>
+                    <li data-view="view-comunicaciones">
+                        <a href="#" class="nav-link">
+                            <i class="fa-solid fa-briefcase"></i> <span>Comunicados</span>
+                        </a>
+                    </li>
+                    <li data-view="view-configuraciones">
+                        <a href="#" class="nav-link">
+                            <i class="fa-solid fa-chalkboard-user"></i> <span>Configuración</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="btn btn-invite">
+                    <i class="fa-solid fa-plus"></i> <span id="sidebarBtnText">Agregar comentario</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <!-- VISTA 1: PANEL PRINCIPAL PADRES (Heatmap) -->
+            <div class="view-content active" id="view-panel">
+                <header class="top-header">
+                    <div style="width: 100%; margin-bottom: 8px;">
+                        <h1 class="page-title-main" style="text-transform: uppercase;">PANEL DE PADRES</h1>
+                    </div>
+                    <div style="width: 100%; display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <h2 class="page-subtitle">Mi Hijo - 7°B</h2>
+                            <div class="badge-update" style="margin-left: 20px;">
+                                <i class="fa-solid fa-droplet" style="color: #22c55e;"></i> Actualizado hace 12 seg
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <div class="profile-dropdown-container" style="position: relative;">
+                                <div class="user-profile" id="userProfileBtn1" style="cursor:pointer;">
+                                    <img src="https://ui-avatars.com/api/?name=Carlos+Lopez&background=random&color=fff" alt="Perfil" class="avatar">
+                                    <div class="user-info">
+                                        <span class="user-name">Carlos y María López</span>
+                                        <span class="user-role">Padres de Familia</span>
+                                    </div>
+                                    <div class="chevron-box" style="margin-right: 8px;">
+                                        <i class="fa-solid fa-chevron-down profile-chevron"></i>
+                                        <span class="notification-dot">1</span>
+                                    </div>
+                                    <div class="school-crest">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Escudo_nacional_de_Colombia.svg/100px-Escudo_nacional_de_Colombia.svg.png" alt="Escudo" style="width: 24px; height: auto;">
+                                    </div>
+                                </div>
+                                <div class="profile-dropdown-menu" id="profileDropdown1" style="position:absolute; top:calc(100% + 10px); right:0; background:white; min-width:200px; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.1); padding:10px 0; opacity:0; visibility:hidden; transform:translateY(-10px); transition:all 0.3s cubic-bezier(0.175,0.885,0.32,1.275); z-index:100;">
+                                    <a href="#" class="dropdown-item" style="display:flex; align-items:center; gap:12px; padding:10px 20px; color:#1e293b; text-decoration:none; font-size:0.9rem; font-weight:500; transition:background 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">
+                                        <i class="fa-regular fa-user" style="color:#64748b; width:20px;"></i> Mi Perfil
+                                    </a>
+                                    <a href="#" class="dropdown-item" style="display:flex; align-items:center; gap:12px; padding:10px 20px; color:#1e293b; text-decoration:none; font-size:0.9rem; font-weight:500; transition:background 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">
+                                        <i class="fa-solid fa-gear" style="color:#64748b; width:20px;"></i> Configuración
+                                    </a>
+                                    <div style="height:1px; background:#e2e8f0; margin:8px 0;"></div>
+                                    <a href="../../auth/index.html" class="dropdown-item" style="display:flex; align-items:center; gap:12px; padding:10px 20px; color:#ef4444; text-decoration:none; font-size:0.9rem; font-weight:500; transition:background 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">
+                                        <i class="fa-solid fa-right-from-bracket" style="color:#ef4444; width:20px;"></i> Cerrar Sesión
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="kpi-grid">
+                    <div class="kpi-card card-purple-blue">
+                        <div class="kpi-title">Tardanzas del curso</div>
+                        <div class="kpi-value">15</div>
+                        <i class="fa-solid fa-users kpi-bg-icon"></i>
+                    </div>
+                    
+                    <div class="kpi-card card-bright-blue">
+                        <div class="kpi-title">Inasistencias totales</div>
+                        <div class="kpi-value">8</div>
+                        <div class="kpi-bg-shape fade-shape"></div>
+                    </div>
+                    
+                    <div class="kpi-card card-deep-purple">
+                        <div class="kpi-title">Puntualidad del curso</div>
+                        <div class="kpi-value">94.5%</div>
+                        <div class="kpi-bg-shape large-circle"></div>
+                    </div>
+                    
+                    <div class="kpi-card card-blue-solid">
+                        <div class="kpi-title">Asistencia promedio</div>
+                        <div class="kpi-value">88%</div>
+                        <i class="fa-solid fa-users kpi-bg-icon"></i>
+                    </div>
+                </div>
+
+                <div class="bottom-grid-mihijo">
+                    <div class="content-card heatmap-card">
+                        <div class="heatmap-legend">
+                            <div class="legend-item"><span class="color-box bg-green"></span> green presente</div>
+                            <div class="legend-item"><span class="color-box bg-yellow"></span> yellow retraso</div>
+                            <div class="legend-item"><span class="color-box bg-red"></span> red ausencia</div>
+                        </div>
+                        
+                        <div class="heatmap-container">
+                            <div class="hm-col-headers">
+                                <div class="hm-header-empty"></div>
+                                <div class="hm-col">A.P.</div>
+                                <div class="hm-col">J.L.</div>
+                                <div class="hm-col">M.S.</div>
+                                <div class="hm-col">R.G.</div>
+                                <div class="hm-col">L.M.</div>
+                                <div class="hm-col">C.T.</div>
+                                <div class="hm-col">D.H.</div>
+                                <div class="hm-col">P.V.</div>
+                                <div class="hm-col">S.Z.</div>
+                            </div>
+
+                            <div class="hm-row">
+                                <div class="hm-row-label">5</div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-red"></div>
+                                <div class="hm-cell bg-green"></div>
+                            </div>
+                            
+                            <div class="hm-row">
+                                <div class="hm-row-label">6</div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-red"></div>
+                                <div class="hm-cell bg-red"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                            </div>
+                            
+                            <div class="hm-row">
+                                <div class="hm-row-label">8</div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-red"></div>
+                                <div class="hm-cell bg-red"></div>
+                            </div>
+                            
+                            <div class="hm-row">
+                                <div class="hm-row-label">7</div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-red"></div>
+                                <div class="hm-cell bg-red"></div>
+                                <div class="hm-cell bg-red"></div>
+                            </div>
+                            
+                            <div class="hm-row">
+                                <div class="hm-row-label">26</div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-red"></div>
+                                <div class="hm-cell bg-red"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-green"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card right-panel-rendimiento">
+                        <div class="chart-wrapper">
+                            <canvas id="trendChart1" height="120"></canvas>
+                        </div>
+
+                        <div class="stat-pickers">
+                            <div class="picker-box">
+                                <div class="picker-val">15</div>
+                                <div class="picker-lbl">Alumnos</div>
+                                <i class="fa-solid fa-chevron-down flex-end"></i>
+                            </div>
+                            <div class="picker-box">
+                                <div class="picker-val">8</div>
+                                <div class="picker-lbl">Inasistencias</div>
+                                <i class="fa-solid fa-chevron-down flex-end"></i>
+                            </div>
+                            <div class="picker-box">
+                                <div class="picker-val">88%</div>
+                                <div class="picker-lbl">Asistencia</div>
+                                <i class="fa-solid fa-chevron-down flex-end"></i>
+                            </div>
+                        </div>
+
+                        <div class="motivation-banner">
+                            <p style="color: var(--purple-primary); font-weight: 600; font-size: 14px; margin-bottom: 16px;">¡Felicitaciones! La asistencia de tu hijo está mejorando 👍</p>
+                            <button class="btn btn-banner" style="width: 100%;">Ver detalles de mi hijo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- VISTA 2: HIJO DETALLES (Bar Chart y Tabla) -->
+            <div class="view-content" id="view-hijo">
+                <header class="top-header">
+                    <div style="width: 100%; margin-bottom: 8px;">
+                        <h1 class="page-title-main" style="text-transform: uppercase;">PADRES - VISTA DE MI HIJO</h1>
+                    </div>
+                    <div style="width: 100%; display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center;">
+                            <h2 class="page-subtitle">Mi Hijo: María Escobedo - 7°B</h2>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <span class="text-progreso" style="color: var(--text-gray);">Nuevo Reporte</span>
+                            <button class="btn btn-primary btn-add-nuevo">
+                                <i class="fa-solid fa-plus"></i> Nuevo Reporte
+                            </button>
+
+                            <div class="user-profile">
+                                <img src="https://ui-avatars.com/api/?name=Laura+Escobedo&background=random&color=fff" alt="Perfil" class="avatar">
+                                <div class="user-info">
+                                    <span class="user-name">Sra. Laura Escobedo -</span>
+                                    <span class="user-role">Madre de María</span>
+                                </div>
+                                <div class="chevron-box" style="margin-right: 8px;">
+                                    <i class="fa-solid fa-chevron-down profile-chevron"></i>
+                                    <span class="notification-dot">5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="kpi-grid">
+                    <div class="kpi-card card-purple-blue">
+                        <div class="kpi-title">Asistencia de Mi Hija</div>
+                        <div class="kpi-value">92%</div>
+                        <i class="fa-solid fa-square-check kpi-bg-icon icon-green" style="opacity: 1; color: #34d399; font-size: 40px; right: 20px; bottom: 20px; z-index: 5;"></i>
+                    </div>
+                    
+                    <div class="kpi-card card-bright-blue">
+                        <div class="kpi-title">Tardanzas del Mes</div>
+                        <div class="kpi-value">2</div>
+                        <i class="fa-regular fa-clock kpi-bg-icon" style="opacity: 0.8; font-size: 50px; right: 15px; bottom: 15px;"></i>
+                    </div>
+                    
+                    <div class="kpi-card card-deep-purple">
+                        <div class="kpi-title">Inasistencias</div>
+                        <div class="kpi-value">1</div>
+                        <i class="fa-solid fa-triangle-exclamation kpi-bg-icon" style="opacity: 0.8; font-size: 50px; color: #fbbf24; right: 15px; bottom: 15px;"></i>
+                    </div>
+                    
+                    <div class="kpi-card card-blue-solid" style="background: linear-gradient(135deg, #6254ea 0%, #4f42dc 100%);">
+                        <div class="kpi-title">Puntualidad General</div>
+                        <div class="kpi-value">94%</div>
+                        <i class="fa-solid fa-square-check kpi-bg-icon" style="opacity: 0.8; font-size: 50px; color: #a5b4fc; right: 15px; bottom: 15px;"></i>
+                    </div>
+                </div>
+
+                <div class="bottom-grid-mihijo">
+                    <div class="content-card">
+                        <h3 class="card-title-mihijo">Mi Hija - María Escobedo</h3>
+                        
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Curso</th>
+                                        <th>Asistencia %</th>
+                                        <th>Tardanzas</th>
+                                        <th>Inasistencias</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>María Escobedo</td>
+                                        <td><span class="badge-curso">7°B</span></td>
+                                        <td>92%</td>
+                                        <td>2</td>
+                                        <td>1</td>
+                                        <td><span class="badge-excelente">Excelente</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ana López</td>
+                                        <td><span class="badge-curso">7°B</span></td>
+                                        <td>78%</td>
+                                        <td>4</td>
+                                        <td>1</td>
+                                        <td><span class="badge-excelente">Excelente</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="content-card right-panel-rendimiento">
+                        <h3 class="card-title-mihijo">Mi Rendimiento</h3>
+                        <div class="chart-wrapper-bar">
+                            <canvas id="rendimientoChart" height="200"></canvas>
+                        </div>
+
+                        <div class="motivation-banner-rendimiento">
+                            <button class="btn btn-banner">Ver Detalles Completos</button>
+                            <p>Consulta el historial completo de María</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Global -->
+            <footer class="dashboard-footer" style="padding: 24px 0; text-align: center; color: var(--text-gray); font-size: 13px; margin-top: 40px; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 8px;">
+                <div>&copy; <script>document.write(new Date().getFullYear())</script> PREZEN. TODOS LOS DERECHOS RESERVADOS.</div>
+                <div style="display: flex; justify-content: center; gap: 15px; margin-top: 4px;">
+                    <a href="#" style="color: var(--text-gray); text-decoration: none; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='var(--blue-primary)'" onmouseout="this.style.color='var(--text-gray)'">TÉRMINOS</a>
+                    <a href="#" style="color: var(--text-gray); text-decoration: none; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='var(--blue-primary)'" onmouseout="this.style.color='var(--text-gray)'">PRIVACIDAD</a>
+                    <a href="#" style="color: var(--text-gray); text-decoration: none; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='var(--blue-primary)'" onmouseout="this.style.color='var(--text-gray)'">Tus Opciones de Privacidad</a>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Init line chart for Panel Principal (View 1)
+        const ctx1 = document.getElementById('trendChart1').getContext('2d');
+        let gradientFill1 = ctx1.createLinearGradient(0, 0, 0, 150);
+        gradientFill1.addColorStop(0, 'rgba(81, 68, 217, 0.2)');
+        gradientFill1.addColorStop(1, 'rgba(81, 68, 217, 0)');
+
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+                datasets: [{
+                    label: 'Trend',
+                    data: [0, 5, 5.2, 8, 7.5, 12, 12.5, 11, 19, 18, 20],
+                    borderColor: '#5c4def',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#5c4def',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 1.5,
+                    pointRadius: 4,
+                    fill: true,
+                    backgroundColor: gradientFill1,
+                    tension: 0.2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { display: false },
+                    y: {
+                        beginAtZero: true, max: 30,
+                        ticks: { stepSize: 10, color: '#a0aec0', font: { size: 10 } },
+                        grid: { color: '#e2e8f0', drawBorder: false }
+                    }
+                }
+            }
+        });
+
+        // Init bar chart for Mi Hijo (View 2)
+        const ctx2 = document.getElementById('rendimientoChart').getContext('2d');
+        
+        Chart.register({
+            id: 'customLabels',
+            afterDatasetsDraw(chart, args, options) {
+                if(chart.canvas.id !== 'rendimientoChart') return;
+                const { ctx } = chart;
+                ctx.save();
+                ctx.font = 'bold 12px Inter';
+                ctx.textAlign = 'center';
+                ctx.fillStyle = '#64748b';
+                
+                const meta = chart.getDatasetMeta(0);
+                const labels = ['72%', '15%', '45%', '12%'];
+                
+                meta.data.forEach((bar, index) => {
+                    ctx.fillText(labels[index], bar.x, bar.y - 10);
+                });
+                ctx.restore();
+            }
+        });
+
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Asistencia', 'Tardanzas', 'Tareas', 'Exámenes'],
+                datasets: [{
+                    label: 'Rendimiento',
+                    data: [80, 50, 80, 50],
+                    backgroundColor: ['#22c55e', '#facc15', '#ef4444', '#22c55e'],
+                    borderRadius: 4,
+                    barPercentage: 0.5,
+                    categoryPercentage: 1.0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: { enabled: false } },
+                scales: {
+                    x: { grid: { display: false }, ticks: { color: '#64748b', font: { size: 10 } } },
+                    y: {
+                        beginAtZero: true, max: 100,
+                        ticks: {
+                            callback: function(value, index) {
+                                const mockupLabels = ['0', '200', '40%', '10%', '500', '400'];
+                                return mockupLabels[index] !== undefined ? mockupLabels[index] : '';
+                            },
+                            color: '#a0aec0', font: { size: 10 }
+                        },
+                        grid: { color: '#e2e8f0', drawBorder: false, borderDash: [5, 5] }
+                    }
+                }
+            }
+        });
+
+        // Toggle Sidebar Nav Logic
+        const navLinks = document.querySelectorAll('.sidebar-nav li');
+        const viewContents = document.querySelectorAll('.view-content');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Active Class Swap
+                navLinks.forEach(item => item.classList.remove('active'));
+                this.classList.add('active');
+
+                // View Switch Logic
+                const viewId = this.getAttribute('data-view');
+                if(viewId) {
+                    viewContents.forEach(view => {
+                        view.classList.remove('active');
+                    });
+                    const targetView = document.getElementById(viewId);
+                    if(targetView) {
+                        targetView.classList.add('active');
+                    }
+                }
+            });
+        });
+
+        // Sidebar Collapse Logic
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('mainSidebar');
+            sidebar.classList.toggle('collapsed');
+            const icon = this.querySelector('i');
+            if (sidebar.classList.contains('collapsed')) {
+                icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+            } else {
+                icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+            }
+        });
+
+        // Profile Dropdowns (both views have one)
+        function setupDropdown(btnId, dropId) {
+            const btn = document.getElementById(btnId);
+            const drop = document.getElementById(dropId);
+            if (!btn || !drop) return;
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = drop.style.opacity === '1';
+                drop.style.opacity = isOpen ? '0' : '1';
+                drop.style.visibility = isOpen ? 'hidden' : 'visible';
+                drop.style.transform = isOpen ? 'translateY(-10px)' : 'translateY(0)';
+            });
+            document.addEventListener('click', (e) => {
+                if (!btn.contains(e.target) && !drop.contains(e.target)) {
+                    drop.style.opacity = '0';
+                    drop.style.visibility = 'hidden';
+                    drop.style.transform = 'translateY(-10px)';
+                }
+            });
+        }
+        setupDropdown('userProfileBtn1', 'profileDropdown1');
+
+        // Button Interactions
+        document.querySelector('.btn-invite')?.addEventListener('click', () => alert('Abriendo formulario para agregar observación...'));
+        document.querySelectorAll('.btn-banner').forEach(btn => {
+            btn.addEventListener('click', () => alert('Mostrando detalles completos del hijo...'));
+        });
+        document.querySelector('.btn-add-nuevo')?.addEventListener('click', () => alert('Abriendo formulario para nuevo reporte...'));
+
+        // Live Update Timer
+        const updateBadge = document.querySelector('.badge-update');
+        if (updateBadge) {
+            let seconds = 12;
+            setInterval(() => {
+                seconds++;
+                updateBadge.innerHTML = `<i class="fa-solid fa-droplet" style="color: #22c55e;"></i> Actualizado hace ${seconds} seg`;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

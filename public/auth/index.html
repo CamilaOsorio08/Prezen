@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Institución Educativa Tulio Ospina</title>
+    <!-- FontAwesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts para tipografías premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <!-- Decoraciones de fondo animadas -->
+    <div class="bg-decorations">
+        <div class="circle circle-bottom-left"></div>
+        <div class="circle circle-right"></div>
+        <div class="pattern pattern-book"><i class="fa-solid fa-book-open"></i></div>
+        <div class="pattern pattern-pencil"><i class="fa-solid fa-pencil"></i></div>
+        <div class="pattern pattern-shield"><i class="fa-solid fa-shield-halved"></i></div>
+        <div id="particles-container"></div>
+    </div>
+
+    <!-- Spinner Cinematográfico (Oculto por defecto) -->
+    <div id="cinematic-spinner" class="spinner-overlay hidden">
+        <div class="spinner-content">
+            <div class="glowing-ring"></div>
+            <div class="glowing-ring inner-ring"></div>
+            <div class="logo-spinner">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h2 class="loading-text">Autenticando<span class="dots"></span></h2>
+            <p class="loading-sub">Preparando su espacio de trabajo</p>
+        </div>
+    </div>
+
+    <!-- Contenedor Principal Glassmorphism -->
+    <div class="login-container">
+        <!-- Lado Izquierdo: Formulario -->
+        <div class="login-form-side">
+            <h2 class="title">Inicio de sesión</h2>
+
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" id="email" placeholder="email@gmail.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Contraseña</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" placeholder="Introduce al menos 8+ caracteres" required>
+                        <i class="fa-regular fa-eye-slash toggle-password"></i>
+                        <i class="fa-solid fa-lock lock-icon"></i>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <label class="remember-me">
+                        <input type="checkbox" id="remember" checked>
+                        <span class="checkmark"></span>
+                        Recordar
+                    </label>
+                    <a href="forgot-password.html" class="forgot-link">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <button type="submit" class="btn btn-signin">Iniciar sesión</button>
+
+                <div class="auth-options">
+                    <button type="button" class="btn btn-qr">
+                        <i class="fa-solid fa-qrcode"></i> Ingresar con QR
+                    </button>
+                    <button type="button" class="btn btn-fingerprint">
+                        <i class="fa-solid fa-fingerprint"></i> Huella Digital
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Lado Derecho: Branding Institucional -->
+        <div class="login-brand-side">
+            <h3 class="brand-subtitle">INSTITUCIÓN EDUCATIVA</h3>
+            <h1 class="brand-title">TULIO OSPINA</h1>
+            <div class="brand-logo">
+                <!-- Se espera que la imagen real del escudo se ubique en la siguiente ruta -->
+                <img src="assets/image/escudo.png" alt="Escudo Institución Educativa Tulio Ospina" id="escudo-img">
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>

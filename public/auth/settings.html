@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración - PREZEN</title>
+    <!-- FontAwesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e1;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+
+        input:checked+.slider {
+            background-color: var(--purple-main);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(24px);
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #f1f5f9;
+            padding: 20px 0;
+        }
+
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <h2 class="logo-text">Z</h2>
+                    <span class="logo-subtext">COLEGIO</span>
+                </div>
+                <div class="brand">
+                    <span class="brand-z">Z</span> PREZEN
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-house"></i> Inicio</a>
+                <a href="#" class="nav-item"><i class="fa-regular fa-user"></i> Asistencia</a>
+                <a href="#" class="nav-item"><i class="fa-regular fa-calendar"></i> Reportes</a>
+                <div class="nav-divider"></div>
+                <!-- Other links shortened for clarity -->
+            </nav>
+
+            <button class="invite-btn"><i class="fa-solid fa-plus"></i> Invite new member</button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <h1 class="page-title"><span
+                            style="font-size: 1.5rem; color: #1e293b; font-weight: 500;">Configuración
+                            del</span><br>Sistema</h1>
+                </div>
+                <div class="header-right">
+                    <div class="badge-update"><i class="fa-solid fa-droplet" style="color: #22c55e;"></i> Actualizado
+                        hace 1 seg</div>
+
+                    <div class="profile-dropdown-container">
+                        <div class="user-profile" id="userProfileBtn">
+                            <div class="notification-icon">
+                                <i class="fa-regular fa-bell"></i>
+                                <span class="badge">1</span>
+                            </div>
+                            <img src="https://i.pravatar.cc/150?u=a042581f4e29026024d" alt="Profile" class="avatar">
+                            <div class="user-info">
+                                <span class="user-role">Coordinadora</span>
+                                <span class="user-name">Ana López</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down profile-chevron"></i>
+                        </div>
+
+                        <!-- Dropdown Menu -->
+                        <div class="profile-dropdown-menu" id="profileDropdown">
+                            <a href="profile.html" class="dropdown-item">
+                                <i class="fa-regular fa-user"></i> Mi Perfil
+                            </a>
+                            <a href="settings.html" class="dropdown-item">
+                                <i class="fa-solid fa-gear"></i> Configuración
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="index.html" class="dropdown-item text-danger">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar Sesión
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Settings Options -->
+            <div class="middle-grid" style="grid-template-columns: 1fr; max-width: 800px;">
+                <div class="white-card">
+                    <h3 style="margin-bottom: 10px;">Preferencias Globales</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Controla el
+                        comportamiento general de tu entorno laboral.</p>
+
+                    <div style="display: flex; flex-direction: column;">
+                        <!-- Ajuste 1 -->
+                        <div class="setting-row">
+                            <div>
+                                <strong style="color: var(--text-main); font-size: 1.05rem;">Notificaciones de
+                                    Inasistencia</strong>
+                                <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 5px;">Recibir alertas
+                                    cuando un alumno exceda las faltas diarias permitidas.</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+
+                        <!-- Ajuste 2 -->
+                        <div class="setting-row">
+                            <div>
+                                <strong style="color: var(--text-main); font-size: 1.05rem;">Correos al Staff</strong>
+                                <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 5px;">Enviar un
+                                    reporte automático al correo del Staff cada viernes a las 5PM.</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+
+                        <!-- Ajuste 3 -->
+                        <div class="setting-row">
+                            <div>
+                                <strong style="color: var(--text-main); font-size: 1.05rem;">Modo Silencio</strong>
+                                <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 5px;">Pausar
+                                    notificaciones mientras estés en modo "No molestar".</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+
+                        <div style="margin-top: 25px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+                            <h3 style="margin-bottom: 20px;">Seguridad</h3>
+                            <div class="setting-row" style="border:none; padding: 0;">
+                                <div>
+                                    <strong style="color: var(--danger); font-size: 1.05rem;">Autenticación de dos pasos
+                                        (2FA)</strong>
+                                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 5px;">Activar
+                                        seguridad adicional para el inicio de sesión.</p>
+                                </div>
+                                <button class="btn-purp outline"
+                                    onclick="alert('Configurando Autenticación de Dos Pasos...')">Habilitar 2FA</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+    <script src="assets/js/dashboard.js"></script>
+</body>
+
+</html>

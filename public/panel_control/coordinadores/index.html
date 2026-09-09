@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordinador - Vista Estudiantes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <!-- QR Scanner Library -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <button class="sidebar-toggle" id="sidebarToggle" title="Contraer/Expandir menú">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div class="logo-container">
+                <div class="logo-box">
+                    <span class="logo-z">Z</span>
+                    <span class="logo-text">COLEGIO</span>
+                </div>
+            </div>
+
+            <div class="brand-btn-container">
+                <button class="brand-btn">
+                    <span class="z-blue">Z</span> <span class="brand-text">PREZEN</span>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="#" class="nav-link" data-target="view-panel">
+                            <i class="fa-solid fa-table-cells-large"></i>
+                            <span>Panel Coordinador</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="#" class="nav-link" data-target="view-estudiantes">
+                            <i class="fa-regular fa-user"></i>
+                            <span>Estudiantes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" data-target="view-tomar-asistencia">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                            <span>Tomar Asistencia</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" data-target="view-asistencia">
+                            <i class="fa-regular fa-calendar-check"></i>
+                            <span>Asistencia General</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" data-target="view-reportes">
+                            <i class="fa-regular fa-clock"></i>
+                            <span>Reportes por Curso</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" data-target="view-comunicaciones">
+                            <i class="fa-solid fa-briefcase"></i>
+                            <span>Comunicaciones</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" data-target="view-configuraciones">
+                            <i class="fa-solid fa-gear"></i>
+                            <span>Configuraciones</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="btn btn-add-student">
+                    <i class="fa-solid fa-plus"></i> <span>Agregar Estudiante</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div id="view-estudiantes" class="view-section active">
+                <!-- Header -->
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>COORDINADOR - VISTA ESTUDIANTES</h1>
+                        <h2>Lista de Estudiantes 7°B</h2>
+                    </div>
+
+                    <div class="header-actions">
+                        <a href="#" class="text-link">Nuevo Reporte</a>
+                        <button class="btn btn-primary btn-new-report">
+                            <i class="fa-solid fa-plus"></i> Nuevo Reporte
+                        </button>
+
+                        <!-- Botón de notificaciones -->
+                        <div class="notifications-dropdown-container" style="position: relative; margin-right: 15px;">
+                            <div class="notification-btn" id="notificationBtn" style="cursor: pointer; position: relative; padding: 5px;">
+                                <i class="fa-regular fa-bell" style="font-size: 20px; color: var(--text-gray);"></i>
+                                <span class="notification-badge" id="notificationCountBadge" style="position: absolute; top: -2px; right: -5px; background: #ef4444; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold;">5</span>
+                            </div>
+
+                            <!-- Dropdown Menu de Notificaciones -->
+                            <div class="notifications-dropdown-menu" id="notificationsDropdown" style="display: none; position: absolute; right: 0; top: 40px; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 320px; z-index: 100; border: 1px solid var(--border-color); overflow: hidden;">
+                                <div style="padding: 15px 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
+                                    <h4 style="margin: 0; font-size: 15px; color: var(--text-dark);">Notificaciones</h4>
+                                    <span style="font-size: 12px; color: var(--blue-primary); cursor: pointer; font-weight: 600;" id="markAllReadBtn">Marcar todas como leídas</span>
+                                </div>
+                                <div id="notificationsList" style="max-height: 350px; overflow-y: auto;">
+                                    <!-- Entradas dinámicas de notificaciones -->
+                                </div>
+                                <div style="padding: 12px; text-align: center; border-top: 1px solid var(--border-color); background: #f8fafc; cursor: pointer;">
+                                    <span style="font-size: 13px; color: var(--text-gray); font-weight: 500;">Ver todas las notificaciones</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile-dropdown-container" style="position: relative;">
+                            <div class="user-profile" id="userProfileBtn">
+                                <div class="avatar-wrapper">
+                                    <img src="https://ui-avatars.com/api/?name=Carlos+Ruiz&background=random&color=fff"
+                                        alt="Perfil">
+                                </div>
+                                <div class="user-info">
+                                    <span class="user-name">Lic. Carlos Ruiz -</span>
+                                    <span class="user-role">Coordinador 7°B</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-down text-gray profile-chevron"></i>
+                            </div>
+
+                            <!-- Dropdown Menu -->
+                            <div class="profile-dropdown-menu" id="profileDropdown">
+                                <a href="#" class="dropdown-item">
+                                    <i class="fa-regular fa-user"></i> Mi Perfil
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    <i class="fa-solid fa-gear"></i> Configuración
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="../../auth/index.html" class="dropdown-item text-danger">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar Sesión
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Stats/KPIs -->
+                <div class="stats-grid">
+                    <!-- Card 1 -->
+                    <div class="stat-card" style="background: linear-gradient(135deg, #7b68ee 0%, #614de6 100%);">
+                        <div class="stat-info">
+                            <h3>Total Estudiantes</h3>
+                            <div class="stat-value">28</div>
+                        </div>
+                        <div class="stat-icon op-60">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="stat-card" style="background: linear-gradient(135deg, #4285f4 0%, #3070df 100%);">
+                        <div class="stat-info">
+                            <h3>Asistencia Promedio</h3>
+                            <div class="stat-value">88%</div>
+                        </div>
+                        <div class="stat-icon stat-icon-green">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="stat-card" style="background: linear-gradient(135deg, #6c5ce7 0%, #5746db 100%);">
+                        <div class="stat-info">
+                            <h3>Tardanzas del Mes</h3>
+                            <div class="stat-value">15</div>
+                        </div>
+                        <div class="stat-icon op-60">
+                            <i class="fa-regular fa-clock"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="stat-card" style="background: linear-gradient(135deg, #635bff 0%, #534be8 100%);">
+                        <div class="stat-info">
+                            <h3>Inasistencias</h3>
+                            <div class="stat-value">8</div>
+                        </div>
+                        <div class="stat-icon stat-icon-warning">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attendance Actions (QR, Huella, Manual) -->
+                <div class="attendance-actions-card">
+                    <h3 class="card-title" style="margin-bottom: 20px; font-size: 18px; font-weight: 800;">TOMAR ASISTENCIA</h3>
+                    <div class="attendance-btn-grid">
+                        <button class="btn-attendance-action" id="btnScanQR">
+                            <i class="fa-solid fa-qrcode"></i>
+                            <span>Escanear QR Estudiante</span>
+                        </button>
+                        <button class="btn-attendance-action" id="btnScanHuella">
+                            <i class="fa-solid fa-fingerprint"></i>
+                            <span>Escanear Huella Digital</span>
+                        </button>
+                        <button class="btn-attendance-action" id="btnAsistenciaManual">
+                            <i class="fa-solid fa-keyboard"></i>
+                            <span>Asistencia Manual</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tables Section -->
+                <div class="tables-container">
+                    <!-- Left Table -->
+                    <div class="table-card">
+                        <h3 class="card-title">Listado de Estudiantes</h3>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Curso</th>
+                                        <th>Asistencia %</th>
+                                        <th>Tardanzas</th>
+                                        <th>Inasistencias</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Ana López</td>
+                                        <td>7°B</td>
+                                        <td>78%</td>
+                                        <td>5</td>
+                                        <td>3</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Juan Pérez</td>
+                                        <td>7°B</td>
+                                        <td>85%</td>
+                                        <td>5</td>
+                                        <td>3</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Juan Pérez</td>
+                                        <td>7°B</td>
+                                        <td>85%</td>
+                                        <td>5</td>
+                                        <td>3</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>María Escobedo</td>
+                                        <td>7°B</td>
+                                        <td>85%</td>
+                                        <td>4</td>
+                                        <td>2</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Diego Martínez</td>
+                                        <td>7°B</td>
+                                        <td>95%</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Right Table -->
+                    <div class="table-card">
+                        <h3 class="card-title">Tabla de Estudiantes en Riesgo</h3>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Curso</th>
+                                        <th>Asistencia %</th>
+                                        <th>Tardanzas</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Juan Pérez</td>
+                                        <td>7°B</td>
+                                        <td>85%</td>
+                                        <td>5</td>
+                                        <td>3</td>
+                                        <td><span class="badge badge-risk">Falta de Asistencia</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>María Escobo</td>
+                                        <td>7°B</td>
+                                        <td>85%</td>
+                                        <td>4</td>
+                                        <td>2</td>
+                                        <td><span class="badge badge-risk">Rendimiento Irregular</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Diego Martre</td>
+                                        <td>7°B</td>
+                                        <td>95%</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td><span class="badge badge-safe">Sin Riesgo</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="card-actions text-center mt-3">
+                            <button class="btn btn-primary btn-block">Ver Detalles de Estudiante en Riesgo</button>
+                            <p class="action-hint">Selecciona un estudiante para ver su plan de acción</p>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- End view-estudiantes -->
+
+            <!-- VISTA: TOMAR ASISTENCIA -->
+            <div id="view-tomar-asistencia" class="view-section" style="display: none;">
+                <!-- Header -->
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>CONTROL DE ASISTENCIA</h1>
+                        <h2>Registro y Monitoreo en Tiempo Real</h2>
+                    </div>
+                </header>
+
+                <!-- Last Scan Result Highlight -->
+                <div class="scan-result-card" id="lastScanResult">
+                    <div class="scan-result-header">
+                        <div class="pulse-icon"></div>
+                        <span>ÚLTIMO REGISTRO PROCESADO</span>
+                    </div>
+                    <div class="scan-result-content">
+                        <div class="scan-avatar-big">
+                            <i class="fa-solid fa-user-check"></i>
+                        </div>
+                        <div class="scan-main-data">
+                            <div class="scan-student-name" id="displayScanName">Seleccione un método de asistencia</div>
+                            <div class="scan-meta-grid">
+                                <div class="scan-meta-item">
+                                    <i class="fa-regular fa-calendar"></i>
+                                    <span id="displayScanDate">--/--/----</span>
+                                </div>
+                                <div class="scan-meta-item">
+                                    <i class="fa-regular fa-clock"></i>
+                                    <span id="displayScanTime">--:--</span>
+                                </div>
+                                <div class="scan-meta-item">
+                                    <i class="fa-solid fa-bolt"></i>
+                                    <span class="scan-badge" id="displayScanStatus">PENDIENTE</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Control Asistencia Estudiantes Table -->
+                <div class="table-card" style="margin-top: 24px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 class="card-title" style="margin-bottom: 0;">Control Asistencia Estudiantes</h3>
+                        <div class="table-actions">
+                            <button class="btn btn-outline btn-sm"><i class="fa-solid fa-download"></i> Exportar</button>
+                            <button class="btn btn-primary btn-sm"><i class="fa-solid fa-filter"></i> Filtrar</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Grado</th>
+                                    <th>Estudiante</th>
+                                    <th>Fecha</th>
+                                    <th>Hora Entrada</th>
+                                    <th>Hora Salida</th>
+                                    <th>Estado</th>
+                                    <th>Director de grupo</th>
+                                    <th>Total Est.</th>
+                                    <th>Asist.</th>
+                                    <th>Ausenc.</th>
+                                    <th>Retrazos</th>
+                                    <th>Estado Asistencia</th>
+                                    <th># Susp.</th>
+                                </tr>
+                            </thead>
+                            <tbody id="attendanceControlTableBody">
+                                <!-- Mock Data Row 1 -->
+                                <tr>
+                                    <td>7°B</td>
+                                    <td style="font-weight: 600;">María Escobedo</td>
+                                    <td>19/03/2026</td>
+                                    <td>06:55 AM</td>
+                                    <td>02:15 PM</td>
+                                    <td><span class="badge badge-success">Puntual</span></td>
+                                    <td>Prof. García</td>
+                                    <td>32</td>
+                                    <td>28</td>
+                                    <td>3</td>
+                                    <td>1</td>
+                                    <td><span class="text-success">Excelente</span></td>
+                                    <td>0</td>
+                                </tr>
+                                <!-- Mock Data Row 2 -->
+                                <tr>
+                                    <td>7°B</td>
+                                    <td style="font-weight: 600;">Ana López</td>
+                                    <td>19/03/2026</td>
+                                    <td>07:15 AM</td>
+                                    <td>02:15 PM</td>
+                                    <td><span class="badge badge-warning">Tarde</span></td>
+                                    <td>Prof. García</td>
+                                    <td>32</td>
+                                    <td>28</td>
+                                    <td>3</td>
+                                    <td>1</td>
+                                    <td><span class="text-warning">Regular</span></td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel Coordinador -->
+            <div id="view-panel" class="view-section" style="display: none;">
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>PANEL DE COORDINADOR</h1>
+                        <h2>Resumen general del colegio</h2>
+                    </div>
+                </header>
+
+                <!-- KPIs Panel -->
+                <div class="stats-grid">
+                    <div class="stat-card" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);">
+                        <div class="stat-info">
+                            <h3>Total Estudiantes</h3>
+                            <div class="stat-value">1,245</div>
+                        </div>
+                        <div class="stat-icon op-60"><i class="fa-solid fa-graduation-cap"></i></div>
+                    </div>
+
+                    <div class="stat-card" style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);">
+                        <div class="stat-info">
+                            <h3>Asistencia Hoy</h3>
+                            <div class="stat-value">92%</div>
+                        </div>
+                        <div class="stat-icon"><i class="fa-solid fa-check-double"></i></div>
+                    </div>
+
+                    <div class="stat-card" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                        <div class="stat-info">
+                            <h3>Tardanzas Globales</h3>
+                            <div class="stat-value">48</div>
+                        </div>
+                        <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
+                    </div>
+
+                    <div class="stat-card" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                        <div class="stat-info">
+                            <h3>En Riesgo Crítico</h3>
+                            <div class="stat-value">12</div>
+                        </div>
+                        <div class="stat-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    </div>
+                </div>
+
+                <!-- Content Area -->
+                <div class="tables-container">
+                    <div class="table-card">
+                        <h3 class="card-title">Tendencia de Asistencia (Semana)</h3>
+                        <div class="chart-mockup"
+                            style="height: 250px; display: flex; align-items: flex-end; justify-content: space-around; padding-top: 20px; border-bottom: 2px solid var(--border-color);">
+                            <div class="bar"
+                                style="height: 80%; width: 40px; background: var(--blue-primary); border-radius: 4px 4px 0 0; position: relative;">
+                                <span
+                                    style="position:absolute; top:-25px; left:50%; transform:translateX(-50%); font-size:12px; font-weight:bold; color:var(--text-gray)">Lun</span>
+                            </div>
+                            <div class="bar"
+                                style="height: 95%; width: 40px; background: var(--blue-primary); border-radius: 4px 4px 0 0; position: relative;">
+                                <span
+                                    style="position:absolute; top:-25px; left:50%; transform:translateX(-50%); font-size:12px; font-weight:bold; color:var(--text-gray)">Mar</span>
+                            </div>
+                            <div class="bar"
+                                style="height: 85%; width: 40px; background: var(--blue-primary); border-radius: 4px 4px 0 0; position: relative;">
+                                <span
+                                    style="position:absolute; top:-25px; left:50%; transform:translateX(-50%); font-size:12px; font-weight:bold; color:var(--text-gray)">Mié</span>
+                            </div>
+                            <div class="bar"
+                                style="height: 92%; width: 40px; background: var(--blue-primary); border-radius: 4px 4px 0 0; position: relative;">
+                                <span
+                                    style="position:absolute; top:-25px; left:50%; transform:translateX(-50%); font-size:12px; font-weight:bold; color:var(--text-gray)">Jue</span>
+                            </div>
+                            <div class="bar"
+                                style="height: 70%; width: 40px; background: #6366f1; border-radius: 4px 4px 0 0; position: relative;">
+                                <span
+                                    style="position:absolute; top:-25px; left:50%; transform:translateX(-50%); font-size:12px; font-weight:bold; color:var(--blue-primary)">Vie</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-card">
+                        <h3 class="card-title">Alertas Recientes</h3>
+                        <div class="alerts-list" style="display:flex; flex-direction:column; gap:15px;">
+                            <div class="alert-item"
+                                style="padding:15px; border-left: 4px solid #ef4444; background:#fef2f2; border-radius:4px;">
+                                <h4 style="color:#b91c1c; font-size:14px; margin-bottom:5px;">Riesgo de Deserción</h4>
+                                <p style="font-size:13px; color:#7f1d1d; margin:0;">3 estudiantes de 10°A acumularon 5
+                                    inasistencias consecutivas.</p>
+                            </div>
+                            <div class="alert-item"
+                                style="padding:15px; border-left: 4px solid #f59e0b; background:#fffbeb; border-radius:4px;">
+                                <h4 style="color:#b45309; font-size:14px; margin-bottom:5px;">Aumento de Tardanzas</h4>
+                                <p style="font-size:13px; color:#92400e; margin:0;">El curso 8°B presenta un pico
+                                    anómalo de tardanzas hoy.</p>
+                            </div>
+                            <div class="alert-item"
+                                style="padding:15px; border-left: 4px solid #3b82f6; background:#eff6ff; border-radius:4px;">
+                                <h4 style="color:#1d4ed8; font-size:14px; margin-bottom:5px;">Nueva Justificación</h4>
+                                <p style="font-size:13px; color:#1e3a8a; margin:0;">Padre de Diego Martínez (7°B) ha
+                                    enviado un soporte médico.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Asistencia General -->
+            <div id="view-asistencia" class="view-section" style="display: none;">
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>ASISTENCIA GENERAL</h1>
+                        <h2>Visión global de todos los cursos</h2>
+                    </div>
+                    <div class="header-actions">
+                        <input type="date" class="form-input" value="2026-03-19"
+                            style="padding:10px 15px; border-radius:8px; border:1px solid var(--border-color); color:var(--text-dark); background:white; font-family:inherit;">
+                        <button class="btn btn-primary"><i class="fa-solid fa-download"></i> Exportar Informe</button>
+                    </div>
+                </header>
+                <div class="table-card" style="margin-top: 20px;">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Grado / Curso</th>
+                                    <th>Director de Grupo</th>
+                                    <th>Total Est.</th>
+                                    <th>Presentes</th>
+                                    <th>Ausentes</th>
+                                    <th>Estado de Asistencia</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>6°A</strong></td>
+                                    <td>Prof. María Gómez</td>
+                                    <td>30</td>
+                                    <td>28</td>
+                                    <td>2</td>
+                                    <td>
+                                        <div
+                                            style="width:100%; height:8px; background:#e5e7eb; border-radius:4px; overflow:hidden; margin-bottom:4px;">
+                                            <div style="width:93%; height:100%; background:#22c55e; border-radius:4px;">
+                                            </div>
+                                        </div>
+                                        <span
+                                            style="font-size:11px; color:var(--text-gray); font-weight:600;">93%</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>7°A</strong></td>
+                                    <td>Prof. Carlos Ruiz</td>
+                                    <td>28</td>
+                                    <td>25</td>
+                                    <td>3</td>
+                                    <td>
+                                        <div
+                                            style="width:100%; height:8px; background:#e5e7eb; border-radius:4px; overflow:hidden; margin-bottom:4px;">
+                                            <div style="width:89%; height:100%; background:#84cc16; border-radius:4px;">
+                                            </div>
+                                        </div>
+                                        <span
+                                            style="font-size:11px; color:var(--text-gray); font-weight:600;">89%</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>7°B</strong></td>
+                                    <td>Lic. Ana Torres</td>
+                                    <td>29</td>
+                                    <td>22</td>
+                                    <td>7</td>
+                                    <td>
+                                        <div
+                                            style="width:100%; height:8px; background:#e5e7eb; border-radius:4px; overflow:hidden; margin-bottom:4px;">
+                                            <div style="width:75%; height:100%; background:#f59e0b; border-radius:4px;">
+                                            </div>
+                                        </div>
+                                        <span
+                                            style="font-size:11px; color:var(--text-gray); font-weight:600;">75%</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>8°A</strong></td>
+                                    <td>Prof. Luis Rojas</td>
+                                    <td>32</td>
+                                    <td>31</td>
+                                    <td>1</td>
+                                    <td>
+                                        <div
+                                            style="width:100%; height:8px; background:#e5e7eb; border-radius:4px; overflow:hidden; margin-bottom:4px;">
+                                            <div style="width:96%; height:100%; background:#22c55e; border-radius:4px;">
+                                            </div>
+                                        </div>
+                                        <span
+                                            style="font-size:11px; color:var(--text-gray); font-weight:600;">96%</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>8°B</strong></td>
+                                    <td>Lic. Fernando Silva</td>
+                                    <td>31</td>
+                                    <td>20</td>
+                                    <td>11</td>
+                                    <td>
+                                        <div
+                                            style="width:100%; height:8px; background:#e5e7eb; border-radius:4px; overflow:hidden; margin-bottom:4px;">
+                                            <div style="width:64%; height:100%; background:#ef4444; border-radius:4px;">
+                                            </div>
+                                        </div>
+                                        <span style="font-size:11px; color:var(--text-gray); font-weight:600;">64% -
+                                            Crítico</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reportes por Curso -->
+            <div id="view-reportes" class="view-section" style="display: none;">
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>REPORTES POR CURSO</h1>
+                        <h2>Análisis detallado de estudiantes</h2>
+                    </div>
+                </header>
+
+                <div class="reports-grid"
+                    style="display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:24px; margin-top:20px;">
+                    <!-- Report Card 1 -->
+                    <div class="table-card"
+                        style="padding:24px; border-top: 4px solid var(--blue-primary); height:auto;">
+                        <div
+                            style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <h3 style="font-size:20px; color:var(--text-dark); margin:0;">Grado 6°A</h3>
+                            <span
+                                style="background:#e0e7ff; color:var(--blue-primary); padding:4px 8px; border-radius:4px; font-size:12px; font-weight:700;">Mensual</span>
+                        </div>
+                        <p style="color:var(--text-gray); font-size:14px; margin-bottom:24px; line-height:1.5;">Resumen
+                            consolidado de inasistencias, excusas y llegadas tarde del mes de Marzo.</p>
+                        <div style="display:flex; gap:12px;">
+                            <button class="btn btn-primary" style="flex:1; font-size:13px; justify-content:center;"><i
+                                    class="fa-regular fa-eye"></i> Detalles</button>
+                            <button class="btn"
+                                style="background:#f1f5f9; color:#334155; font-size:13px; border:1px solid #cbd5e1;"><i
+                                    class="fa-solid fa-file-pdf"></i> PDF</button>
+                        </div>
+                    </div>
+
+                    <!-- Report Card 2 -->
+                    <div class="table-card"
+                        style="padding:24px; border-top: 4px solid var(--blue-primary); height:auto;">
+                        <div
+                            style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <h3 style="font-size:20px; color:var(--text-dark); margin:0;">Grado 7°A</h3>
+                            <span
+                                style="background:#e0e7ff; color:var(--blue-primary); padding:4px 8px; border-radius:4px; font-size:12px; font-weight:700;">Mensual</span>
+                        </div>
+                        <p style="color:var(--text-gray); font-size:14px; margin-bottom:24px; line-height:1.5;">Resumen
+                            consolidado de inasistencias, excusas y llegadas tarde del mes de Marzo.</p>
+                        <div style="display:flex; gap:12px;">
+                            <button class="btn btn-primary" style="flex:1; font-size:13px; justify-content:center;"><i
+                                    class="fa-regular fa-eye"></i> Detalles</button>
+                            <button class="btn"
+                                style="background:#f1f5f9; color:#334155; font-size:13px; border:1px solid #cbd5e1;"><i
+                                    class="fa-solid fa-file-pdf"></i> PDF</button>
+                        </div>
+                    </div>
+
+                    <!-- Report Card 3 -->
+                    <div class="table-card" style="padding:24px; border-top: 4px solid #f59e0b; height:auto;">
+                        <div
+                            style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <h3 style="font-size:20px; color:var(--text-dark); margin:0;">Grado 7°B</h3>
+                            <span
+                                style="background:#fef3c7; color:#b45309; padding:4px 8px; border-radius:4px; font-size:12px; font-weight:700;">Alerta
+                                Baja</span>
+                        </div>
+                        <p style="color:var(--text-gray); font-size:14px; margin-bottom:24px; line-height:1.5;">Reporte
+                            especial generado por detección de múltiples inasistencias consecutivas.</p>
+                        <div style="display:flex; gap:12px;">
+                            <button class="btn btn-primary" style="flex:1; font-size:13px; justify-content:center;"><i
+                                    class="fa-regular fa-eye"></i> Detalles</button>
+                            <button class="btn"
+                                style="background:#f1f5f9; color:#334155; font-size:13px; border:1px solid #cbd5e1;"><i
+                                    class="fa-solid fa-file-pdf"></i> PDF</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comunicaciones -->
+            <div id="view-comunicaciones" class="view-section" style="display: none;">
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>COMUNICACIONES</h1>
+                        <h2>Bandeja de entrada e historial</h2>
+                    </div>
+                    <button class="btn btn-primary"><i class="fa-solid fa-pen"></i> Redactar Mensaje</button>
+                </header>
+
+                <div class="tables-container"
+                    style="grid-template-columns: 350px 1fr; align-items: stretch; margin-top:20px;">
+                    <!-- Inbox List -->
+                    <div class="table-card"
+                        style="padding:0; overflow:hidden; display:flex; flex-direction:column; height: 600px;">
+                        <div style="padding:20px; border-bottom:1px solid var(--border-color); background:#f8fafc;">
+                            <input type="text" placeholder="Buscar mensajes..."
+                                style="width:100%; padding:12px 15px; border-radius:8px; border:1px solid #cbd5e1; outline:none; font-family:inherit;">
+                        </div>
+                        <div style="overflow-y:auto; flex:1;">
+                            <div class="msg-item"
+                                style="padding:18px 20px; border-bottom:1px solid var(--border-color); cursor:pointer; background:#eff6ff; border-left:4px solid var(--blue-primary); transition:background 0.2s;">
+                                <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                                    <strong style="font-size:14px;">María (Mamá Ana)</strong>
+                                    <span style="font-size:11px; color:var(--blue-primary); font-weight:bold;">10:30
+                                        AM</span>
+                                </div>
+                                <div style="font-size:13px; font-weight:600; color:#1e293b; margin-bottom:6px;">
+                                    Justificación de falta médica</div>
+                                <div
+                                    style="font-size:12px; color:var(--text-gray); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                                    Adjunto el certificado médico de Ana López correspondiente a los días de ausencia...
+                                </div>
+                            </div>
+                            <div class="msg-item"
+                                style="padding:18px 20px; border-bottom:1px solid var(--border-color); cursor:pointer; transition:background 0.2s; border-left:4px solid transparent;">
+                                <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                                    <strong style="font-size:14px; color:var(--text-gray);">Prof. Luis Rojas</strong>
+                                    <span style="font-size:11px; color:var(--text-gray);">Ayer</span>
+                                </div>
+                                <div style="font-size:13px; color:#475569; margin-bottom:6px;">Problema de conducta 8°A
+                                </div>
+                                <div
+                                    style="font-size:12px; color:var(--text-gray); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                                    Coordinador, le escribo para reportar un incidente ocurrido en la clase de
+                                    historia...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Inbox Detail -->
+                    <div class="table-card" style="display:flex; flex-direction:column; height: 600px; padding:0;">
+                        <div
+                            style="padding:24px; border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:flex-start;">
+                            <div>
+                                <h3 style="font-size:20px; margin-bottom:12px; color:var(--text-dark);">Justificación de
+                                    falta médica</h3>
+                                <div
+                                    style="display:flex; align-items:center; gap:12px; font-size:14px; color:var(--text-gray);">
+                                    <div class="avatar-wrapper" style="width:36px; height:36px;"><img
+                                            src="https://ui-avatars.com/api/?name=Maria&background=random&color=fff"
+                                            alt="Avatar" style="border-radius:50%; width:100%; height:100%;"></div>
+                                    <div>
+                                        <div style="color:var(--text-dark); font-weight:500;">María Gómez (Mamá de Ana
+                                            López)</div>
+                                        <div style="font-size:12px; margin-top:2px;">maria.gomez@gmail.com</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="color:var(--text-gray); font-size:13px; font-weight:500;">Hoy, 10:30 AM</div>
+                        </div>
+                        <div
+                            style="padding:24px; flex:1; overflow-y:auto; line-height:1.7; color:#334155; font-size:15px;">
+                            <p>Estimado Coordinador,</p>
+                            <br>
+                            <p>Me dirijo a usted para justificar la inasistencia de mi hija Ana López (7°B) el día de
+                                ayer y de hoy. Ana presentó un cuadro viral y el médico le recomendó reposo absoluto por
+                                48 horas.</p>
+                            <br>
+                            <p>Adjunto a este correo el comprobante de urgencias y medicación para que sea anexado a su
+                                expediente escolar y se le excusen las fallas.</p>
+                            <br>
+                            <p>Agradezco su atención de antemano.</p>
+                            <p>Atentamente,<br>María Gómez.</p>
+
+                            <div class="attachment"
+                                style="margin-top:40px; padding:15px 20px; border:1px solid #e2e8f0; border-radius:8px; display:inline-flex; align-items:center; gap:15px; cursor:pointer; background:#f8fafc; transition:background 0.2s;">
+                                <i class="fa-solid fa-file-pdf" style="font-size:28px; color:#ef4444;"></i>
+                                <div style="display:flex; flex-direction:column; gap:4px;">
+                                    <div style="font-size:14px; font-weight:600; color:var(--text-dark);">
+                                        certificado_medico.pdf</div>
+                                    <div style="font-size:12px; color:var(--text-gray);">1.2 MB</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="padding:24px; border-top:1px solid var(--border-color); background:#f8fafc;">
+                            <textarea placeholder="Escribe tu respuesta aquí..."
+                                style="width:100%; padding:15px; border-radius:8px; border:1px solid #cbd5e1; resize:none; height:100px; margin-bottom:15px; font-family:inherit; font-size:14px; outline:none;"></textarea>
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <div style="color:var(--text-gray); font-size:20px; display:flex; gap:18px;">
+                                    <i class="fa-solid fa-paperclip" style="cursor:pointer; transition:color 0.2s;"></i>
+                                    <i class="fa-regular fa-image" style="cursor:pointer; transition:color 0.2s;"></i>
+                                </div>
+                                <button class="btn btn-primary"><i class="fa-solid fa-paper-plane"
+                                        style="margin-right:8px;"></i> Enviar Respuesta</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Configuraciones -->
+            <div id="view-configuraciones" class="view-section" style="display: none;">
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>CONFIGURACIONES</h1>
+                        <h2>Ajustes del sistema y perfil</h2>
+                    </div>
+                    <button class="btn btn-primary" id="btnGuardarConfig"><i class="fa-solid fa-floppy-disk"></i> Guardar Cambios</button>
+                </header>
+
+                <div class="tables-container"
+                    style="grid-template-columns: 1fr 1fr; margin-top:20px; align-items: start;">
+                    <div class="table-card">
+                        <h3 class="card-title">Datos Personales</h3>
+                        <div style="display:flex; flex-direction:column; gap:20px;">
+                            <div style="display:flex; align-items:center; gap:24px; margin-bottom:10px;">
+                                <input type="file" id="profileImageInput" accept="image/*" style="display: none;">
+                                <img src="https://ui-avatars.com/api/?name=Carlos+Ruiz&background=random&color=fff"
+                                    alt="Perfil"
+                                    id="profileImagePreview"
+                                    style="width:80px; height:80px; border-radius:50%; object-fit:cover; box-shadow:0 4px 6px rgba(0,0,0,0.1);">
+                                <button class="btn" id="btnChangePhoto"
+                                    style="background:#f1f5f9; border:1px solid #cbd5e1; color:#334155;">Cambiar
+                                    Foto</button>
+                            </div>
+                            <div>
+                                <label
+                                    style="display:block; font-size:13px; font-weight:600; color:#475569; margin-bottom:8px;">Nombre
+                                    Completo</label>
+                                <input type="text" value="Lic. Carlos Ruiz" class="profile-input" id="coordNameInput"
+                                    style="width:100%; padding:12px 15px; border-radius:8px; border:1px solid #cbd5e1; font-family:inherit; color:var(--text-dark); background:#f8fafc; outline:none;">
+                            </div>
+                            <div>
+                                <label
+                                    style="display:block; font-size:13px; font-weight:600; color:#475569; margin-bottom:8px;">Correo
+                                    Electrónico</label>
+                                <input type="email" value="coordinador@gmail.com" class="profile-input" id="coordEmailInput"
+                                    style="width:100%; padding:12px 15px; border-radius:8px; border:1px solid #cbd5e1; font-family:inherit; color:var(--text-dark); background:#f8fafc; outline:none;">
+                            </div>
+                            <div>
+                                <label
+                                    style="display:block; font-size:13px; font-weight:600; color:#475569; margin-bottom:8px;">Contraseña</label>
+                                <input type="password" value="********" class="profile-input" id="coordPassInput"
+                                    style="width:100%; padding:12px 15px; border-radius:8px; border:1px solid #cbd5e1; font-family:inherit; color:var(--text-dark); background:#f8fafc; outline:none;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-card">
+                        <h3 class="card-title">Preferencias de Notificación</h3>
+                        <div style="display:flex; flex-direction:column; gap:28px;">
+
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <div>
+                                    <div style="font-weight:600; color:#1e293b; margin-bottom:6px;">Inasistencias
+                                        Severas</div>
+                                    <div style="font-size:13px; color:var(--text-gray); line-height:1.4;">Recibir alerta
+                                        inmediata cuando un estudiante falte 3 veces seguidas.</div>
+                                </div>
+                                <label
+                                    style="position:relative; display:inline-block; width:50px; height:26px; flex-shrink:0;">
+                                    <input type="checkbox" checked style="opacity:0; width:0; height:0;">
+                                    <span
+                                        style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:var(--blue-primary); border-radius:34px; transition:.4s;">
+                                        <span
+                                            style="position:absolute; content:''; height:20px; width:20px; left:27px; bottom:3px; background-color:white; border-radius:50%; transition:.4s; box-shadow:0 2px 4px rgba(0,0,0,0.2);"></span>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <div>
+                                    <div style="font-weight:600; color:#1e293b; margin-bottom:6px;">Nuevos Mensajes de
+                                        Padres</div>
+                                    <div style="font-size:13px; color:var(--text-gray); line-height:1.4;">Notificación
+                                        por correo electrónico al recibir mensajes nuevos en buzón.</div>
+                                </div>
+                                <label
+                                    style="position:relative; display:inline-block; width:50px; height:26px; flex-shrink:0;">
+                                    <input type="checkbox" checked style="opacity:0; width:0; height:0;">
+                                    <span
+                                        style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:var(--blue-primary); border-radius:34px; transition:.4s;">
+                                        <span
+                                            style="position:absolute; content:''; height:20px; width:20px; left:27px; bottom:3px; background-color:white; border-radius:50%; transition:.4s; box-shadow:0 2px 4px rgba(0,0,0,0.2);"></span>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <div>
+                                    <div style="font-weight:600; color:#1e293b; margin-bottom:6px;">Resumen Semanal
+                                        Escolar</div>
+                                    <div style="font-size:13px; color:var(--text-gray); line-height:1.4;">Recibir un
+                                        reporte consolidado de asistencia y rendimiento cada viernes.</div>
+                                </div>
+                                <label
+                                    style="position:relative; display:inline-block; width:50px; height:26px; flex-shrink:0;">
+                                    <input type="checkbox" style="opacity:0; width:0; height:0;">
+                                    <span
+                                        style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:#cbd5e1; border-radius:34px; transition:.4s;">
+                                        <span
+                                            style="position:absolute; content:''; height:20px; width:20px; left:3px; bottom:3px; background-color:white; border-radius:50%; transition:.4s; box-shadow:0 2px 4px rgba(0,0,0,0.2);"></span>
+                                    </span>
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="dashboard-footer" style="padding: 24px 0; text-align: center; color: var(--text-gray); font-size: 13px; margin-top: 40px; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 8px;">
+                <div>&copy; <script>document.write(new Date().getFullYear())</script> PREZEN. TODOS LOS DERECHOS RESERVADOS.</div>
+                <div style="display: flex; justify-content: center; gap: 15px; margin-top: 4px;">
+                    <a href="#" style="color: var(--text-gray); text-decoration: none; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='var(--blue-primary)'" onmouseout="this.style.color='var(--text-gray)'">TÉRMINOS</a>
+                    <a href="#" style="color: var(--text-gray); text-decoration: none; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='var(--blue-primary)'" onmouseout="this.style.color='var(--text-gray)'">PRIVACIDAD</a>
+                    <a href="#" style="color: var(--text-gray); text-decoration: none; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='var(--blue-primary)'" onmouseout="this.style.color='var(--text-gray)'">Tus Opciones de Privacidad</a>
+                </div>
+            </footer>
+
+        </main>
+    </div>
+    <!-- QR Scanner Modal -->
+    <div id="qrModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>ESCANEAR QR ESTUDIANTE</h3>
+                <button id="closeQrModal" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="qr-reader" style="width: 100%; border-radius: 12px; overflow: hidden;"></div>
+                <div id="qr-result" class="scan-feedback">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>Enfoque el código QR del carnet estudiantil</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="stopScanner" class="btn btn-secondary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Save Success Modal -->
+    <div id="saveSuccessModal" class="modal-overlay">
+        <div class="modal-container" style="max-width: 400px; text-align: center; padding: 30px;">
+            <div style="font-size: 48px; color: #22c55e; margin-bottom: 20px;">
+                <i class="fa-regular fa-circle-check"></i>
+            </div>
+            <h3 style="margin-bottom: 15px; color: var(--text-dark);">¡Cambios Guardados!</h3>
+            <p style="color: var(--text-gray); margin-bottom: 25px;">Los cambios han sido guardados satisfactoriamente.</p>
+            <button id="closeSaveSuccessModal" class="btn btn-primary" style="width: 100%; justify-content: center;">Aceptar</button>
+        </div>
+    </div>
+
+    <!-- Add Report Modal -->
+    <div id="addReportModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15,23,42,0.6); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(4px);">
+        <div style="background: white; border-radius: 16px; width: 90%; max-width: 500px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); overflow: hidden; transform: scale(0.95); transition: transform 0.2s;">
+            <div style="padding: 20px 25px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
+                <h3 style="margin: 0; color: #1e293b; font-size: 16px; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-file-circle-plus" style="color: #3b82f6;"></i> Generar Nuevo Reporte
+                </h3>
+                <button id="closeAddReportBtn" style="background: none; border: none; font-size: 20px; color: #64748b; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#64748b'">&times;</button>
+            </div>
+            <div style="padding: 25px;">
+                <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 8px;">Tipo de Reporte</label>
+                <select style="width: 100%; padding: 10px 15px; border: 1px solid #cbd5e1; border-radius: 8px; background: white; color: #1e293b; margin-bottom: 15px; font-family: inherit; font-size: 14px;">
+                    <option>Reporte de Asistencia Diaria</option>
+                    <option>Reporte de Retrasos Acumulados</option>
+                    <option>Incitación de Disciplina</option>
+                    <option>Rendimiento Académico</option>
+                </select>
+
+                <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 8px;">Estudiante(s) / Grupo Aplicable</label>
+                <input type="text" placeholder="Ej. Grado 10°A, Juan Pérez, etc." style="width: 100%; padding: 10px 15px; border: 1px solid #cbd5e1; border-radius: 8px; color: #1e293b; margin-bottom: 15px; box-sizing: border-box; font-family: inherit; font-size: 14px; outline: none;">
+
+                <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 8px;">Observaciones Adicionales</label>
+                <textarea placeholder="Detalles o parámetros adicionales para generar el reporte..." style="width: 100%; padding: 12px 15px; border: 1px solid #cbd5e1; border-radius: 8px; height: 90px; resize: none; box-sizing: border-box; font-family: inherit; color: #1e293b; line-height: 1.5; font-size: 14px; outline: none;"></textarea>
+            </div>
+            <div style="padding: 15px 25px; border-top: 1px solid #e2e8f0; background: #f8fafc; display: flex; justify-content: flex-end; gap: 10px;">
+                <button id="cancelAddReportBtn" style="padding: 10px 20px; background: white; border: 1px solid #cbd5e1; color: #475569; border-radius: 8px; font-weight: 600; font-family: inherit; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='white'">Cancelar</button>
+                <button id="createReportBtn" style="padding: 10px 20px; background: #3b82f6; border: none; color: white; border-radius: 8px; font-weight: 600; font-family: inherit; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">Generar y Descargar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./assets/js/script.js"></script>
+</body>
+
+</html>
