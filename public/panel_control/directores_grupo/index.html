@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Director de Grupo - PREZEN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --sidebar-bg: #1e153a;
+            --sidebar-active: #2d2448;
+            --sidebar-text: #a09cb0;
+            --text-white: #ffffff;
+            --bg-main: #f5f6fa;
+            --purple-primary: #5c4def;
+            --purple-light: #7c4dff;
+            --blue-primary: #3b82f6;
+            --blue-bright: #3f80ea;
+            --green-hm: #22c55e;
+            --yellow-hm: #facc15;
+            --red-hm: #ef4444;
+            --text-dark: #1e293b;
+            --text-gray: #64748b;
+            --border-color: #e2e8f0;
+            --surface: #ffffff;
+            --surface-muted: #f8fafc;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-dark); }
+        .app-container { display: flex; min-height: 100vh; }
+
+        /* Sidebar */
+        .sidebar { width: 250px; background-color: var(--sidebar-bg); color: var(--sidebar-text); display: flex; flex-direction: column; padding: 24px 0; flex-shrink: 0; position: relative; transition: width 0.3s ease; }
+        .logo-container { display: flex; justify-content: center; margin-bottom: 24px; }
+        .logo-box { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 90px; height: 90px; border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; }
+        .logo-z { font-size: 38px; font-weight: 800; color: var(--text-white); margin-bottom: 2px; line-height: 1; }
+        .logo-text { font-size: 10px; letter-spacing: 2px; color: var(--text-white); font-weight: 600; }
+        .brand-btn-container { padding: 0 24px; margin-bottom: 30px; }
+        .brand-btn { width: 100%; background: var(--text-white); color: var(--text-dark); border: none; border-radius: 8px; padding: 12px; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .z-purple { color: var(--purple-primary); font-size: 16px; }
+        .sidebar-nav ul { list-style: none; }
+        .sidebar-nav li { margin-bottom: 6px; }
+        .nav-link { display: flex; align-items: center; padding: 14px 24px; color: var(--sidebar-text); text-decoration: none; font-size: 14px; font-weight: 500; border-radius: 0 20px 20px 0; margin-right: 20px; transition: all 0.25s ease; }
+        .nav-link i { width: 20px; font-size: 16px; margin-right: 14px; }
+        .nav-link:hover { background-color: rgba(255,255,255,0.08); color: var(--text-white); transform: translateX(4px); }
+        .sidebar-nav li.active .nav-link { background-color: var(--sidebar-active); color: var(--text-white); }
+        .sidebar-footer { margin-top: auto; padding: 24px; }
+        .btn-invite { width: 100%; background-color: rgba(255,255,255,0.05); color: var(--sidebar-text); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 8px; font-weight: 600; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: all 0.25s ease; }
+        .btn-invite:hover { background-color: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+        /* Sidebar Toggle */
+        .sidebar-toggle { position: absolute; top: 24px; right: -14px; width: 28px; height: 28px; background-color: var(--purple-primary); color: var(--text-white); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; box-shadow: 0 4px 6px rgba(0,0,0,0.2); font-size: 12px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .sidebar-toggle:hover { transform: scale(1.15); box-shadow: 0 6px 15px rgba(92, 77, 239, 0.4); }
+        .sidebar.collapsed { width: 80px; }
+        .sidebar.collapsed .logo-box { width: 45px; height: 45px; border-radius: 8px; }
+        .sidebar.collapsed .logo-z { font-size: 24px; margin-bottom: 0px; }
+        .sidebar.collapsed .logo-text, .sidebar.collapsed .brand-text, .sidebar.collapsed .nav-link span, .sidebar.collapsed .btn-invite span { display: none; }
+        .sidebar.collapsed .brand-btn { padding: 12px 0; }
+        .sidebar.collapsed .nav-link { justify-content: center; padding: 14px 0; margin-right: 0; border-radius: 0; }
+        .sidebar.collapsed .nav-link i { margin-right: 0; font-size: 20px; }
+        .sidebar.collapsed .btn-invite { padding: 12px 0; }
+
+        /* Main Content */
+        .main-content { flex: 1; padding: 24px 32px; overflow-y: auto; }
+
+        /* Header */
+        .top-header { display: flex; flex-direction: column; margin-bottom: 24px; }
+        .page-title-main { font-size: 28px; font-weight: 800; color: var(--text-dark); line-height: 1.2; text-transform: uppercase; }
+        .page-subtitle { font-size: 22px; font-weight: 700; color: var(--text-dark); }
+        .badge-update { background: var(--text-white); padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 500; color: var(--text-gray); display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); transition: transform 0.25s ease; }
+        .badge-update:hover { transform: scale(1.05); }
+        .user-profile { display: flex; align-items: center; gap: 10px; background: var(--text-white); padding: 6px 12px 6px 6px; border-radius: 50px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); transition: box-shadow 0.3s ease, transform 0.3s ease; }
+        .user-profile:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); transform: translateY(-2px); }
+        .avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+        .user-info { display: flex; flex-direction: column; font-size: 12px; }
+        .user-name { font-weight: 700; color: var(--text-dark); }
+        .user-role { color: var(--text-gray); font-weight: 500; }
+        .notification-dot { background: var(--red-hm); color: white; font-size: 9px; font-weight: bold; width: 14px; height: 14px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+        /* KPI Cards */
+        .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 24px; }
+        .kpi-card { position: relative; border-radius: 16px; padding: 24px; color: var(--text-white); overflow: hidden; height: 130px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 6px 15px rgba(0,0,0,0.06); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .kpi-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 12px 30px rgba(92, 77, 239, 0.25); }
+        .kpi-title { font-size: 14px; font-weight: 500; margin-bottom: 12px; z-index: 2; }
+        .kpi-value { font-size: 42px; font-weight: 700; z-index: 2; line-height: 1; }
+        .kpi-bg-icon { position: absolute; right: -10px; bottom: -15px; font-size: 80px; opacity: 0.15; z-index: 1; }
+        .card-purple-blue { background: linear-gradient(135deg, #6254ea 0%, #4f42dc 100%); }
+        .card-bright-blue { background: var(--blue-bright); }
+        .card-deep-purple { background: var(--purple-light); }
+        .card-blue-solid { background: var(--blue-primary); }
+
+        .director-welcome-card { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(340px, 1fr); align-items: center; gap: 32px; min-height: 300px; margin-bottom: 28px; padding: 30px; border: 1px solid #dddafe; border-radius: 20px; background: linear-gradient(120deg, #eeedff 0%, #e9eefc 100%); box-shadow: 0 12px 28px rgba(79, 70, 229, .08); }
+        .director-welcome-label { display: inline-flex; margin-bottom: 14px; padding: 7px 13px; border-radius: 20px; color: var(--purple-primary); background: rgba(92, 77, 239, .12); font-size: 12px; font-weight: 800; letter-spacing: .3px; }
+        .director-welcome-copy h2 { color: var(--text-dark); font-size: clamp(24px, 2.2vw, 38px); line-height: 1.2; }
+        .director-welcome-copy p { max-width: 700px; margin-top: 14px; color: #718096; font-size: 16px; line-height: 1.65; }
+        .director-welcome-features { display: grid; gap: 14px; }
+        .director-welcome-feature { display: flex; align-items: center; gap: 14px; min-height: 78px; padding: 14px 16px; border: 1px solid rgba(226, 232, 240, .8); border-radius: 16px; background: rgba(255, 255, 255, .7); }
+        .director-welcome-feature-icon { display: grid; place-items: center; flex: 0 0 46px; height: 46px; border-radius: 13px; color: white; background: linear-gradient(135deg, #6254ea, #3b82f6); font-size: 18px; }
+        .director-welcome-feature strong { display: block; color: var(--text-dark); font-size: 14px; }
+        .director-welcome-feature span { display: block; margin-top: 5px; color: #718096; font-size: 13px; line-height: 1.4; }
+
+        /* Bottom Grid */
+        .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; gap: 20px; }
+        .content-card { background: var(--text-white); border-radius: 16px; padding: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .content-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
+        .card-title { font-size: 16px; font-weight: 700; color: var(--text-dark); margin-bottom: 20px; }
+        .notifications-card { display: flex; flex-direction: column; }
+        .notifications-card .card-title { margin-bottom: 8px; }
+        .recent-notifications { flex: 1; list-style: none; display: grid; grid-template-rows: repeat(3, minmax(0, 1fr)); }
+        .recent-notifications li { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid var(--border-color); color: var(--text-dark); font-size: 13px; line-height: 1.45; }
+        .recent-notifications i { width: 18px; padding-top: 2px; color: var(--purple-primary); }
+
+        /* Student List */
+        .student-list { display: flex; flex-direction: column; gap: 12px; }
+        .student-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-radius: 10px; border: 1px solid var(--border-color); transition: background 0.2s ease; }
+        .student-item:hover { background: #f8f7ff; }
+        .student-left { display: flex; align-items: center; gap: 12px; }
+        .student-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--purple-primary), var(--blue-primary)); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; }
+        .student-name { font-weight: 600; font-size: 14px; }
+        .student-course { font-size: 12px; color: var(--text-gray); }
+        .badge-status { padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+        .badge-presente { background: rgba(34, 197, 94, 0.1); color: var(--green-hm); }
+        .badge-ausente { background: rgba(239, 68, 68, 0.1); color: var(--red-hm); }
+        .badge-tardanza { background: rgba(250, 204, 21, 0.1); color: #b45309; }
+
+        /* Quick Actions */
+        .quick-actions { display: flex; flex-direction: column; gap: 12px; }
+        .action-btn { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid var(--border-color); background: white; font-size: 14px; font-weight: 600; color: var(--text-dark); cursor: pointer; display: flex; align-items: center; gap: 12px; transition: all 0.25s ease; }
+        .action-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.06); border-color: var(--purple-primary); color: var(--purple-primary); }
+        .action-btn i { font-size: 18px; color: var(--purple-primary); width: 24px; }
+
+        body { transition: background-color 0.2s ease, color 0.2s ease; }
+        body.dark-mode {
+            --bg-main: #111827;
+            --text-dark: #e5e7eb;
+            --text-gray: #a7b3c4;
+            --border-color: #344154;
+            --surface: #1f2937;
+            --surface-muted: #17212f;
+        }
+        .badge-update, .user-profile, .content-card, .action-btn { background: var(--surface); }
+        .sidebar-footer { display: flex; flex-direction: column; gap: 10px; }
+        .theme-toggle { width: 100%; background: rgba(255,255,255,0.08); color: var(--text-white); border: 1px solid rgba(255,255,255,0.15); padding: 11px 12px; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 9px; cursor: pointer; font-size: 13px; font-weight: 600; }
+        .sidebar.collapsed .theme-toggle span { display: none; }
+        .sidebar.collapsed .theme-toggle { padding: 12px 0; }
+        .nav-view { display: none; }
+        .nav-view.active { display: block; }
+        .screen-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 22px; }
+        .screen-heading h1 { color: var(--text-dark); font-size: 28px; line-height: 1.2; }
+        .screen-heading p { color: var(--text-gray); font-size: 14px; margin-top: 6px; }
+        .profile-card, .settings-card { width: 100%; max-width: 1100px; padding: 28px; background: var(--surface); border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
+        .profile-card h2, .settings-card h2 { font-size: 16px; color: var(--text-dark); padding-bottom: 10px; border-bottom: 1px solid var(--border-color); margin-bottom: 22px; }
+        .profile-form-layout { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 34px; }
+        .profile-photo { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+        .profile-photo img { width: 144px; height: 144px; border-radius: 50%; object-fit: cover; border: 4px solid var(--purple-primary); }
+        .profile-photo button, .outline-button { background: transparent; color: var(--purple-primary); border: 1px solid var(--purple-primary); border-radius: 6px; padding: 8px 14px; cursor: pointer; }
+        .profile-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+        .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+        .field.wide { grid-column: 1 / -1; }
+        .field label { color: var(--text-gray); font-size: 13px; }
+        .field input { width: 100%; min-height: 38px; border: 1px solid var(--border-color); border-radius: 8px; padding: 9px 11px; color: var(--text-dark); background: var(--surface); }
+        .field input:disabled { background: var(--surface-muted); color: var(--text-gray); }
+        .save-row { grid-column: 1 / -1; display: flex; justify-content: flex-end; margin-top: 8px; }
+        .primary-button { border: 0; border-radius: 6px; background: var(--purple-primary); color: white; font-weight: 600; padding: 11px 22px; cursor: pointer; }
+        .settings-card { max-width: 1100px; }
+        .settings-intro { color: var(--text-gray); font-size: 14px; margin: -14px 0 18px; }
+        .setting-row { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; border-bottom: 1px solid var(--border-color); }
+        .setting-row strong { color: var(--text-dark); font-size: 14px; }
+        .setting-row p { color: var(--text-gray); font-size: 13px; margin-top: 4px; }
+        .switch { position: relative; flex: 0 0 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .switch span { position: absolute; inset: 0; border-radius: 20px; background: #cbd5e1; cursor: pointer; transition: .2s; }
+        .switch span::before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; border-radius: 50%; background: white; transition: .2s; }
+        .switch input:checked + span { background: var(--purple-primary); }
+        .switch input:checked + span::before { transform: translateX(20px); }
+        .security-section { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border-color); }
+        .security-section h2 { border: 0; margin: 0 0 10px; padding: 0; }
+        .security-row { display: flex; justify-content: space-between; align-items: center; gap: 18px; }
+        .security-row strong { color: #ef4444; }
+        .communications-view { --communication-page: var(--bg-main); --communication-panel: var(--surface); --communication-text: var(--text-dark); --communication-muted: var(--text-gray); --communication-border: var(--border-color); --communication-input: var(--surface-muted); --communication-selected: #eef2ff; --communication-button-text: #1e293b; color: var(--communication-text); background: var(--communication-page); min-height: calc(100vh - 48px); margin: -24px -32px; padding: 22px 32px; }
+        body.dark-mode .communications-view { --communication-page: #111827; --communication-panel: #1f2937; --communication-text: #e5e7eb; --communication-muted: #b6c3d6; --communication-border: #374151; --communication-input: #111827; --communication-selected: #192954; --communication-button-text: #111827; }
+        .communications-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 0 0 20px; }
+        .communications-heading h1 { font-size: 22px; }
+        .communications-heading p { font-size: 14px; margin-top: 5px; color: var(--communication-muted); }
+        .compose-button { background: var(--purple-primary); color: var(--communication-button-text); border: 0; border-radius: 7px; padding: 10px 16px; font-weight: 700; cursor: pointer; }
+        .communications-layout { display: grid; grid-template-columns: minmax(250px, 310px) minmax(0, 1fr); gap: 20px; min-height: 530px; }
+        .message-list, .message-panel { background: var(--communication-panel); border-top: 4px solid var(--communication-border); }
+        .message-list { border-radius: 14px; overflow: hidden; }
+        .message-search { padding: 16px; border-bottom: 1px solid var(--communication-border); }
+        .message-search input, .reply-box { width: 100%; border: 1px solid var(--communication-border); border-radius: 7px; background: var(--communication-input); color: var(--communication-text); padding: 11px 13px; }
+        .message-item { width: 100%; display: block; text-align: left; background: transparent; border: 0; border-bottom: 1px solid var(--communication-border); color: var(--communication-text); padding: 16px; cursor: pointer; }
+        .message-item.active { background: var(--communication-selected); border-left: 3px solid #6254ea; }
+        .message-item strong, .message-item span, .message-item small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .message-item span { margin-top: 7px; font-size: 12px; font-weight: 600; }
+        .message-item small { margin-top: 5px; color: var(--communication-muted); }
+        .message-panel { display: flex; flex-direction: column; border-radius: 14px 14px 0 0; min-width: 0; }
+        .message-detail-heading { padding: 20px; border-bottom: 1px solid var(--communication-border); }
+        .message-detail-heading h2 { font-size: 17px; margin-bottom: 10px; }
+        .message-sender { color: var(--communication-text); font-size: 13px; }
+        .message-sender small { display: block; color: var(--communication-muted); margin-top: 3px; }
+        .message-body { padding: 22px 20px; flex: 1; min-height: 220px; max-height: 250px; overflow-y: auto; color: var(--communication-text); font-size: 14px; line-height: 1.6; }
+        .message-body p + p { margin-top: 20px; }
+        .reply-area { padding: 18px 20px; border-top: 1px solid var(--communication-border); }
+        .reply-box { min-height: 82px; resize: vertical; }
+        .reply-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+        .reply-actions button { border: 0; color: var(--communication-muted); background: none; cursor: pointer; padding: 6px; }
+        .reply-actions .send-button { background: var(--purple-primary); color: var(--communication-button-text); border-radius: 7px; padding: 10px 16px; font-weight: 700; }
+        .attachment-list { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin-top: 10px; }
+        .attachment-list li { max-width: 100%; overflow-wrap: anywhere; background: var(--communication-input); color: var(--communication-text); border: 1px solid var(--communication-border); border-radius: 6px; padding: 6px 9px; font-size: 12px; }
+        .message-modal { position: fixed; inset: 0; z-index: 500; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(15,23,42,.55); }
+        .message-modal.open { display: flex; }
+        .message-modal[hidden] { display: none; }
+        .message-modal-card { width: min(100%, 480px); padding: 26px; background: var(--surface); color: var(--text-dark); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 20px 55px rgba(0,0,0,.25); }
+        .message-modal-card h2 { font-size: 20px; margin-bottom: 20px; }
+        .message-modal-fields { display: grid; gap: 16px; }
+        .message-modal-fields label { display: grid; gap: 7px; color: var(--text-gray); font-size: 13px; font-weight: 600; }
+        .message-modal-fields label[hidden] { display: none; }
+        .message-modal-fields select { width: 100%; min-height: 42px; padding: 9px 11px; color: var(--text-dark); background: var(--surface); border: 1px solid var(--border-color); border-radius: 7px; }
+        .message-modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; }
+        .message-modal-actions button { min-width: 100px; padding: 10px 14px; border-radius: 7px; cursor: pointer; font-weight: 600; }
+        .cancel-compose { border: 1px solid var(--border-color); color: var(--text-dark); background: transparent; }
+        .group-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; margin-bottom: 20px; }
+        .group-heading h1 { font-size: 28px; color: var(--text-dark); }
+        .group-heading p, .group-count { margin-top: 6px; color: var(--text-gray); font-size: 14px; }
+        .student-table-wrap { background: var(--surface); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; }
+        .student-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .student-table th { padding: 14px 18px; background: var(--surface-muted); color: var(--text-gray); font-size: 11px; text-transform: uppercase; }
+        .student-table td { padding: 12px 18px; border-top: 1px solid var(--border-color); color: var(--text-dark); font-size: 14px; }
+        .student-row { cursor: pointer; }
+        .student-row:hover { background: var(--surface-muted); }
+        .student-expand-button { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 0; background: transparent; border: 0; color: inherit; text-align: left; font: inherit; font-weight: 600; cursor: pointer; }
+        .student-expand-button i { color: var(--text-gray); transition: transform .2s; }
+        .student-expand-button[aria-expanded="true"] i { transform: rotate(180deg); }
+        .student-status { display: inline-flex; border-radius: 20px; padding: 5px 11px; font-size: 12px; font-weight: 600; }
+        .student-status.present { background: rgba(34,197,94,.12); color: #16a34a; }
+        .student-status.absent { background: rgba(239,68,68,.12); color: #ef4444; }
+        .student-status.late { background: rgba(245,158,11,.14); color: #b45309; }
+        .student-detail-cell { padding: 0 !important; background: var(--surface-muted); }
+        .student-details { padding: 20px; border-top: 1px solid var(--border-color); }
+        .student-details h3 { font-size: 15px; color: var(--text-dark); margin-bottom: 14px; }
+        .monthly-summary { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(250px, .8fr); gap: 20px; align-items: center; }
+        .monthly-table { width: 100%; border-collapse: collapse; color: var(--text-dark); font-size: 13px; }
+        .monthly-table th, .monthly-table td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border-color); }
+        .monthly-table th { color: var(--text-gray); font-size: 11px; text-transform: uppercase; }
+        .monthly-chart { display: grid; gap: 13px; }
+        .monthly-chart-row { display: grid; grid-template-columns: 90px 1fr 38px; align-items: center; gap: 10px; color: var(--text-gray); font-size: 12px; }
+        .monthly-chart-track { height: 9px; background: var(--border-color); border-radius: 10px; overflow: hidden; }
+        .monthly-chart-fill { height: 100%; background: var(--purple-primary); border-radius: inherit; }
+        .monthly-chart-row:nth-child(2) .monthly-chart-fill { background: #ef4444; }
+        .monthly-chart-row:nth-child(3) .monthly-chart-fill { background: #f59e0b; }
+        .student-report-button { margin-top: 16px; padding: 9px 13px; color: white; background: var(--purple-primary); border: 0; border-radius: 7px; font-weight: 600; cursor: pointer; }
+        .profile-modal { position: fixed; inset: 0; z-index: 1000; display: none; place-items: center; padding: 20px; background: rgba(15,23,42,.58); backdrop-filter: blur(6px); }
+        .profile-modal.open { display: grid; }
+        .profile-modal[hidden] { display: none; }
+        .profile-modal-panel { width: min(100%, 494px); overflow: hidden; border: 1px solid #cbd5e1; border-radius: 16px; box-shadow: 0 24px 70px rgba(0,0,0,.35); }
+        .profile-modal-heading { display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; color: #1e293b; background: #f8fafc; }
+        .profile-modal-heading span { color: #5c4def; font-size: 10px; font-weight: 800; letter-spacing: 1px; }
+        .profile-modal-heading h2 { margin-top: 7px; font-size: 20px; }
+        .profile-modal-close { color: #64748b; background: transparent; border: 0; font-size: 20px; cursor: pointer; }
+        .profile-modal-content { padding: 20px; color: #e5e7eb; background: #1f2937; }
+        .profile-identity { display: flex; align-items: center; gap: 16px; padding: 16px; background: #f8fafc; border-radius: 12px; color: #1e293b; }
+        .profile-modal-avatar { width: 56px; height: 56px; display: grid; place-items: center; flex: 0 0 56px; border: 3px solid white; border-radius: 50%; background-color: #5145e5; background-position: center; background-size: cover; color: white; font-size: 19px; }
+        .profile-identity h3 { font-size: 16px; }
+        .profile-identity p { color: #64748b; font-size: 12px; margin-top: 4px; }
+        .profile-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+        .profile-info-tile { min-width: 0; padding: 12px; border-radius: 11px; background: #f8fafc; color: #1e293b; }
+        .profile-info-tile span { display: block; margin-bottom: 5px; color: #718096; font-size: 9px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; }
+        .profile-info-tile strong { display: block; overflow-wrap: anywhere; font-size: 12px; }
+        .profile-modal-footer { display: flex; justify-content: flex-end; margin-top: 20px; }
+        .profile-modal-footer button { padding: 8px 16px; color: #e5e7eb; background: transparent; border: 1px solid #9ca3af; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .profile-modal-footer .profile-edit-button, .profile-modal-footer .profile-save-button { color: white; background: var(--purple-primary); border-color: var(--purple-primary); }
+        .profile-modal-footer .profile-cancel-button { margin-right: auto; }
+        .profile-edit-fields { display: grid; gap: 12px; margin-top: 16px; }
+        .profile-edit-fields label { display: grid; gap: 6px; color: #cbd5e1; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        .profile-edit-fields input { min-height: 40px; padding: 9px 11px; border: 1px solid #475569; border-radius: 7px; background: #111827; color: #e5e7eb; font-size: 14px; text-transform: none; }
+        .profile-edit-fields[hidden], .profile-read-fields[hidden] { display: none; }
+        .reports-view { --report-muted: #718096; }
+        .report-filter-row { position: relative; display: flex; align-items: center; gap: 12px; margin: 2px 0 18px; }
+        .report-month-button, .report-week-filter { min-height: 46px; display: inline-flex; align-items: center; gap: 11px; padding: 0 15px; border: 1px solid #e5ddff; border-radius: 12px; color: #26365d; background: #f5f2ff; font-size: 14px; font-weight: 600; }
+        .report-month-button { cursor: pointer; }
+        .report-month-button > i:first-child { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; color: #7148f5; background: #e8ddff; font-size: 16px; }
+        .report-month-button > i:last-child { margin-left: 10px; color: #7148f5; }
+        .report-month-button[aria-expanded="true"] > i:last-child { transform: rotate(180deg); }
+        .report-week-filter { border-color: var(--border-color); background: var(--surface); color: var(--text-dark); }
+        .report-week-filter select { border: 0; outline: 0; color: inherit; background: transparent; font: inherit; cursor: pointer; }
+        .report-month-popover { position: absolute; top: calc(100% + 8px); left: 0; z-index: 5; width: min(290px, calc(100vw - 40px)); padding: 16px; border: 1px solid var(--border-color); border-radius: 12px; background: var(--surface); box-shadow: 0 14px 35px rgba(15, 23, 42, .16); }
+        .report-month-popover[hidden] { display: none; }
+        .report-month-popover label { display: grid; gap: 8px; color: var(--text-gray); font-size: 12px; font-weight: 600; }
+        .report-month-popover input { min-height: 40px; padding: 8px 10px; border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-dark); background: var(--surface); font: inherit; }
+        .report-total-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 18px; }
+        .report-total { min-height: 110px; display: flex; align-items: center; gap: 16px; padding: 18px 20px; border: 1px solid #e2e8f0; border-radius: 12px; color: #26365d; background: linear-gradient(115deg, #fbfaff, #f7f9ff); }
+        .report-total:nth-child(1) { border-color: #e5ddff; }
+        .report-total:nth-child(2) { border-color: #d9e6ff; background: linear-gradient(115deg, #f7faff, #f7f9ff); }
+        .report-total:nth-child(3) { border-color: #ffead5; background: linear-gradient(115deg, #fffaf5, #fff9f2); }
+        .report-total:nth-child(4) { border-color: #e0e7f2; }
+        .report-total-icon { display: grid; place-items: center; flex: 0 0 44px; width: 44px; height: 44px; border-radius: 50%; font-size: 19px; }
+        .report-total:nth-child(1) .report-total-icon { color: #7546ef; background: #e9ddff; }
+        .report-total:nth-child(2) .report-total-icon { color: #3278fa; background: #dceaff; }
+        .report-total:nth-child(3) .report-total-icon { color: #f28b18; background: #ffebd1; }
+        .report-total:nth-child(4) .report-total-icon { color: #435983; background: #e4e9f4; }
+        .report-total span { display: block; margin-top: 5px; color: var(--report-muted); font-size: 12px; }
+        .report-total strong { display: block; color: #26365d; font-size: 25px; line-height: 1.1; }
+        .report-panel { padding: 20px 22px 16px; border: 1px solid #e0e7f2; border-radius: 14px; background: var(--surface); }
+        .report-panel h2 { margin: 0 0 12px; color: #26365d; font-size: 21px; }
+        .attendance-chart { display: block; width: 100%; height: 300px; overflow: visible; }
+        .attendance-chart text { fill: var(--report-muted); font: 12px Inter, sans-serif; }
+        .chart-grid-line { stroke: #e8edf5; stroke-width: 1; }
+        .chart-area { fill: url(#attendanceArea); }
+        .chart-line { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+        .chart-line.attended, .chart-point.attended { stroke: #7546ff; fill: #7546ff; }
+        .chart-line.absences, .chart-point.absences { stroke: #3381ff; fill: #3381ff; }
+        .chart-line.late, .chart-point.late { stroke: #ff9a1b; fill: #ff9a1b; }
+        .chart-point { stroke: white; stroke-width: 2; }
+        .report-chart-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin: 2px 0 8px; color: #26365d; font-size: 13px; }
+        .report-chart-legend span { display: inline-flex; align-items: center; gap: 10px; }
+        .report-chart-legend i { width: 26px; height: 6px; border-radius: 10px; background: #7546ff; }
+        .report-chart-legend span:nth-child(2) i { background: #3381ff; }
+        .report-chart-legend span:nth-child(3) i { background: #ff9a1b; }
+        body.dark-mode .report-total, body.dark-mode .report-total:nth-child(n) { border-color: var(--border-color); background: var(--surface); }
+        body.dark-mode .report-total strong, body.dark-mode .report-panel h2, body.dark-mode .report-chart-legend { color: var(--text-dark); }
+        body.dark-mode .chart-grid-line { stroke: #344154; }
+        body.dark-mode .attendance-chart text { fill: var(--text-gray); }
+        .message-detail-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+        .delete-message-button { display: none; flex: 0 0 auto; padding: 8px 11px; color: #ef4444; background: transparent; border: 1px solid rgba(239,68,68,.5); border-radius: 7px; cursor: pointer; }
+        .delete-message-button.visible { display: inline-flex; align-items: center; gap: 7px; }
+        @media (max-width: 700px) { .report-total-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .report-filter-row { flex-wrap: wrap; } .report-panel { overflow-x: auto; } .attendance-chart { min-width: 580px; } }
+        @media (max-width: 420px) { .report-total-grid { grid-template-columns: 1fr; } .report-total { min-height: 88px; } }
+        @media (max-width: 760px) { .monthly-summary { grid-template-columns: 1fr; } .student-table th, .student-table td { padding: 11px 10px; } }
+        body.dark-mode .student-item:hover { background: #263246; }
+        body.dark-mode .action-btn { color: var(--text-dark); }
+        body.dark-mode .profile-dropdown-menu { background: var(--surface) !important; border: 1px solid var(--border-color); }
+        body.dark-mode .dropdown-item { color: var(--text-dark) !important; }
+        body.dark-mode .profile-card, body.dark-mode .settings-card { color: var(--text-dark); }
+
+        @media (max-width: 900px) {
+            .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .bottom-grid { grid-template-columns: 1fr; }
+            .director-welcome-card { grid-template-columns: 1fr; gap: 24px; }
+            .profile-form-layout { grid-template-columns: 1fr; }
+            .communications-layout { grid-template-columns: 1fr; }
+            .message-list { max-height: 240px; overflow-y: auto; }
+        }
+        @media (max-width: 600px) {
+            .main-content { padding: 18px 16px; }
+            .screen-heading { align-items: flex-start; }
+            .director-welcome-card { min-height: 0; padding: 22px; }
+            .director-welcome-copy p { font-size: 14px; }
+            .profile-fields { grid-template-columns: 1fr; }
+            .field.wide, .save-row { grid-column: auto; }
+            .communications-view { margin: -18px -16px; padding: 18px 16px; }
+            .communications-heading { align-items: flex-start; flex-direction: column; }
+        }
+
+        /* Fade In */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .kpi-card { animation: fadeInUp 0.5s ease forwards; }
+        .kpi-card:nth-child(2) { animation-delay: 0.1s; }
+        .kpi-card:nth-child(3) { animation-delay: 0.2s; }
+        .kpi-card:nth-child(4) { animation-delay: 0.3s; }
+        .content-card { animation: fadeInUp 0.5s ease 0.35s forwards; }
+    </style>
+</head>
+
+<body data-prezen-dashboard data-required-role="director_grupo">
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="mainSidebar">
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div class="logo-container">
+                <div class="logo-box">
+                    <span class="logo-z">Z</span>
+                    <span class="logo-text">COLEGIO</span>
+                </div>
+            </div>
+
+            <div class="brand-btn-container">
+                <button class="brand-btn">
+                    <span class="z-purple">Z</span> <span class="brand-text">PREZEN</span>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active">
+                        <a href="#dashboard" class="nav-link" data-view="dashboard">
+                            <i class="fa-solid fa-house"></i> <span>Panel Director</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#grupo" class="nav-link" data-view="group">
+                            <i class="fa-solid fa-users"></i> <span>Mi Grupo</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#reportes" class="nav-link" data-view="reports">
+                            <i class="fa-solid fa-chart-line"></i> <span>Reportes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#comunicaciones" class="nav-link" data-view="communications">
+                            <i class="fa-solid fa-briefcase"></i> <span>Comunicaciones</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">
+                    <i class="fa-solid fa-moon" aria-hidden="true"></i> <span>Modo oscuro</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <section class="nav-view active" id="dashboardView">
+            <header class="top-header">
+                <div style="width: 100%; margin-bottom: 8px;">
+                    <h1 class="page-title-main">DIRECTOR DE GRUPO</h1>
+                </div>
+                <div style="width: 100%; display: flex; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <h2 class="page-subtitle" data-prezen-group>Curso 7°B - Jornada Mañana</h2>
+                        <div class="badge-update">
+                            <i class="fa-solid fa-droplet" style="color: #22c55e;"></i> Actualizado hace 5 min
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <div class="profile-dropdown-container" style="position: relative;">
+                            <div class="user-profile" id="userProfileBtn" style="cursor:pointer;">
+                                <img src="https://ui-avatars.com/api/?name=Prof+Garcia&background=random&color=fff" alt="Perfil" class="avatar" id="headerProfilePhoto" data-prezen-avatar>
+                                <div class="user-info">
+                                    <span class="user-name" id="headerProfileName" data-prezen-name>Prof. García</span>
+                                    <span class="user-role">Director de Grupo</span>
+                                </div>
+                                <span class="notification-dot">3</span>
+                            </div>
+                            <div class="profile-dropdown-menu" id="profileDropdown" style="position:absolute; top:calc(100% + 10px); right:0; background:white; min-width:200px; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.1); padding:10px 0; opacity:0; visibility:hidden; transform:translateY(-10px); transition:all 0.3s cubic-bezier(0.175,0.885,0.32,1.275); z-index:100;">
+                                <a href="#perfil" class="dropdown-item" data-view="profile" style="display:flex; align-items:center; gap:12px; padding:10px 20px; color:#1e293b; text-decoration:none; font-size:0.9rem; font-weight:500; transition:background 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">
+                                    <i class="fa-regular fa-user" style="color:#64748b; width:20px;"></i> Mi Perfil
+                                </a>
+                                <div style="height:1px; background:#e2e8f0; margin:8px 0;"></div>
+                                <a href="../../auth/index.html" class="dropdown-item" style="display:flex; align-items:center; gap:12px; padding:10px 20px; color:#ef4444; text-decoration:none; font-size:0.9rem; font-weight:500; transition:background 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">
+                                    <i class="fa-solid fa-right-from-bracket" style="color:#ef4444; width:20px;"></i> Cerrar Sesión
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div id="localDemoNotice" hidden role="status" style="margin:-8px 0 20px;padding:12px 16px;border:1px solid #bfdbfe;border-radius:10px;background:#eff6ff;color:#1e40af;font-size:13px;">
+                Modo demostración local: los datos y cambios se guardan solo en este navegador; no se conecta a la base de datos.
+            </div>
+
+            <section class="director-welcome-card" aria-labelledby="directorWelcomeTitle">
+                <div class="director-welcome-copy">
+                    <span class="director-welcome-label">INICIO</span>
+                    <h2 id="directorWelcomeTitle">Bienvenido profesor <span id="welcomeTeacherName" data-prezen-name>García</span></h2>
+                    <p>Consulta de forma rápida la asistencia de tus estudiantes, identifica patrones de puntualidad y mantente al tanto de las novedades de tu grupo.</p>
+                </div>
+                <div class="director-welcome-features">
+                    <div class="director-welcome-feature">
+                        <div class="director-welcome-feature-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                        <div><strong>Seguimiento del grupo</strong><span>Revisa asistencia, retrasos e inasistencias.</span></div>
+                    </div>
+                    <div class="director-welcome-feature">
+                        <div class="director-welcome-feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+                        <div><strong>Indicadores claros</strong><span>Consulta tendencias y rendimiento del grupo.</span></div>
+                    </div>
+                    <div class="director-welcome-feature">
+                        <div class="director-welcome-feature-icon"><i class="fa-solid fa-bell"></i></div>
+                        <div><strong>Comunicaciones</strong><span>Mantente informado sobre novedades importantes.</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- KPI Cards -->
+            <div class="kpi-grid">
+                <div class="kpi-card card-purple-blue">
+                    <div class="kpi-title">Total Estudiantes</div>
+                    <div class="kpi-value" data-prezen-value="students">32</div>
+                    <i class="fa-solid fa-users kpi-bg-icon"></i>
+                </div>
+                <div class="kpi-card card-bright-blue">
+                    <div class="kpi-title">Presentes Hoy</div>
+                    <div class="kpi-value" data-prezen-value="present">28</div>
+                    <i class="fa-solid fa-check-circle kpi-bg-icon"></i>
+                </div>
+                <div class="kpi-card card-deep-purple">
+                    <div class="kpi-title">Ausentes Hoy</div>
+                    <div class="kpi-value" data-prezen-value="absent">3</div>
+                    <i class="fa-solid fa-user-xmark kpi-bg-icon"></i>
+                </div>
+                <div class="kpi-card card-blue-solid">
+                    <div class="kpi-title">Tardanzas Hoy</div>
+                    <div class="kpi-value" data-prezen-value="late">1</div>
+                    <i class="fa-solid fa-clock kpi-bg-icon"></i>
+                </div>
+            </div>
+
+            <!-- Bottom Content -->
+            <div class="bottom-grid">
+                <div class="content-card notifications-card">
+                    <h3 class="card-title">Notificaciones recientes</h3>
+                    <ul class="recent-notifications">
+                        <li><i class="fa-solid fa-file-medical"></i><span>Recibiste una justificación médica para Ana López.</span></li>
+                        <li><i class="fa-solid fa-user-xmark"></i><span>Carlos Ramírez tiene una inasistencia pendiente por revisar.</span></li>
+                        <li><i class="fa-solid fa-clock"></i><span>Hay una tardanza registrada hoy en el grupo 7°B.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Right: Quick Actions -->
+                <div class="content-card">
+                    <h3 class="card-title">Acciones Rápidas</h3>
+                    <div class="quick-actions">
+                        <button class="action-btn" data-view="reports">
+                            <i class="fa-solid fa-file-export"></i> Generar Reporte Semanal
+                        </button>
+                        <button class="action-btn" data-view="communications">
+                            <i class="fa-solid fa-envelope"></i> Enviar Comunicado a Padres
+                        </button>
+                        <button class="action-btn" data-view="reports">
+                            <i class="fa-solid fa-chart-bar"></i> Ver Estadísticas del Grupo
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="dashboard-footer" style="padding: 24px 0; text-align: center; color: var(--text-gray); font-size: 13px; margin-top: 40px; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 8px;">
+                <div>&copy; <script>document.write(new Date().getFullYear())</script> PREZEN. TODOS LOS DERECHOS RESERVADOS.</div>
+                <div style="display: flex; justify-content: center; gap: 15px; margin-top: 4px;">
+                    <a href="#" style="color: var(--text-gray); text-decoration: none; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='var(--blue-primary)'" onmouseout="this.style.color='var(--text-gray)'">TÉRMINOS</a>
+                    <a href="#" style="color: var(--text-gray); text-decoration: none; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='var(--blue-primary)'" onmouseout="this.style.color='var(--text-gray)'">PRIVACIDAD</a>
+                    <a href="#" style="color: var(--text-gray); text-decoration: none; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='var(--blue-primary)'" onmouseout="this.style.color='var(--text-gray)'">Tus Opciones de Privacidad</a>
+                </div>
+            </footer>
+            </section>
+
+            <section class="nav-view" id="groupView">
+                <header class="group-heading">
+                    <div><h1>Mi Grupo</h1><p>Curso 7°B · Jornada Mañana</p></div>
+                    <span class="group-count" id="studentCount"></span>
+                </header>
+                <div class="student-table-wrap">
+                    <table class="student-table">
+                        <thead><tr><th>Estudiante</th><th>Grado</th><th>Estado</th></tr></thead>
+                        <tbody id="studentTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="nav-view reports-view" id="reportsView">
+                <div class="report-filter-row">
+                    <button class="report-month-button" id="reportMonthButton" type="button" aria-expanded="false" aria-controls="reportMonthPopover">
+                        <i class="fa-regular fa-calendar-days" aria-hidden="true"></i>
+                        <span id="reportMonthButtonLabel">Mes: </span>
+                        <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="report-month-popover" id="reportMonthPopover" hidden>
+                        <label for="reportMonthInput">Selecciona el mes
+                            <input id="reportMonthInput" type="month">
+                        </label>
+                    </div>
+                    <label class="report-week-filter" for="reportWeekFilter">
+                        <i class="fa-solid fa-filter" aria-hidden="true"></i>
+                        <select id="reportWeekFilter" aria-label="Filtrar por semana">
+                            <option value="all">Todas las semanas</option>
+                        </select>
+                    </label>
+                    <label class="report-week-filter" for="reportPeriodFilter">
+                        <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+                        <span>Por período</span>
+                        <select id="reportPeriodFilter" aria-label="Filtrar por período">
+                            <option value="0">Período 1</option>
+                            <option value="1">Período 2</option>
+                            <option value="2">Período 3</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="report-total-grid">
+                    <div class="report-total"><i class="report-total-icon fa-regular fa-user" aria-hidden="true"></i><div><strong id="monthlyAttendanceTotal">0</strong><span>Total de Asistencias</span></div></div>
+                    <div class="report-total"><i class="report-total-icon fa-solid fa-xmark" aria-hidden="true"></i><div><strong id="monthlyAbsenceTotal">0</strong><span>Total de Inasistencias</span></div></div>
+                    <div class="report-total"><i class="report-total-icon fa-regular fa-clock" aria-hidden="true"></i><div><strong id="monthlyLateTotal">0</strong><span>Total de Llegadas Tarde</span></div></div>
+                    <div class="report-total"><i class="report-total-icon fa-solid fa-users" aria-hidden="true"></i><div><strong id="monthlyAbsentStudents">0</strong><span>Total de Ausencias</span></div></div>
+                </div>
+                <section class="report-panel">
+                    <h2>Resumen de asistencia</h2>
+                    <svg class="attendance-chart" id="attendanceChart" viewBox="0 0 1000 260" role="img" aria-labelledby="attendanceChartTitle attendanceChartDescription" preserveAspectRatio="none">
+                        <title id="attendanceChartTitle">Resumen de asistencia</title>
+                        <desc id="attendanceChartDescription">Asistencias, inasistencias y tardanzas por semana.</desc>
+                    </svg>
+                    <div class="report-chart-legend" aria-hidden="true">
+                        <span><i></i>Asistencias</span><span><i></i>Inasistencias</span><span><i></i>Tardanzas</span>
+                    </div>
+                </section>
+            </section>
+
+            <section class="nav-view communications-view" id="communicationsView">
+                <header class="communications-heading">
+                    <div><h1>COMUNICACIONES</h1><p>Bandeja de entrada e historial</p></div>
+                    <button type="button" class="compose-button" id="composeMessage"><i class="fa-solid fa-pen"></i> Redactar Mensaje</button>
+                </header>
+                <div class="communications-layout">
+                    <aside class="message-list">
+                        <div class="message-search"><input id="messageSearch" type="search" placeholder="Buscar mensajes..."></div>
+                        <button type="button" class="message-item active" data-message="medical"><strong>María (Mamá Ana) <small style="float:right; color:#8b7cff;">10:30 AM</small></strong><span>Justificación de falta médica</span><small>Adjunto el certificado médico de Ana López corres...</small></button>
+                        <button type="button" class="message-item" data-message="incident"><strong>Prof. Luis Rojas <small style="float:right; color:#b6c3d6;">Ayer</small></strong><span>Problema de conducta 8°A</span><small>Coordinador, le escribo para reportar un incidente...</small></button>
+                    </aside>
+                    <article class="message-panel">
+                        <header class="message-detail-heading">
+                            <div class="message-detail-top"><h2 id="messageSubject">Justificación de falta médica</h2><button type="button" class="delete-message-button" id="deleteMessageButton" aria-label="Eliminar mensaje"><i class="fa-regular fa-trash-can"></i> Eliminar</button></div>
+                            <div class="message-sender" id="messageSender">María Gómez (Mamá de Ana López)<small>maria.gomez@gmail.com</small></div>
+                        </header>
+                        <div class="message-body" id="messageBody"><p>Estimado Coordinador,</p><p>Me dirijo a usted para justificar la inasistencia de mi hija Ana López (7°B) el día de ayer y de hoy. Ana presentó un cuadro viral y el médico le recomendó reposo absoluto por 48 horas.</p><p>Adjunto a este correo el comprobante de urgencias y medicación para que sea anexado a su expediente escolar y se le excusen las fallas.</p><p>Agradezco su atención de antemano.</p></div>
+                        <form class="reply-area" id="replyForm">
+                            <input class="reply-box" type="text" id="composeSubject" placeholder="Asunto del mensaje" hidden>
+                            <textarea class="reply-box" id="replyMessage" placeholder="Escribe tu respuesta aquí..."></textarea>
+                            <input type="file" id="documentAttachment" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv" multiple hidden>
+                            <input type="file" id="imageAttachment" accept="image/*" multiple hidden>
+                            <ul class="attachment-list" id="attachmentList" aria-live="polite"></ul>
+                            <div class="reply-actions">
+                                <div>
+                                    <button type="button" id="attachDocumentButton" aria-label="Adjuntar documento" title="Adjuntar documento"><i class="fa-solid fa-paperclip"></i></button>
+                                    <button type="button" id="attachImageButton" aria-label="Adjuntar imagen" title="Adjuntar imagen"><i class="fa-regular fa-image"></i></button>
+                                </div>
+                                <button type="submit" class="send-button" id="sendMessageButton"><i class="fa-solid fa-paper-plane"></i> Enviar Respuesta</button>
+                            </div>
+                        </form>
+                    </article>
+                </div>
+                <div class="message-modal" id="composeModal" hidden>
+                    <form class="message-modal-card" id="composeForm" role="dialog" aria-modal="true" aria-labelledby="composeModalTitle">
+                        <h2 id="composeModalTitle">Redactar mensaje</h2>
+                        <div class="message-modal-fields">
+                            <label for="recipientType">Tipo de destinatario
+                                <select id="recipientType" name="tipo" required>
+                                    <option value="Padre de familia">Padre de familia</option>
+                                    <option value="Coordinador">Coordinador</option>
+                                </select>
+                            </label>
+                            <label for="recipientGrade">Filtrar por grado
+                                <select id="recipientGrade" name="grado" required>
+                                    <option value="Todos los grados">Todos los grados</option>
+                                    <option>6°A</option><option>6°B</option>
+                                    <option>7°A</option><option selected>7°B</option>
+                                    <option>8°A</option><option>8°B</option>
+                                    <option>9°A</option><option>9°B</option>
+                                    <option>10°A</option><option>10°B</option>
+                                    <option>11°A</option><option>11°B</option>
+                                </select>
+                            </label>
+                            <label for="recipientStudent" id="recipientStudentField">Estudiante
+                                <select id="recipientStudent" name="estudiante">
+                                    <option value="">Todos los estudiantes del grado</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="message-modal-actions">
+                            <button type="button" class="cancel-compose" id="cancelCompose">Cancelar</button>
+                            <button type="submit" class="primary-button">Aceptar</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+        <div class="profile-modal" id="profileModal" hidden>
+            <section class="profile-modal-panel" role="dialog" aria-modal="true" aria-labelledby="profileModalTitle">
+                <header class="profile-modal-heading">
+                    <div><span>PERFIL</span><h2 id="profileModalTitle">Mi perfil</h2></div>
+                    <button type="button" class="profile-modal-close" id="closeProfileModal" aria-label="Cerrar perfil"><i class="fa-solid fa-xmark"></i></button>
+                </header>
+                <div class="profile-modal-content">
+                    <div class="profile-identity">
+                        <div class="profile-modal-avatar" id="profileModalAvatar">PG</div>
+                        <div><h3 id="profileModalName">Prof. García</h3><p>Director de Grupo</p></div>
+                    </div>
+                    <div class="profile-info-grid profile-read-fields" id="profileReadFields">
+                        <div class="profile-info-tile"><span>Correo</span><strong id="profileModalEmail">prof.garcia@prezen.edu</strong></div>
+                        <div class="profile-info-tile"><span>Teléfono</span><strong id="profileModalPhone">+57 320 123 4567</strong></div>
+                        <div class="profile-info-tile"><span>Área</span><strong>Grupo 7°B</strong></div>
+                        <div class="profile-info-tile"><span>Sesión</span><strong>Activa</strong></div>
+                    </div>
+                    <form class="profile-edit-fields" id="profileEditForm" hidden>
+                        <label for="editProfilePhone">Teléfono<input id="editProfilePhone" name="telefono" type="tel"></label>
+                        <label for="editProfilePhoto">Foto de perfil<input id="editProfilePhoto" name="foto" type="file" accept="image/*"></label>
+                    </form>
+                    <footer class="profile-modal-footer">
+                        <button type="button" class="profile-cancel-button" id="cancelProfileEdit" hidden>Cancelar</button>
+                        <button type="button" class="profile-edit-button" id="editProfileButton">Editar perfil</button>
+                        <button type="submit" form="profileEditForm" class="profile-save-button" id="saveProfileButton" hidden>Guardar</button>
+                        <button type="button" id="closeProfileModalFooter">Cerrar</button>
+                    </footer>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Sidebar Collapse
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('mainSidebar');
+            sidebar.classList.toggle('collapsed');
+            const icon = this.querySelector('i');
+            if (sidebar.classList.contains('collapsed')) {
+                icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+            } else {
+                icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+            }
+        });
+
+        // Switch between dashboard sections without leaving the director panel.
+        const views = {
+            dashboard: document.getElementById('dashboardView'),
+            group: document.getElementById('groupView'),
+            reports: document.getElementById('reportsView'),
+            communications: document.getElementById('communicationsView')
+        };
+        function showView(viewName) {
+            Object.entries(views).forEach(([name, view]) => view.classList.toggle('active', name === viewName));
+            document.querySelectorAll('.sidebar-nav li').forEach(item => item.classList.remove('active'));
+            const activeLink = document.querySelector(`.sidebar-nav [data-view="${viewName}"]`);
+            activeLink?.closest('li')?.classList.add('active');
+            profileDropdown?.classList.remove('open');
+            if (profileDropdown) {
+                profileDropdown.style.opacity = '0';
+                profileDropdown.style.visibility = 'hidden';
+                profileDropdown.style.transform = 'translateY(-10px)';
+            }
+        }
+        document.querySelectorAll('.sidebar-nav a, .dropdown-item[data-view]').forEach(link => {
+            link.addEventListener('click', event => {
+                event.preventDefault();
+                const targetView = link.dataset.view;
+                if (targetView === 'profile') openProfileModal();
+                else if (targetView && views[targetView]) showView(targetView);
+                else if (link.closest('.sidebar-nav')) {
+                    document.querySelectorAll('.sidebar-nav li').forEach(item => item.classList.remove('active'));
+                    link.closest('li')?.classList.add('active');
+                    showView('dashboard');
+                }
+            });
+        });
+
+        // Profile Dropdown
+        const userProfileBtn = document.getElementById('userProfileBtn');
+        const profileDropdown = document.getElementById('profileDropdown');
+        if (userProfileBtn && profileDropdown) {
+            userProfileBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = profileDropdown.style.opacity === '1';
+                profileDropdown.style.opacity = isOpen ? '0' : '1';
+                profileDropdown.style.visibility = isOpen ? 'hidden' : 'visible';
+                profileDropdown.style.transform = isOpen ? 'translateY(-10px)' : 'translateY(0)';
+            });
+            document.addEventListener('click', (e) => {
+                if (!userProfileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+                    profileDropdown.style.opacity = '0';
+                    profileDropdown.style.visibility = 'hidden';
+                    profileDropdown.style.transform = 'translateY(-10px)';
+                }
+            });
+        }
+
+        // Action Button Handlers
+        const actionMessages = [
+            'Generando reporte semanal del grupo 7°B...',
+            'Abriendo formulario de reporte de incidencia...',
+            'Cargando estadísticas del grupo 7°B...'
+        ];
+        document.querySelectorAll('.action-btn').forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                if (btn.dataset.view && views[btn.dataset.view]) showView(btn.dataset.view);
+                else alert(actionMessages[index] || 'Acción ejecutada.');
+            });
+        });
+
+        // Keep the selected appearance across views and browser tabs.
+        const themeToggle = document.getElementById('themeToggle');
+        const themeKey = 'prezen-director-dark-mode';
+        function applyTheme(isDark) {
+            document.body.classList.toggle('dark-mode', isDark);
+            themeToggle?.setAttribute('aria-pressed', String(isDark));
+            if (themeToggle) {
+                themeToggle.querySelector('span').textContent = isDark ? 'Modo claro' : 'Modo oscuro';
+                themeToggle.querySelector('i').className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            }
+        }
+        applyTheme(localStorage.getItem(themeKey) === 'true');
+        themeToggle?.addEventListener('click', () => {
+            const isDark = !document.body.classList.contains('dark-mode');
+            localStorage.setItem(themeKey, String(isDark));
+            applyTheme(isDark);
+        });
+        window.addEventListener('storage', event => {
+            if (event.key === themeKey) applyTheme(event.newValue === 'true');
+        });
+
+        // Display saved profile values in the profile dialog.
+        let savedProfile = {};
+        try {
+            savedProfile = JSON.parse(localStorage.getItem('prezen-director-profile') || '{}');
+        } catch (error) {
+            console.warn('No se pudieron leer los datos guardados del perfil.', error);
+        }
+        const profileModal = document.getElementById('profileModal');
+        const profileModalAvatar = document.getElementById('profileModalAvatar');
+        const profileEditForm = document.getElementById('profileEditForm');
+        const profilePhotoInput = document.getElementById('editProfilePhoto');
+        const saveProfileButton = document.getElementById('saveProfileButton');
+        let editedProfilePhoto = null;
+        function refreshProfileDisplay() {
+            const name = savedProfile.nombre || 'Prof. García';
+            const teacherName = name.replace(/^prof(?:esor(?:a)?|\.?)\s*/i, '').trim() || name;
+            document.getElementById('headerProfileName').textContent = name;
+            document.getElementById('profileModalName').textContent = name;
+            document.getElementById('profileModalEmail').textContent = savedProfile.correo || 'prof.garcia@prezen.edu';
+            document.getElementById('profileModalPhone').textContent = savedProfile.telefono || '+57 320 123 4567';
+            document.getElementById('welcomeTeacherName').textContent = teacherName;
+            const initials = name.trim().split(/\s+/).slice(0, 2).map(part => part[0]).join('').toUpperCase();
+            if (savedProfile.foto) {
+                profileModalAvatar.style.backgroundImage = `url("${savedProfile.foto}")`;
+                profileModalAvatar.textContent = '';
+                document.getElementById('headerProfilePhoto').src = savedProfile.foto;
+            } else {
+                profileModalAvatar.style.backgroundImage = '';
+                profileModalAvatar.textContent = initials || 'PG';
+            }
+        }
+        refreshProfileDisplay();
+        document.addEventListener('prezen:dashboard-loaded', event => {
+            const profile = event.detail.profile;
+            savedProfile = {
+                ...savedProfile,
+                nombre: profile.nombre,
+                correo: profile.email,
+                telefono: profile.telefono || '',
+                foto: profile.avatar_url || savedProfile.foto,
+            };
+            refreshProfileDisplay();
+        });
+        function setProfileEditing(isEditing) {
+            document.getElementById('profileReadFields').hidden = isEditing;
+            profileEditForm.hidden = !isEditing;
+            document.getElementById('editProfileButton').hidden = isEditing;
+            document.getElementById('saveProfileButton').hidden = !isEditing;
+            document.getElementById('cancelProfileEdit').hidden = !isEditing;
+        }
+        document.getElementById('editProfileButton').addEventListener('click', () => {
+            document.getElementById('editProfilePhone').value = savedProfile.telefono || '+57 320 123 4567';
+            profilePhotoInput.value = '';
+            editedProfilePhoto = null;
+            setProfileEditing(true);
+            document.getElementById('editProfilePhone').focus();
+        });
+        profilePhotoInput.addEventListener('change', () => {
+            const [file] = profilePhotoInput.files;
+            if (!file) {
+                editedProfilePhoto = null;
+                refreshProfileDisplay();
+                saveProfileButton.disabled = false;
+                return;
+            }
+            if (!file.type.startsWith('image/')) {
+                profilePhotoInput.value = '';
+                editedProfilePhoto = null;
+                refreshProfileDisplay();
+                saveProfileButton.disabled = false;
+                alert('Selecciona un archivo de imagen válido.');
+                return;
+            }
+            const reader = new FileReader();
+            editedProfilePhoto = null;
+            refreshProfileDisplay();
+            saveProfileButton.disabled = true;
+            reader.addEventListener('load', () => {
+                if (typeof reader.result !== 'string') {
+                    refreshProfileDisplay();
+                    alert('No se pudo leer la imagen seleccionada.');
+                    saveProfileButton.disabled = false;
+                    return;
+                }
+                editedProfilePhoto = reader.result;
+                profileModalAvatar.style.backgroundImage = `url("${editedProfilePhoto}")`;
+                profileModalAvatar.textContent = '';
+                saveProfileButton.disabled = false;
+            });
+            reader.addEventListener('error', () => {
+                refreshProfileDisplay();
+                saveProfileButton.disabled = false;
+                alert('No se pudo leer la imagen seleccionada.');
+            });
+            reader.readAsDataURL(file);
+        });
+        document.getElementById('cancelProfileEdit').addEventListener('click', () => {
+            editedProfilePhoto = null;
+            refreshProfileDisplay();
+            setProfileEditing(false);
+        });
+        profileEditForm.addEventListener('submit', async event => {
+            event.preventDefault();
+            const phone = new FormData(profileEditForm).get('telefono');
+            try {
+                const updatedProfile = await window.PrezenAPI.request('/auth/me', {
+                    method: 'PATCH',
+                    body: JSON.stringify({ telefono: phone }),
+                });
+                savedProfile.telefono = updatedProfile.telefono || '';
+                if (editedProfilePhoto) {
+                    const avatar = await window.PrezenAPI.request('/auth/me/avatar', {
+                        method: 'POST',
+                        body: JSON.stringify({ image_data: editedProfilePhoto }),
+                    });
+                    savedProfile.foto = avatar.avatar_url;
+                }
+                localStorage.setItem('prezen-director-profile', JSON.stringify(savedProfile));
+                editedProfilePhoto = null;
+                refreshProfileDisplay();
+                setProfileEditing(false);
+            } catch (error) {
+                localStorage.setItem('prezen-director-profile', JSON.stringify(savedProfile));
+                refreshProfileDisplay();
+                alert(error.message || 'No se pudieron guardar los cambios del perfil.');
+            }
+        });
+        function openProfileModal() {
+            profileDropdown.style.opacity = '0';
+            profileDropdown.style.visibility = 'hidden';
+            profileDropdown.style.transform = 'translateY(-10px)';
+            profileModal.hidden = false;
+            profileModal.classList.add('open');
+            document.getElementById('closeProfileModal').focus();
+        }
+        function closeProfileModal() {
+            profileModal.classList.remove('open');
+            profileModal.hidden = true;
+            document.getElementById('userProfileBtn').focus();
+        }
+        document.getElementById('closeProfileModal').addEventListener('click', closeProfileModal);
+        document.getElementById('closeProfileModalFooter').addEventListener('click', closeProfileModal);
+        profileModal.addEventListener('click', event => {
+            if (event.target === profileModal) closeProfileModal();
+        });
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && !profileModal.hidden) closeProfileModal();
+        });
+
+        let students = window.prezenDemoStudents = [
+            ['María Escobedo', 'Presente'], ['Ana López', 'Presente'], ['Carlos Ramírez', 'Ausente'],
+            ['Juan Gómez', 'Tardanza'], ['Laura Pérez', 'Presente'], ['Diego Hernández', 'Ausente'],
+            ['Sofía Martínez', 'Presente'], ['Mateo Torres', 'Presente'], ['Valentina Castro', 'Tardanza'],
+            ['Samuel Rojas', 'Presente'], ['Isabella Mendoza', 'Presente'], ['Nicolás Herrera', 'Ausente'],
+            ['Lucía Vargas', 'Presente'], ['Daniel Ortiz', 'Presente'], ['Camila Jiménez', 'Tardanza'],
+            ['Sebastián Moreno', 'Presente'], ['Manuela Silva', 'Presente'], ['Tomás Álvarez', 'Ausente'],
+            ['Gabriela Ruiz', 'Presente'], ['Emiliano Díaz', 'Presente'], ['Juliana Romero', 'Presente'],
+            ['Santiago Navarro', 'Tardanza'], ['Sara Medina', 'Presente'], ['Jerónimo León', 'Presente'],
+            ['Victoria Cruz', 'Ausente'], ['David Cárdenas', 'Presente'], ['Mariana Ospina', 'Presente'],
+            ['Felipe Parra', 'Presente']
+        ];
+        const weeklyAttendance = [
+            { attended: 142, absences: 12, late: 7, absentees: 4 },
+            { attended: 151, absences: 9, late: 5, absentees: 3 },
+            { attended: 138, absences: 14, late: 8, absentees: 5 },
+            { attended: 157, absences: 6, late: 4, absentees: 2 },
+            { attended: 165, absences: 8, late: 6, absentees: 3 }
+        ];
+        const reportPeriods = [
+            weeklyAttendance,
+            [
+                { attended: 158, absences: 10, late: 6, absentees: 3 },
+                { attended: 164, absences: 8, late: 5, absentees: 2 },
+                { attended: 149, absences: 13, late: 7, absentees: 4 },
+                { attended: 171, absences: 7, late: 4, absentees: 2 },
+                { attended: 176, absences: 6, late: 5, absentees: 2 }
+            ],
+            [
+                { attended: 169, absences: 9, late: 5, absentees: 3 },
+                { attended: 174, absences: 7, late: 4, absentees: 2 },
+                { attended: 161, absences: 11, late: 6, absentees: 3 },
+                { attended: 181, absences: 5, late: 3, absentees: 2 },
+                { attended: 185, absences: 4, late: 4, absentees: 1 }
+            ]
+        ];
+        const reportMonthButton = document.getElementById('reportMonthButton');
+        const reportMonthPopover = document.getElementById('reportMonthPopover');
+        const reportMonthInput = document.getElementById('reportMonthInput');
+        const reportWeekFilter = document.getElementById('reportWeekFilter');
+        const reportPeriodFilter = document.getElementById('reportPeriodFilter');
+        const attendanceChart = document.getElementById('attendanceChart');
+        const currentMonth = new Date();
+        reportMonthInput.value = `${currentMonth.getFullYear()}-${String(currentMonth.getMonth() + 1).padStart(2, '0')}`;
+
+        function getReportMonthTitle() {
+            const [year, month] = reportMonthInput.value.split('-').map(Number);
+            const title = new Intl.DateTimeFormat('es-CO', { month: 'long', year: 'numeric' }).format(new Date(year, month - 1, 1));
+            return title.charAt(0).toLocaleUpperCase('es-CO') + title.slice(1);
+        }
+
+        function getReportMonthSlug() {
+            return getReportMonthTitle().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-').toLocaleLowerCase('es-CO');
+        }
+
+        function getReportWeeks() {
+            const [year, month] = reportMonthInput.value.split('-').map(Number);
+            return Math.ceil(new Date(year, month, 0).getDate() / 7);
+        }
+
+        function updateWeekOptions() {
+            const selectedWeek = reportWeekFilter.value;
+            const numberOfWeeks = getReportWeeks();
+            reportWeekFilter.replaceChildren(new Option('Todas las semanas', 'all'));
+            for (let index = 1; index <= numberOfWeeks; index++) {
+                reportWeekFilter.add(new Option(`Semana ${index}`, String(index - 1)));
+            }
+            reportWeekFilter.value = selectedWeek !== 'all' && Number(selectedWeek) < numberOfWeeks ? selectedWeek : 'all';
+        }
+
+        function renderAttendanceReport() {
+            const monthLabel = getReportMonthTitle();
+            document.getElementById('reportMonthButtonLabel').textContent = `Mes: ${monthLabel}`;
+            const periodIndex = Number(reportPeriodFilter.value);
+            const periodAttendance = reportPeriods[periodIndex] || reportPeriods[0];
+            const weeks = periodAttendance.slice(0, getReportWeeks()).map((week, index) => ({
+                ...week,
+                label: `Semana ${index + 1}`
+            }));
+            const selectedWeeks = reportWeekFilter.value === 'all'
+                ? weeks
+                : weeks.filter((week, index) => index === Number(reportWeekFilter.value));
+            const sum = key => selectedWeeks.reduce((total, week) => total + week[key], 0);
+            document.getElementById('monthlyAttendanceTotal').textContent = sum('attended').toLocaleString('es-CO');
+            document.getElementById('monthlyAbsenceTotal').textContent = sum('absences').toLocaleString('es-CO');
+            document.getElementById('monthlyLateTotal').textContent = sum('late').toLocaleString('es-CO');
+            document.getElementById('monthlyAbsentStudents').textContent = sum('absentees').toLocaleString('es-CO');
+            const periodLabel = `Período ${periodIndex + 1}`;
+            attendanceChart.setAttribute('aria-label', `Resumen de asistencia de ${monthLabel}, ${periodLabel}, ${reportWeekFilter.value === 'all' ? 'todas las semanas' : selectedWeeks[0]?.label || 'sin semana seleccionada'}`);
+
+            const plot = { left: 62, right: 986, top: 18, bottom: 204 };
+            const maximum = Math.max(1, ...selectedWeeks.flatMap(week => [week.attended, week.absences, week.late]));
+            const tickStep = Math.max(1, Math.ceil(maximum / 4 / 50) * 50);
+            const chartMaximum = tickStep * 4;
+            const xForIndex = index => selectedWeeks.length === 1
+                ? (plot.left + plot.right) / 2
+                : plot.left + index * (plot.right - plot.left) / (selectedWeeks.length - 1);
+            const yForValue = value => plot.bottom - value / chartMaximum * (plot.bottom - plot.top);
+            const series = [
+                { key: 'attended', className: 'attended' },
+                { key: 'absences', className: 'absences' },
+                { key: 'late', className: 'late' }
+            ];
+            const grid = Array.from({ length: 5 }, (_, index) => {
+                const value = chartMaximum - index * tickStep;
+                const y = yForValue(value);
+                return `<line class="chart-grid-line" x1="${plot.left}" y1="${y}" x2="${plot.right}" y2="${y}"></line><text x="2" y="${y + 4}">${value}</text>`;
+            }).join('');
+            const xLabels = selectedWeeks.map((week, index) =>
+                `<text x="${xForIndex(index)}" y="${plot.bottom + 30}" text-anchor="middle">${week.label}</text>`
+            ).join('');
+            const paths = series.map(({ key, className }) => {
+                const points = selectedWeeks.map((week, index) => `${xForIndex(index)},${yForValue(week[key])}`).join(' ');
+                const circles = selectedWeeks.map((week, index) =>
+                    `<circle class="chart-point ${className}" cx="${xForIndex(index)}" cy="${yForValue(week[key])}" r="4.5"></circle>`
+                ).join('');
+                const area = key === 'attended' && selectedWeeks.length > 1
+                    ? `<polygon class="chart-area" points="${xForIndex(0)},${plot.bottom} ${points} ${xForIndex(selectedWeeks.length - 1)},${plot.bottom}"></polygon>`
+                    : '';
+                return `${area}<polyline class="chart-line ${className}" points="${points}"></polyline>${circles}`;
+            }).join('');
+            attendanceChart.innerHTML = `<title id="attendanceChartTitle">Resumen de asistencia · ${periodLabel}</title><desc id="attendanceChartDescription">Asistencias, inasistencias y tardanzas por semana para ${monthLabel}, ${periodLabel}.</desc><defs><linearGradient id="attendanceArea" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#7546ff" stop-opacity=".2"></stop><stop offset="100%" stop-color="#7546ff" stop-opacity=".02"></stop></linearGradient></defs>${grid}${paths}${xLabels}`;
+        }
+
+        updateWeekOptions();
+        renderAttendanceReport();
+        reportMonthButton.addEventListener('click', () => {
+            const isExpanded = reportMonthButton.getAttribute('aria-expanded') === 'true';
+            reportMonthButton.setAttribute('aria-expanded', String(!isExpanded));
+            reportMonthPopover.hidden = isExpanded;
+            if (!isExpanded) reportMonthInput.focus();
+        });
+        reportMonthInput.addEventListener('change', () => {
+            if (!/^\d{4}-\d{2}$/.test(reportMonthInput.value)) {
+                reportMonthInput.value = `${currentMonth.getFullYear()}-${String(currentMonth.getMonth() + 1).padStart(2, '0')}`;
+            }
+            updateWeekOptions();
+            renderAttendanceReport();
+            reportMonthPopover.hidden = true;
+            reportMonthButton.setAttribute('aria-expanded', 'false');
+        });
+        reportWeekFilter.addEventListener('change', renderAttendanceReport);
+        reportPeriodFilter.addEventListener('change', renderAttendanceReport);
+        document.addEventListener('click', event => {
+            if (!reportMonthPopover.hidden && !reportMonthPopover.contains(event.target) && !reportMonthButton.contains(event.target)) {
+                reportMonthPopover.hidden = true;
+                reportMonthButton.setAttribute('aria-expanded', 'false');
+            }
+        });
+        const studentTableBody = document.getElementById('studentTableBody');
+        document.getElementById('studentCount').textContent = `${students.length} estudiantes`;
+        students.forEach(([name, status], index) => {
+            const row = document.createElement('tr');
+            row.className = 'student-row';
+            const statusClass = status === 'Presente' ? 'present' : status === 'Ausente' ? 'absent' : 'late';
+            row.innerHTML = `<td><button type="button" class="student-expand-button" aria-expanded="false">${name}<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button></td><td>7°B</td><td><span class="student-status ${statusClass}">${status}</span></td>`;
+            row.addEventListener('click', () => {
+                const expanded = row.nextElementSibling;
+                if (expanded?.classList.contains('student-detail-row')) {
+                    expanded.remove();
+                    row.querySelector('.student-expand-button').setAttribute('aria-expanded', 'false');
+                    return;
+                }
+                const reportMonthTitle = getReportMonthTitle();
+                document.querySelectorAll('.student-detail-row').forEach(detail => {
+                    detail.previousElementSibling.querySelector('.student-expand-button').setAttribute('aria-expanded', 'false');
+                    detail.remove();
+                });
+                const present = 17 + index % 5;
+                const absent = 1 + index % 3;
+                const late = index % 4;
+                const days = present + absent + late;
+                const presentWidth = Math.round((present / days) * 100);
+                const absentWidth = Math.round((absent / days) * 100);
+                const lateWidth = Math.round((late / days) * 100);
+                const detailRow = document.createElement('tr');
+                detailRow.className = 'student-detail-row';
+                detailRow.innerHTML = `<td colspan="3" class="student-detail-cell"><div class="student-details"><h3>Estadísticas de ${name} · ${reportMonthTitle}</h3><div class="monthly-summary"><table class="monthly-table"><thead><tr><th>Mes</th><th>Presentes</th><th>Ausencias</th><th>Tardanzas</th></tr></thead><tbody><tr><td>${reportMonthTitle}</td><td>${present}</td><td>${absent}</td><td>${late}</td></tr></tbody></table><div class="monthly-chart" role="img" aria-label="Gráfico mensual de asistencia de ${name}"><div class="monthly-chart-row"><span>Presentes</span><div class="monthly-chart-track"><div class="monthly-chart-fill" style="width:${presentWidth}%"></div></div><strong>${present}</strong></div><div class="monthly-chart-row"><span>Ausencias</span><div class="monthly-chart-track"><div class="monthly-chart-fill" style="width:${absentWidth}%"></div></div><strong>${absent}</strong></div><div class="monthly-chart-row"><span>Tardanzas</span><div class="monthly-chart-track"><div class="monthly-chart-fill" style="width:${lateWidth}%"></div></div><strong>${late}</strong></div></div></div><button type="button" class="student-report-button" data-report-index="${index}"><i class="fa-solid fa-download"></i> Generar Reporte</button></div></td>`;
+                row.after(detailRow);
+                row.querySelector('.student-expand-button').setAttribute('aria-expanded', 'true');
+            });
+            studentTableBody.appendChild(row);
+        });
+        studentTableBody.addEventListener('click', event => {
+            const reportButton = event.target.closest('.student-report-button');
+            if (!reportButton) return;
+            const index = Number(reportButton.dataset.reportIndex);
+            const [name, status] = students[index];
+            const reportMonthTitle = getReportMonthTitle();
+            const reportData = [
+                ['Estudiante', 'Grado', 'Mes', 'Estado de hoy', 'Presentes', 'Ausencias', 'Tardanzas'],
+                [name, '7°B', reportMonthTitle, status, 17 + index % 5, 1 + index % 3, index % 4]
+            ].map(row => row.join(';')).join('\n');
+            const reportUrl = URL.createObjectURL(new Blob(['\ufeff' + reportData], { type: 'text/csv;charset=utf-8' }));
+            const downloadLink = document.createElement('a');
+            downloadLink.href = reportUrl;
+            downloadLink.download = `reporte-${name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-')}-${getReportMonthSlug()}.csv`;
+            downloadLink.click();
+            setTimeout(() => URL.revokeObjectURL(reportUrl), 1000);
+        });
+
+        // Communication inbox interactions.
+        const messageData = {
+            medical: {
+                subject: 'Justificación de falta médica',
+                sender: 'María Gómez (Mamá de Ana López)',
+                email: 'maria.gomez@gmail.com',
+                body: '<p>Estimado Coordinador,</p><p>Me dirijo a usted para justificar la inasistencia de mi hija Ana López (7°B) el día de ayer y de hoy. Ana presentó un cuadro viral y el médico le recomendó reposo absoluto por 48 horas.</p><p>Adjunto a este correo el comprobante de urgencias y medicación para que sea anexado a su expediente escolar y se le excusen las fallas.</p><p>Agradezco su atención de antemano.</p>'
+            },
+            incident: {
+                subject: 'Problema de conducta 8°A',
+                sender: 'Prof. Luis Rojas',
+                email: 'luis.rojas@prezen.edu',
+                body: '<p>Buen día, Coordinador.</p><p>Le escribo para reportar un incidente de convivencia ocurrido hoy con el grupo 8°A. ¿Podemos conversar para revisar lo sucedido?</p><p>Quedo atento a sus indicaciones.</p>'
+            }
+        };
+        const sentMessageStorageKey = 'prezen-director-sent-messages';
+        let sentMessages = [];
+        try {
+            const storedMessages = JSON.parse(localStorage.getItem(sentMessageStorageKey) || '[]');
+            if (Array.isArray(storedMessages)) sentMessages = storedMessages;
+        } catch (error) {
+            console.warn('No se pudieron cargar los mensajes enviados.', error);
+        }
+        const composeModal = document.getElementById('composeModal');
+        const composeForm = document.getElementById('composeForm');
+        const composeSubject = document.getElementById('composeSubject');
+        const replyMessage = document.getElementById('replyMessage');
+        const messageList = document.querySelector('.message-list');
+        const attachmentList = document.getElementById('attachmentList');
+        const documentAttachment = document.getElementById('documentAttachment');
+        const imageAttachment = document.getElementById('imageAttachment');
+        const sendMessageButton = document.getElementById('sendMessageButton');
+        const deleteMessageButton = document.getElementById('deleteMessageButton');
+        const recipientType = document.getElementById('recipientType');
+        const recipientGrade = document.getElementById('recipientGrade');
+        const recipientStudent = document.getElementById('recipientStudent');
+        const recipientStudentField = document.getElementById('recipientStudentField');
+        let selectedAttachments = [];
+        let currentDraft = null;
+        let composingMessage = false;
+
+        function updateRecipientStudents() {
+            recipientStudentField.hidden = recipientType.value !== 'Padre de familia';
+            const selectedGrade = recipientGrade.value;
+            const contacts = window.prezenContacts;
+            const gradeStudents = Array.isArray(contacts)
+                ? contacts.filter(contact => selectedGrade === 'Todos los grados' || String(contact.grupo_id) === selectedGrade)
+                : students
+                    .filter(([name, status, grade = '7°B']) => selectedGrade === 'Todos los grados' || grade === selectedGrade)
+                    .map(([name]) => ({ estudiante: name, estudiante_id: name }));
+            recipientStudent.replaceChildren(new Option(
+                gradeStudents.length ? 'Todos los estudiantes del grado' : 'No hay estudiantes registrados para este grado',
+                ''
+            ));
+            gradeStudents.forEach(contact => recipientStudent.add(new Option(contact.estudiante, contact.estudiante_id)));
+            recipientStudent.disabled = gradeStudents.length === 0;
+        }
+
+        document.addEventListener('prezen:contacts-loaded', event => {
+            const contacts = event.detail;
+            const groups = [...new Map(contacts.map(contact => [contact.grupo_id, contact.grupo])).entries()];
+            recipientGrade.replaceChildren(new Option('Selecciona un grupo', ''));
+            groups.forEach(([groupId, groupName]) => recipientGrade.add(new Option(groupName, String(groupId))));
+            recipientGrade.required = groups.length > 0;
+            updateRecipientStudents();
+        });
+        recipientType.addEventListener('change', updateRecipientStudents);
+        recipientGrade.addEventListener('change', updateRecipientStudents);
+        updateRecipientStudents();
+
+        function saveSentMessages() {
+            try {
+                localStorage.setItem(sentMessageStorageKey, JSON.stringify(sentMessages));
+                return true;
+            } catch (error) {
+                alert('No se pudieron guardar los mensajes en este navegador.');
+                return false;
+            }
+        }
+
+        function createSentMessageItem(message) {
+            const item = document.createElement('button');
+            item.type = 'button';
+            item.className = 'message-item';
+            item.dataset.message = 'sent';
+            item.dataset.messageId = message.id;
+            const titleRow = document.createElement('strong');
+            titleRow.textContent = 'Nuevo mensaje';
+            const timeLabel = document.createElement('small');
+            timeLabel.dataset.messageTime = '';
+            timeLabel.style.cssText = 'float:right; color:#8b7cff;';
+            timeLabel.textContent = new Intl.DateTimeFormat('es-CO', { hour: '2-digit', minute: '2-digit' }).format(new Date(message.createdAt));
+            titleRow.appendChild(timeLabel);
+            const subject = document.createElement('span');
+            subject.textContent = message.subject;
+            const summary = document.createElement('small');
+            summary.dataset.messageSummary = '';
+            summary.textContent = message.body || `${message.attachments.length} archivo(s) adjunto(s)`;
+            item.append(titleRow, subject, summary);
+            item.addEventListener('click', () => openMessage(item));
+            return item;
+        }
+
+        sentMessages.forEach(message => messageList.insertBefore(createSentMessageItem(message), messageList.querySelector('.message-item')));
+
+        function renderAttachments() {
+            attachmentList.replaceChildren();
+            selectedAttachments.forEach(file => {
+                const item = document.createElement('li');
+                const size = file.size < 1024 * 1024
+                    ? `${Math.max(1, Math.round(file.size / 1024))} KB`
+                    : `${(file.size / (1024 * 1024)).toFixed(1)} MB`;
+                item.textContent = `${file.name} · ${size}`;
+                attachmentList.appendChild(item);
+            });
+        }
+
+        function selectAttachments(event) {
+            const newFiles = Array.from(event.target.files || []);
+            newFiles.forEach(file => {
+                if (!selectedAttachments.some(selected => selected.name === file.name && selected.size === file.size && selected.lastModified === file.lastModified)) {
+                    selectedAttachments.push(file);
+                }
+            });
+            if (currentDraft) currentDraft.attachments = selectedAttachments;
+            renderAttachments();
+            event.target.value = '';
+        }
+
+        document.getElementById('attachDocumentButton').addEventListener('click', () => documentAttachment.click());
+        document.getElementById('attachImageButton').addEventListener('click', () => imageAttachment.click());
+        documentAttachment.addEventListener('change', selectAttachments);
+        imageAttachment.addEventListener('change', selectAttachments);
+
+        function openMessage(item) {
+            document.querySelectorAll('.message-item').forEach(message => message.classList.toggle('active', message === item));
+            if (item.dataset.message === 'draft' && currentDraft) {
+                deleteMessageButton.classList.remove('visible');
+                composingMessage = true;
+                composeSubject.hidden = false;
+                composeSubject.value = currentDraft.subject;
+                replyMessage.value = currentDraft.body;
+                replyMessage.placeholder = 'Escribe el mensaje...';
+                selectedAttachments = currentDraft.attachments || [];
+                document.getElementById('messageSubject').textContent = 'Nuevo mensaje';
+                document.getElementById('messageSender').innerHTML = `Para: ${currentDraft.type}<small>Grado: ${currentDraft.grade}${currentDraft.student ? ` · Estudiante: ${currentDraft.student}` : ''}</small>`;
+                document.getElementById('messageBody').replaceChildren();
+                sendMessageButton.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Enviar Mensaje';
+                renderAttachments();
+                return;
+            }
+            composingMessage = false;
+            composeSubject.hidden = true;
+            composeSubject.value = '';
+            replyMessage.value = '';
+            replyMessage.placeholder = 'Escribe tu respuesta aquí...';
+            selectedAttachments = [];
+            documentAttachment.value = '';
+            imageAttachment.value = '';
+            renderAttachments();
+            sendMessageButton.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Enviar Respuesta';
+            if (item.dataset.message === 'sent') {
+                const sentMessage = sentMessages.find(message => message.id === item.dataset.messageId);
+                if (!sentMessage) return;
+                deleteMessageButton.classList.add('visible');
+                document.getElementById('messageSubject').textContent = sentMessage.subject;
+                document.getElementById('messageSender').innerHTML = `Nuevo mensaje<small>Para: ${sentMessage.type} · Grado: ${sentMessage.grade}${sentMessage.student ? ` · Estudiante: ${sentMessage.student}` : ''}</small>`;
+                const content = document.getElementById('messageBody');
+                content.replaceChildren();
+                if (sentMessage.body) {
+                    const paragraph = document.createElement('p');
+                    paragraph.textContent = sentMessage.body;
+                    content.appendChild(paragraph);
+                }
+                if (sentMessage.attachments.length) {
+                    const attachmentSummary = document.createElement('p');
+                    attachmentSummary.textContent = `Archivos adjuntos: ${sentMessage.attachments.join(', ')}`;
+                    content.appendChild(attachmentSummary);
+                }
+                return;
+            }
+            deleteMessageButton.classList.remove('visible');
+            const message = messageData[item.dataset.message];
+            document.getElementById('messageSubject').textContent = message.subject;
+            document.getElementById('messageSender').innerHTML = `${message.sender}<small>${message.email}</small>`;
+            document.getElementById('messageBody').innerHTML = message.body;
+        }
+
+        document.querySelectorAll('.message-item').forEach(item => item.addEventListener('click', () => openMessage(item)));
+        deleteMessageButton.addEventListener('click', () => {
+            const selectedItem = messageList.querySelector('.message-item.active');
+            if (selectedItem?.dataset.message !== 'sent') return;
+            if (!confirm('¿Quieres eliminar este mensaje?')) return;
+            sentMessages = sentMessages.filter(message => message.id !== selectedItem.dataset.messageId);
+            if (!saveSentMessages()) return;
+            selectedItem.remove();
+            openMessage(messageList.querySelector('[data-message="medical"]'));
+        });
+        document.getElementById('messageSearch')?.addEventListener('input', event => {
+            const searchTerm = event.target.value.toLocaleLowerCase('es');
+            document.querySelectorAll('.message-item').forEach(item => {
+                item.hidden = !item.textContent.toLocaleLowerCase('es').includes(searchTerm);
+            });
+        });
+        document.getElementById('composeMessage')?.addEventListener('click', () => {
+            composeModal.hidden = false;
+            composeModal.classList.add('open');
+            document.getElementById('recipientType').focus();
+        });
+        function closeComposeModal() {
+            composeModal.classList.remove('open');
+            composeModal.hidden = true;
+        }
+        document.getElementById('cancelCompose').addEventListener('click', closeComposeModal);
+        composeModal.addEventListener('click', event => {
+            if (event.target === composeModal) closeComposeModal();
+        });
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && !composeModal.hidden) closeComposeModal();
+        });
+        composeForm.addEventListener('submit', event => {
+            event.preventDefault();
+            currentDraft = {
+                type: recipientType.value,
+                grade: recipientGrade.value,
+                student: recipientType.value === 'Padre de familia' ? recipientStudent.value : '',
+                subject: '',
+                body: '',
+                attachments: []
+            };
+            selectedAttachments = [];
+            renderAttachments();
+            documentAttachment.value = '';
+            imageAttachment.value = '';
+            replyMessage.value = '';
+            composeSubject.value = '';
+            let draftItem = messageList.querySelector('[data-message="draft"]');
+            if (!draftItem) {
+                draftItem = document.createElement('button');
+                draftItem.type = 'button';
+                draftItem.className = 'message-item';
+                draftItem.dataset.message = 'draft';
+                draftItem.innerHTML = '<strong>Nuevo mensaje <small data-message-time style="float:right; color:#8b7cff;">Ahora</small></strong><span>Redactar mensaje</span><small data-message-summary>Destinatarios seleccionados</small>';
+                draftItem.addEventListener('click', () => openMessage(draftItem));
+                messageList.insertBefore(draftItem, messageList.querySelector('.message-item'));
+            }
+            closeComposeModal();
+            openMessage(draftItem);
+        });
+        document.getElementById('replyForm')?.addEventListener('submit', async event => {
+            event.preventDefault();
+            const messageText = replyMessage.value.trim();
+            if (composingMessage) {
+                const subject = composeSubject.value.trim();
+                if (!subject || (!messageText && !selectedAttachments.length)) {
+                    alert('Escribe un asunto y un mensaje o adjunta un archivo antes de enviar.');
+                    return;
+                }
+                if (currentDraft.type !== 'Padre de familia') {
+                    alert('El envío de mensajes está habilitado para acudientes registrados.');
+                    return;
+                }
+                if (selectedAttachments.length) {
+                    alert('Los archivos adjuntos aún no se pueden guardar en el sistema. Quita los archivos para enviar el mensaje.');
+                    return;
+                }
+                let persistedMessages;
+                try {
+                    persistedMessages = await window.PrezenAPI.request('/messages', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            ...(currentDraft.student ? { estudiante_id: currentDraft.student } : { grupo_id: Number(currentDraft.grade) }),
+                            asunto: subject,
+                            contenido: messageText,
+                        }),
+                    });
+                } catch (error) {
+                    alert(error.message);
+                    return;
+                }
+                currentDraft.subject = subject;
+                currentDraft.body = messageText;
+                currentDraft.attachments = selectedAttachments;
+                const content = document.getElementById('messageBody');
+                content.replaceChildren();
+                if (messageText) {
+                    const paragraph = document.createElement('p');
+                    paragraph.textContent = messageText;
+                    content.appendChild(paragraph);
+                }
+                if (selectedAttachments.length) {
+                    const attachmentSummary = document.createElement('p');
+                    attachmentSummary.textContent = `Archivos adjuntos: ${selectedAttachments.map(file => file.name).join(', ')}`;
+                    content.appendChild(attachmentSummary);
+                }
+                document.getElementById('messageSubject').textContent = subject;
+                document.getElementById('messageSender').innerHTML = `Nuevo mensaje<small>Para: ${currentDraft.type} · Grupo: ${recipientGrade.options[recipientGrade.selectedIndex]?.textContent || currentDraft.grade}${currentDraft.student ? ` · Estudiante: ${recipientStudent.options[recipientStudent.selectedIndex]?.textContent || ''}` : ''}</small>`;
+                const draftItem = messageList.querySelector('[data-message="draft"]');
+                const sentMessage = {
+                    id: String(persistedMessages[0]?.id || `${Date.now()}-${Math.random().toString(36).slice(2)}`),
+                    subject,
+                    type: currentDraft.type,
+                    grade: currentDraft.grade,
+                    student: currentDraft.student,
+                    body: messageText,
+                    attachments: selectedAttachments.map(file => file.name),
+                    createdAt: new Date().toISOString()
+                };
+                sentMessages.unshift(sentMessage);
+                saveSentMessages();
+                draftItem.dataset.message = 'sent';
+                draftItem.dataset.messageId = sentMessage.id;
+                draftItem.querySelector('span').textContent = subject;
+                draftItem.querySelector('[data-message-summary]').textContent = messageText || `${selectedAttachments.length} archivo(s) adjunto(s)`;
+                draftItem.querySelector('[data-message-time]').textContent = new Intl.DateTimeFormat('es-CO', { hour: '2-digit', minute: '2-digit' }).format(new Date());
+                composingMessage = false;
+                deleteMessageButton.classList.add('visible');
+                composeSubject.hidden = true;
+                replyMessage.value = '';
+                replyMessage.placeholder = 'Escribe tu respuesta aquí...';
+                selectedAttachments = [];
+                renderAttachments();
+                sendMessageButton.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Enviar Respuesta';
+                alert(window.PrezenLocalDemo?.isActive()
+                    ? 'Mensaje guardado en este navegador (modo demostración local).'
+                    : 'Mensaje guardado en PREZEN para los acudientes registrados.');
+                return;
+            }
+            if (!messageText && !selectedAttachments.length) return;
+            const replyParagraph = document.createElement('p');
+            replyParagraph.textContent = messageText || 'Se adjuntaron archivos.';
+            document.getElementById('messageBody').appendChild(replyParagraph);
+            if (selectedAttachments.length) {
+                const attachmentParagraph = document.createElement('p');
+                attachmentParagraph.textContent = `Archivos adjuntos: ${selectedAttachments.map(file => file.name).join(', ')}`;
+                document.getElementById('messageBody').appendChild(attachmentParagraph);
+            }
+            replyMessage.value = '';
+            selectedAttachments = [];
+            renderAttachments();
+            alert('Respuesta enviada.');
+        });
+
+        // Live Update Timer
+        const updateBadge = document.querySelector('.badge-update');
+        if (updateBadge) {
+            let minutes = 5;
+            setInterval(() => {
+                minutes++;
+                updateBadge.innerHTML = `<i class="fa-solid fa-droplet" style="color: #22c55e;"></i> Actualizado hace ${minutes} min`;
+            }, 60000);
+        }
+    </script>
+    <script src="../../assets/js/prezen-local-demo.js"></script>
+    <script src="../../assets/js/prezen-api.js"></script>
+    <script src="/auth/assets/js/cerrarSesion.js"></script>
+</body>
+</html>

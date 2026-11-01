@@ -1,0 +1,19 @@
+BACK DE PREZEN - SUPABASE
+
+.ENV: 
+NEXT_PUBLIC_SUPABASE_URL=https://rtcmmkkokbzqddxfnwal.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_NHuOceN2_XFSGStnheqBzw_Qxbbw76W
+
+CONEXION DIRECTA:
+postgresql://postgres:polloychuchy@db.rtcmmkkokbzqddxfnwal.supabase.co:5432/postgres
+
+CONEXION 
+postgresql://postgres.rtcmmkkokbzqddxfnwal:polloychuchy@aws-0-us-east-2.pooler.supabase.com:5432/postgres
+
+CONEXION
+postgresql://postgres.rtcmmkkokbzqddxfnwal:polloychuchy@aws-0-us-east-2.pooler.supabase.com:5432/postgres
+
+ANON PUBLIC
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ0Y21ta2tva2J6cWRkeGZud2FsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY1NTQ1OTksImV4cCI6MjEwMjEzMDU5OX0.99qCJLXmEuz_k87IgzRbKzjjTnMejwAxPX5Dp0j8o-s
+
+service_role secret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ0Y21ta2tva2J6cWRkeGZud2FsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NjU1NDU5OSwiZXhwIjoyMTAyMTMwNTk5fQ.lMOAlR-8HNT46R6-_Waiee5Ku-FI5L0OdOMLD3z6QQk
