@@ -1,0 +1,22 @@
+{
+  "name": "backend.prezen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:check": "node ./bd/check-connection.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.117.1",
+    "dotenv": "^18.0.5",
+    "express": "^5.2.1"
+  }
+}

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido - Institución Educativa Tulio Ospina</title>
+    <!-- FontAwesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts para tipografías premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .welcome-content {
+            text-align: center;
+            width: 100%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .welcome-icon {
+            font-size: 5rem;
+            color: var(--green-btn);
+            margin-bottom: 20px;
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 0 15px rgba(57, 207, 111, 0.4));
+        }
+
+        .welcome-title {
+            font-size: 3rem;
+            color: var(--gold);
+            font-family: 'Cinzel', serif;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(252, 211, 77, 0.3);
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+
+        .welcome-name {
+            font-size: 2.5rem;
+            color: var(--text-light);
+            font-weight: 700;
+            margin-bottom: 30px;
+            animation: slideUp 0.8s ease-out 0.4s both;
+        }
+
+        .dashboard-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 15px 30px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideUp 0.8s ease-out 0.6s both;
+        }
+
+        .dashboard-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            0% {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Barra de progreso de carga de workspace */
+        .progress-container {
+            width: 100%;
+            max-width: 400px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-top: 30px;
+            overflow: hidden;
+            position: relative;
+            animation: slideUp 0.8s ease-out 0.6s both;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--green-btn), var(--blue-btn));
+            width: 0%;
+            border-radius: 10px;
+            /* La animación durará 4.5s para coincidir con el redireccionamiento */
+            animation: fillProgress 4.5s linear 1s forwards;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0) 100%);
+            animation: shimmer 2s infinite linear;
+            background-size: 200% 100%;
+        }
+
+        .progress-text {
+            margin-top: 15px;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            animation: slideUp 0.8s ease-out 0.6s both;
+            letter-spacing: 1px;
+        }
+
+        @keyframes fillProgress {
+            0% {
+                width: 0%;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Decoraciones de fondo animadas -->
+    <div class="bg-decorations">
+        <div class="circle circle-bottom-left"></div>
+        <div class="circle circle-right"></div>
+        <div class="pattern pattern-book"><i class="fa-solid fa-book-open"></i></div>
+        <div class="pattern pattern-pencil"><i class="fa-solid fa-pencil"></i></div>
+        <div class="pattern pattern-shield"><i class="fa-solid fa-shield-halved"></i></div>
+        <div id="particles-container"></div>
+    </div>
+
+    <!-- Contenedor Principal -->
+    <div class="login-container" style="max-width: 700px; justify-content: center;">
+        <div class="welcome-content">
+            <i class="fa-solid fa-circle-check welcome-icon"></i>
+            <h1 class="welcome-title">Bienvenido</h1>
+            <h2 class="welcome-name" id="user-name-display">Usuario...</h2>
+
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+            <p class="progress-text">Cargando tu espacio de trabajo...</p>
+        </div>
+    </div>
+
+    <!-- Script de inicialización de partículas y nombre -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animación de partículas de fondo (Mismo de script.js)
+            const container = document.getElementById('particles-container');
+            if (container) {
+                const particleCount = 45;
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    const posX = Math.random() * 100;
+                    const size = Math.random() * 150 + 30;
+                    const duration = Math.random() * 20 + 20;
+                    const delay = Math.random() * 40;
+                    const opacity = Math.random() * 0.4 + 0.1;
+
+                    particle.style.cssText = `
+                        position: absolute;
+                        left: ${posX}vw;
+                        top: 100vh;
+                        width: ${size}px;
+                        height: ${size}px;
+                        background-color: rgba(30, 144, 255, ${opacity});
+                        border-radius: 50%;
+                        pointer-events: none;
+                        animation: floatUp ${duration}s infinite linear;
+                        animation-delay: -${delay}s;
+                    `;
+                    container.appendChild(particle);
+                }
+            }
+
+            // Obtener el nombre de usuario de la URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const userName = urlParams.get('name');
+            const redirectUrl = urlParams.get('redirect') || 'dashboard.html';
+
+            if (userName) {
+                document.getElementById('user-name-display').innerText = userName;
+            } else {
+                document.getElementById('user-name-display').innerText = "Invitado";
+            }
+            // Redirección automática después de 5 segundos
+            let timeLeft = 5;
+            const redirectInterval = setInterval(() => {
+                timeLeft--;
+                // Opcional: podrías mostrar timeLeft en la UI si quisieras, pero el requerimiento es solo demorarse.
+                if (timeLeft <= 0) {
+                    clearInterval(redirectInterval);
+                    window.location.href = redirectUrl;
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>

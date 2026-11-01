@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - PREZEN</title>
+    <!-- FontAwesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <style>
+        .profile-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-top: 5px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .profile-input:focus {
+            border-color: var(--purple-main);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .profile-input:disabled {
+            background: #f8fafc;
+            color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .profile-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <h2 class="logo-text">Z</h2>
+                    <span class="logo-subtext">COLEGIO</span>
+                </div>
+                <div class="brand">
+                    <span class="brand-z">Z</span> PREZEN
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-house"></i> Inicio</a>
+                <a href="#" class="nav-item"><i class="fa-regular fa-user"></i> Asistencia</a>
+                <a href="#" class="nav-item"><i class="fa-regular fa-calendar"></i> Reportes</a>
+                <!-- Rest of nav elements -->
+                <div class="nav-divider"></div>
+                <div class="nav-label">Label <i class="fa-solid fa-gear" style="float: right; margin-top:4px;"></i>
+                </div>
+                <a href="#" class="nav-item"><i class="fa-regular fa-circle-check"></i> Published</a>
+            </nav>
+
+            <button class="invite-btn"><i class="fa-solid fa-plus"></i> Invite new member</button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <h1 class="page-title">Mi<br><span
+                            style="font-size: 1.5rem; color: #1e293b; font-weight: 500;">Perfil</span></h1>
+                </div>
+                <div class="header-right">
+                    <div class="badge-update"><i class="fa-solid fa-droplet" style="color: #22c55e;"></i> Actualizado
+                        hace 1 seg</div>
+
+                    <div class="notifications-dropdown-container" style="position: relative; margin-right: 20px; display: flex; align-items: center;">
+                        <div class="notification-icon" id="notificationBtn" style="cursor: pointer; position: relative;">
+                            <i class="fa-regular fa-bell" style="font-size: 20px; color: #64748b;"></i>
+                            <span class="badge" id="notificationCountBadge" style="position: absolute; top: -5px; right: -8px; background: #ef4444; color: white; border-radius: 50%; padding: 2px 5px; font-size: 10px;">3</span>
+                        </div>
+                        
+                        <!-- Dropdown de notificaciones (oculto por defecto) -->
+                        <div class="notifications-dropdown-menu" id="notificationsDropdown" style="display: none; position: absolute; right: 0; top: 35px; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 300px; z-index: 100; border: 1px solid #e2e8f0; overflow: hidden;">
+                            <div style="padding: 15px; border-bottom: 1px solid #e2e8f0; background: #f8fafc; text-align: center;">
+                                <h4 style="margin: 0; font-size: 14px; color: #1e293b;">Notificaciones</h4>
+                            </div>
+                            <div style="max-height: 300px; overflow-y: auto;">
+                                <!-- Item de Notificación -->
+                                <div onclick="window.location.href='reporte_detalle.html?id=1'" style="padding: 15px; border-bottom: 1px solid #e2e8f0; display: flex; gap: 12px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+                                    <div style="width: 36px; height: 36px; background: #fffbeb; color: #f59e0b; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <i class="fa-solid fa-clock"></i>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <p style="margin: 0; font-size: 13px; color: #334155; line-height: 1.4;"><strong>Juan Arboleda</strong> llegó tarde a las <strong>7:00 A.M</strong></p>
+                                        <span style="font-size: 11px; color: #94a3b8;">Hoy</span>
+                                    </div>
+                                </div>
+                                <!-- Item de Notificación -->
+                                <div onclick="window.location.href='reporte_detalle.html?id=2'" style="padding: 15px; border-bottom: 1px solid #e2e8f0; display: flex; gap: 12px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+                                    <div style="width: 36px; height: 36px; background: #fef2f2; color: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <i class="fa-solid fa-user-xmark"></i>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <p style="margin: 0; font-size: 13px; color: #334155; line-height: 1.4;"><strong>María Escobedo</strong> inasistencia sin justificar.</p>
+                                        <span style="font-size: 11px; color: #94a3b8;">Ayer</span>
+                                    </div>
+                                </div>
+                                <!-- Item de Notificación -->
+                                <div onclick="window.location.href='reporte_detalle.html?id=3'" style="padding: 15px; display: flex; gap: 12px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+                                    <div style="width: 36px; height: 36px; background: #eff6ff; color: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <p style="margin: 0; font-size: 13px; color: #334155; line-height: 1.4;">Nuevo reporte de asistencia generado (Marzo).</p>
+                                        <span style="font-size: 11px; color: #94a3b8;">Ayer</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-dropdown-container">
+                        <div class="user-profile" id="userProfileBtn">
+                            <img src="https://i.pravatar.cc/150?u=a042581f4e29026024d" alt="Profile" class="avatar">
+                            <div class="user-info">
+                                <span class="user-role">Coordinadora</span>
+                                <span class="user-name">Ana López</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down profile-chevron"></i>
+                        </div>
+
+                        <!-- Dropdown Menu -->
+                        <div class="profile-dropdown-menu" id="profileDropdown">
+                            <a href="profile.html" class="dropdown-item">
+                                <i class="fa-regular fa-user"></i> Mi Perfil
+                            </a>
+                            <a href="settings.html" class="dropdown-item">
+                                <i class="fa-solid fa-gear"></i> Configuración
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="index.html" class="dropdown-item text-danger">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar Sesión
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Profile Editor -->
+            <div class="middle-grid" style="grid-template-columns: 1fr; max-width: 800px;">
+                <div class="white-card">
+                    <h3 style="margin-bottom: 25px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;">Información
+                        General</h3>
+
+                    <div style="display: flex; gap: 40px; align-items: flex-start;">
+                        <!-- Columna Foto -->
+                        <div
+                            style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                            <input type="file" id="profileImageInput" accept="image/*" style="display: none;">
+                            <img src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+                                id="profileImagePreview"
+                                style="width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--purple-main); object-fit: cover;">
+                            <button class="btn-purp outline" id="btnChangePhoto">Cambiar Foto</button>
+                        </div>
+
+                        <!-- Columna Formulario -->
+                        <div style="flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div style="grid-column: span 2;">
+                                <label class="profile-label">Nombre Completo</label>
+                                <input type="text" value="Ana López" class="profile-input">
+                            </div>
+
+                            <div>
+                                <label class="profile-label">Rol en la institución</label>
+                                <input type="text" value="Coordinadora" class="profile-input" disabled>
+                            </div>
+
+                            <div>
+                                <label class="profile-label">Número de identificación</label>
+                                <input type="text" value="1029384756" class="profile-input" disabled>
+                            </div>
+
+                            <div style="grid-column: span 2;">
+                                <label class="profile-label">Correo Electrónico</label>
+                                <input type="email" value="ana.lopez@prezen.edu" class="profile-input">
+                            </div>
+
+                            <div>
+                                <label class="profile-label">Teléfono de Contacto</label>
+                                <input type="text" value="+57 320 123 4567" class="profile-input">
+                            </div>
+
+                            <div
+                                style="grid-column: span 2; display: flex; justify-content: flex-end; margin-top: 15px;">
+                                <button class="btn-purp" id="btnSaveChanges"
+                                    style="padding: 12px 25px; font-weight: 600;">Guardar Cambios</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Save Result Modal -->
+    <div id="saveResultModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+        <div style="background: white; border-radius: 12px; padding: 30px; max-width: 400px; text-align: center; width: 90%; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+            <div id="saveResultIcon" style="font-size: 48px; color: #22c55e; margin-bottom: 20px;">
+                <i class="fa-regular fa-circle-check"></i>
+            </div>
+            <h3 id="saveResultTitle" style="margin-bottom: 15px; color: #1e293b; font-family: 'Inter', sans-serif;">¡Cambios Guardados!</h3>
+            <p id="saveResultMsg" style="color: #64748b; margin-bottom: 25px; font-family: 'Inter', sans-serif;">Los cambios han sido guardados satisfactoriamente.</p>
+            <button id="closeSaveResultModal" class="btn-purp" style="width: 100%; justify-content: center; padding: 12px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; color: white;">Aceptar</button>
+        </div>
+    </div>
+
+    <script src="assets/js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnChangePhoto = document.getElementById('btnChangePhoto');
+            const profileImageInput = document.getElementById('profileImageInput');
+            const profileImagePreview = document.getElementById('profileImagePreview');
+            const headerProfileImg = document.querySelector('.user-profile .avatar');
+
+            if (btnChangePhoto && profileImageInput) {
+                btnChangePhoto.addEventListener('click', () => {
+                    profileImageInput.click();
+                });
+
+                profileImageInput.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const newImageBase64 = event.target.result;
+                            profileImagePreview.src = newImageBase64;
+                            if (headerProfileImg) {
+                                headerProfileImg.src = newImageBase64;
+                            }
+                            
+                            // Guardar automáticamente la foto en LocalStorage al instante
+                            try {
+                                let savedData = JSON.parse(localStorage.getItem('profileData') || '{}');
+                                savedData.fotoBase64 = newImageBase64;
+                                localStorage.setItem('profileData', JSON.stringify(savedData));
+                            } catch (err) {
+                                console.error('No se pudo autoguardar la imagen:', err);
+                            }
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            const btnSaveChanges = document.getElementById('btnSaveChanges');
+            const saveResultModal = document.getElementById('saveResultModal');
+            const closeSaveResultModal = document.getElementById('closeSaveResultModal');
+            const saveResultIcon = document.getElementById('saveResultIcon');
+            const saveResultTitle = document.getElementById('saveResultTitle');
+            const saveResultMsg = document.getElementById('saveResultMsg');
+
+            if (btnSaveChanges && saveResultModal) {
+                btnSaveChanges.addEventListener('click', () => {
+                    // Recopilar datos y la foto (en Data URL base64)
+                    const inputs = document.querySelectorAll('.profile-input');
+                    
+                    const profileDataJSON = {
+                        nombre: inputs[0] ? inputs[0].value : 'Ana López',
+                        rol: inputs[1] ? inputs[1].value : 'Coordinadora',
+                        identificacion: inputs[2] ? inputs[2].value : '1029384756',
+                        correo: inputs[3] ? inputs[3].value : 'ana.lopez@prezen.edu',
+                        telefono: inputs[4] ? inputs[4].value : '+57 320 123 4567',
+                        fotoBase64: profileImagePreview.src // Aquí va la imagen elegida o por defecto
+                    };
+
+                    try {
+                        // Opcional: También guardarlo en localStorage para simular backend
+                        localStorage.setItem('profileData', JSON.stringify(profileDataJSON));
+                        
+                        // Generar archivo JSON y descargarlo automáticamente
+                        const blob = new Blob([JSON.stringify(profileDataJSON, null, 2)], { type: 'application/json' });
+                        const url = URL.createObjectURL(blob);
+                        
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'perfil_usuario.json'; // Nombre del archivo a descargar
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+
+                        const isSuccess = true; 
+                        saveResultModal.style.display = 'flex';
+                        
+                        if (isSuccess) {
+                            saveResultIcon.style.color = '#22c55e';
+                            saveResultIcon.innerHTML = '<i class="fa-regular fa-circle-check"></i>';
+                            saveResultTitle.innerText = '¡Cambios Guardados!';
+                            saveResultMsg.innerText = 'Los cambios y la foto han sido exportados al archivo JSON satisfactoriamente.';
+                        }
+                    } catch (error) {
+                        saveResultModal.style.display = 'flex';
+                        saveResultIcon.style.color = '#ef4444';
+                        saveResultIcon.innerHTML = '<i class="fa-regular fa-circle-xmark"></i>';
+                        saveResultTitle.innerText = 'Error al Guardar';
+                        saveResultMsg.innerText = 'Hubo un problema procesando el archivo JSON. Intenta nuevamente.';
+                    }
+                });
+            }
+
+            if (closeSaveResultModal) {
+                closeSaveResultModal.addEventListener('click', () => {
+                    saveResultModal.style.display = 'none';
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

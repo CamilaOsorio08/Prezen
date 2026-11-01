@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Reporte - PREZEN</title>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <style>
+        body { background-color: #f8fafc; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        .detail-container { max-width: 800px; margin: 50px auto; background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #e2e8f0; }
+        .detail-header { background: #fffbeb; padding: 30px; border-bottom: 1px solid #fef3c7; display: flex; align-items: center; gap: 20px; }
+        .detail-icon { width: 60px; height: 60px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #f59e0b; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .detail-title { margin: 0; font-size: 24px; color: #1e293b; font-weight: 700; margin-bottom: 5px; }
+        .detail-subtitle { margin: 0; color: #64748b; font-size: 15px; }
+        .detail-body { padding: 40px; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+        .info-box { background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; }
+        .info-label { font-size: 12px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; display: block; }
+        .info-value { font-size: 16px; color: #1e293b; font-weight: 500; display: block; }
+        .reason-box { background: white; border: 2px dashed #cbd5e1; padding: 25px; border-radius: 12px; margin-top: 20px; }
+        .reason-title { font-size: 15px; font-weight: 600; color: #334155; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .reason-text { color: #475569; line-height: 1.6; font-size: 15px; margin: 0; }
+        .detail-footer { padding: 20px 40px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: white; border: 1px solid #cbd5e1; color: #475569; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s; cursor: pointer; }
+        .btn-back:hover { background: #f1f5f9; color: #1e293b; }
+        .btn-action { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: #3b82f6; color: white; border-radius: 8px; font-weight: 600; text-decoration: none; transition: opacity 0.2s; border: none; cursor: pointer; }
+        .btn-action:hover { opacity: 0.9; }
+    </style>
+</head>
+
+<body>
+    <div class="detail-container">
+        <div class="detail-header" id="headerDynamic">
+            <div class="detail-icon" id="iconDynamic">
+                <i class="fa-solid fa-clock"></i>
+            </div>
+            <div>
+                <h1 class="detail-title" id="titleDynamic">Llegada Tardía (Injustificada)</h1>
+                <p class="detail-subtitle" id="subtitleDynamic">Reporte generado automáticamente por portería</p>
+            </div>
+        </div>
+
+        <div class="detail-body">
+            <div class="info-grid">
+                <div class="info-box">
+                    <span class="info-label"><i class="fa-regular fa-user"></i> Estudiante</span>
+                    <span class="info-value" id="studentDynamic">Juan Arboleda</span>
+                    <span style="font-size: 13px; color: #64748b; margin-top: 4px; display: block;">Grado 10°A</span>
+                </div>
+                <div class="info-box">
+                    <span class="info-label"><i class="fa-regular fa-clock"></i> Hora de Ingreso Registrada</span>
+                    <span class="info-value" id="timeDynamic">07:00 A.M</span>
+                    <span style="font-size: 13px; color: #ef4444; margin-top: 4px; display: block; font-weight: 500;">+30 minutos de retraso</span>
+                </div>
+            </div>
+
+            <div class="reason-box">
+                <h3 class="reason-title"><i class="fa-solid fa-pen-to-square" style="color: #64748b;"></i> Anotación / Causa de la tardanza</h3>
+                <p class="reason-text" id="reasonDynamic">
+                    Según lo conversado con el estudiante en la entrada, se retrasó debido a problemas mecánicos con la ruta de transporte escolar "Express Sur 04", la cual sufrió una avería en la Avenida 5ta y tuvo que ser remolcada. El estudiante tuvo que caminar las últimas 10 cuadras con sus pertenencias.
+                    <br><br>
+                    <strong>Nota:</strong> Se requiere contactar a los padres para validar si existe constancia sobre esto con la empresa de transporte o si se requiere asentar la falla en el observador del alumno por llegar después de las 6:30 A.M. sin documento de soporte inicial.
+                </p>
+            </div>
+        </div>
+
+        <div class="detail-footer">
+            <a href="dashboard.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver al Inicio</a>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-back" onclick="window.print()"><i class="fa-solid fa-print"></i> Imprimir</button>
+                <button class="btn-action" id="btnContact"><i class="fa-solid fa-paper-plane"></i> Contactar Acudiente</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15,23,42,0.6); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(4px);">
+        <div style="background: white; border-radius: 16px; width: 90%; max-width: 500px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); overflow: hidden; transform: scale(0.95); transition: transform 0.2s;">
+            <div style="padding: 20px 25px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
+                <h3 style="margin: 0; color: #1e293b; font-size: 16px; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-paper-plane" style="color: #3b82f6;"></i> Enviar Mensaje a Acudiente
+                </h3>
+                <button id="closeContactBtn" style="background: none; border: none; font-size: 20px; color: #64748b; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#64748b'">&times;</button>
+            </div>
+            <div style="padding: 25px;">
+                <p style="margin-top: 0; color: #475569; font-size: 14px; margin-bottom: 20px;" id="contactDesc">Redacta el mensaje que se enviará al correo/dispositivo registrado del acudiente responsable.</p>
+                
+                <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 8px;">Destinatario</label>
+                <input type="text" id="contactRecipient" value="Acudiente de Juan Arboleda" disabled style="width: 100%; padding: 10px 15px; border: 1px solid #cbd5e1; border-radius: 8px; background: #f1f5f9; color: #64748b; margin-bottom: 15px; box-sizing: border-box; font-family: inherit;">
+                
+                <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 8px;">Mensaje</label>
+                <textarea id="contactMessageInput" style="width: 100%; padding: 12px 15px; border: 1px solid #cbd5e1; border-radius: 8px; height: 120px; resize: none; box-sizing: border-box; font-family: inherit; color: #1e293b; line-height: 1.5; font-size: 14px; outline: none;">Estimado acudiente,
+
+Le informamos que el estudiante ingresó a la institución a las 07:00 A.M, registrando un retraso. Solicitamos justificación soporte si aplica.</textarea>
+            </div>
+            <div style="padding: 15px 25px; border-top: 1px solid #e2e8f0; background: #f8fafc; display: flex; justify-content: flex-end; gap: 10px;">
+                <button id="cancelContactBtn" style="padding: 10px 20px; background: white; border: 1px solid #cbd5e1; color: #475569; border-radius: 8px; font-weight: 600; font-family: inherit; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='white'">Cancelar</button>
+                <button id="sendContactBtn" style="padding: 10px 20px; background: #3b82f6; border: none; color: white; border-radius: 8px; font-weight: 600; font-family: inherit; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">Enviar Mensaje</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lógica simple para simular diferentes detalles según URL
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+
+            if(id === '2') {
+                document.getElementById('headerDynamic').style.background = '#fef2f2';
+                document.getElementById('headerDynamic').style.borderBottomColor = '#fecaca';
+                document.getElementById('iconDynamic').style.color = '#ef4444';
+                document.getElementById('iconDynamic').innerHTML = '<i class="fa-solid fa-user-xmark"></i>';
+                document.getElementById('titleDynamic').textContent = "Inasistencia sin justificar";
+                document.getElementById('studentDynamic').textContent = "María Escobedo";
+                document.getElementById('timeDynamic').textContent = "N/A - Ausente todo el día";
+                document.getElementById('reasonDynamic').innerHTML = "La estudiante no reporta asistencia por torniquetes durante toda la jornada escolar. No existe justificación médica ni de acudiente registrada en el sistema de coordinación de convivencia.";
+                
+                document.getElementById('contactRecipient').value = "Acudiente de María Escobedo";
+                document.getElementById('contactMessageInput').value = "Aviso de Coordinación PREZEN:\nEstimado acudiente, le informamos que la estudiante María Escobedo no se ha presentado a la institución en el día de hoy, ni tampoco se ha cargado justificación médica en el sistema.\nPor favor comunicarse a la brevedad.";
+            } else if(id === '3') {
+                document.getElementById('headerDynamic').style.background = '#eff6ff';
+                document.getElementById('headerDynamic').style.borderBottomColor = '#bfdbfe';
+                document.getElementById('iconDynamic').style.color = '#3b82f6';
+                document.getElementById('iconDynamic').innerHTML = '<i class="fa-solid fa-file-invoice"></i>';
+                document.getElementById('titleDynamic').textContent = "Reporte Mensual Generado";
+                document.getElementById('studentDynamic').textContent = "General (Institución)";
+                document.getElementById('timeDynamic').textContent = "Corte: Marzo 31";
+                document.getElementById('reasonDynamic').innerHTML = "El reporte consolidado de asistencia masivo de marzo ya se encuentra disponible para su revisión. Ha disminuido el porcentaje general de faltas en un 4% comparado a febrero.";
+                
+                // Ocultar botón de contactar ya que es reporte general
+                document.getElementById('btnContact').style.display = 'none';
+            }
+
+            // --- Lógica del Modal de Contacto ---
+            const btnContact = document.getElementById('btnContact');
+            const contactModal = document.getElementById('contactModal');
+            const closeContactBtn = document.getElementById('closeContactBtn');
+            const cancelContactBtn = document.getElementById('cancelContactBtn');
+            const sendContactBtn = document.getElementById('sendContactBtn');
+            // Elemento de transición
+            const contactModalContent = contactModal ? contactModal.querySelector('div') : null;
+
+            const toggleModal = (show) => {
+                if(!contactModal) return;
+                if(show) {
+                    contactModal.style.display = 'flex';
+                    setTimeout(() => contactModalContent.style.transform = 'scale(1)', 10);
+                } else {
+                    contactModalContent.style.transform = 'scale(0.95)';
+                    setTimeout(() => contactModal.style.display = 'none', 200);
+                }
+            };
+
+            if(btnContact) btnContact.addEventListener('click', () => toggleModal(true));
+            if(closeContactBtn) closeContactBtn.addEventListener('click', () => toggleModal(false));
+            if(cancelContactBtn) cancelContactBtn.addEventListener('click', () => toggleModal(false));
+            
+            if(sendContactBtn) {
+                sendContactBtn.addEventListener('click', () => {
+                    const originalText = sendContactBtn.innerHTML;
+                    sendContactBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...';
+                    sendContactBtn.style.opacity = '0.7';
+                    sendContactBtn.style.pointerEvents = 'none';
+                    
+                    setTimeout(() => {
+                        sendContactBtn.innerHTML = '<i class="fa-solid fa-check"></i> ¡Mensaje Enviado!';
+                        sendContactBtn.style.background = '#22c55e';
+                        
+                        setTimeout(() => {
+                            toggleModal(false);
+                            // Resetear
+                            setTimeout(() => {
+                                sendContactBtn.innerHTML = originalText;
+                                sendContactBtn.style.background = '#3b82f6';
+                                sendContactBtn.style.opacity = '1';
+                                sendContactBtn.style.pointerEvents = 'auto';
+                            }, 300);
+                        }, 1200);
+                    }, 1500);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
