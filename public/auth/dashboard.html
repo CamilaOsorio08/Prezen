@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - PREZEN</title>
+    <!-- FontAwesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <!-- Chart.js para los gráficos reales opcionales -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <h2 class="logo-text">Z</h2>
+                    <span class="logo-subtext">COLEGIO</span>
+                </div>
+                <div class="brand">
+                    <span class="brand-z">Z</span> PREZEN
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i> Inicio</a>
+                <a href="#" class="nav-item"><i class="fa-regular fa-user"></i> Asistencia</a>
+                <a href="#" class="nav-item"><i class="fa-regular fa-calendar"></i> Reportes</a>
+                <a href="#" class="nav-item"><i class="fa-regular fa-clock"></i> Capentos</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-briefcase"></i> Eelcos</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-chalkboard-user"></i> Profcipos</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-phone"></i> Telo</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-scissors"></i> Coordinadto</a>
+                <a href="#" class="nav-item"><i class="fa-regular fa-pen-to-square"></i> Confesiontas</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-inbox"></i> Sollos</a>
+
+                <div class="nav-divider"></div>
+
+                <a href="#" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i> Eque</a>
+
+                <!-- Items from second image -->
+                <div class="nav-divider"></div>
+                <div class="nav-label">Label <i class="fa-solid fa-gear" style="float: right; margin-top:4px;"></i>
+                </div>
+                <a href="#" class="nav-item"><i class="fa-regular fa-circle-check"></i> Published</a>
+                <a href="#" class="nav-item"><i class="fa-regular fa-clock"></i> Today's Scheduled</a>
+                <a href="#" class="nav-item"><i class="fa-regular fa-bookmark"></i> Bookmarks</a>
+            </nav>
+
+            <button class="invite-btn"><i class="fa-solid fa-plus"></i> Invite new member</button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Top Header (Merged concepts) -->
+            <header class="top-header">
+                <div class="header-left">
+                    <h1 class="page-title">KPI <br><span
+                            style="font-size: 1.5rem; color: #1e293b; font-weight: 500;">Asistencia</span></h1>
+                </div>
+                <div class="header-right">
+                    <div class="badge-update"><i class="fa-solid fa-droplet" style="color: #22c55e;"></i> Actualizado
+                        hace 12 seg</div>
+
+                    <div class="presentes-badge">
+                        Estudiantes presentes hoy: <strong>87/106</strong> (6:15-12:00)
+                    </div>
+                    <button class="btn-report" id="authBtnReport"><i class="fa-solid fa-plus"></i> Add report</button>
+
+                    <div class="notifications-dropdown-container" style="position: relative; margin-right: 20px; display: flex; align-items: center;">
+                        <div class="notification-icon" id="notificationBtn" style="cursor: pointer; position: relative;">
+                            <i class="fa-regular fa-bell" style="font-size: 20px; color: #64748b;"></i>
+                            <span class="badge" id="notificationCountBadge" style="position: absolute; top: -5px; right: -8px; background: #ef4444; color: white; border-radius: 50%; padding: 2px 5px; font-size: 10px;">3</span>
+                        </div>
+                        
+                        <!-- Dropdown de notificaciones (oculto por defecto) -->
+                        <div class="notifications-dropdown-menu" id="notificationsDropdown" style="display: none; position: absolute; right: 0; top: 35px; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 300px; z-index: 100; border: 1px solid #e2e8f0; overflow: hidden;">
+                            <div style="padding: 15px; border-bottom: 1px solid #e2e8f0; background: #f8fafc; text-align: center;">
+                                <h4 style="margin: 0; font-size: 14px; color: #1e293b;">Notificaciones</h4>
+                            </div>
+                            <div style="max-height: 300px; overflow-y: auto;">
+                                <!-- Item de Notificación -->
+                                <div onclick="window.location.href='reporte_detalle.html?id=1'" style="padding: 15px; border-bottom: 1px solid #e2e8f0; display: flex; gap: 12px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+                                    <div style="width: 36px; height: 36px; background: #fffbeb; color: #f59e0b; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <i class="fa-solid fa-clock"></i>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <p style="margin: 0; font-size: 13px; color: #334155; line-height: 1.4;"><strong>Juan Arboleda</strong> llegó tarde a las <strong>7:00 A.M</strong></p>
+                                        <span style="font-size: 11px; color: #94a3b8;">Hoy</span>
+                                    </div>
+                                </div>
+                                <!-- Item de Notificación -->
+                                <div onclick="window.location.href='reporte_detalle.html?id=2'" style="padding: 15px; border-bottom: 1px solid #e2e8f0; display: flex; gap: 12px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+                                    <div style="width: 36px; height: 36px; background: #fef2f2; color: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <i class="fa-solid fa-user-xmark"></i>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <p style="margin: 0; font-size: 13px; color: #334155; line-height: 1.4;"><strong>María Escobedo</strong> inasistencia sin justificar.</p>
+                                        <span style="font-size: 11px; color: #94a3b8;">Ayer</span>
+                                    </div>
+                                </div>
+                                <!-- Item de Notificación -->
+                                <div onclick="window.location.href='reporte_detalle.html?id=3'" style="padding: 15px; display: flex; gap: 12px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+                                    <div style="width: 36px; height: 36px; background: #eff6ff; color: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <p style="margin: 0; font-size: 13px; color: #334155; line-height: 1.4;">Nuevo reporte de asistencia generado (Marzo).</p>
+                                        <span style="font-size: 11px; color: #94a3b8;">Ayer</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-dropdown-container">
+                        <div class="user-profile" id="userProfileBtn">
+                            <img src="https://i.pravatar.cc/150?u=a042581f4e29026024d" alt="Profile" class="avatar">
+                            <div class="user-info">
+                                <span class="user-role">Coordinadora</span>
+                                <span class="user-name">Ana López</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down profile-chevron"></i>
+                        </div>
+
+                        <!-- Dropdown Menu -->
+                        <div class="profile-dropdown-menu" id="profileDropdown">
+                            <a href="profile.html" class="dropdown-item">
+                                <i class="fa-regular fa-user"></i> Mi Perfil
+                            </a>
+                            <a href="settings.html" class="dropdown-item">
+                                <i class="fa-solid fa-gear"></i> Configuración
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="index.html" class="dropdown-item text-danger">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar Sesión
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div id="homeDashboardView">
+                <!-- Cards Section (Image 1) -->
+                <div class="cards-grid">
+                <div class="kpi-card purple">
+                    <div class="kpi-title">Tasa puntualidad</div>
+                    <div class="kpi-value">94%</div>
+                    <i class="fa-solid fa-users kpi-icon"></i>
+                </div>
+                <div class="kpi-card blue">
+                    <div class="kpi-title">Inasistencias hoy</div>
+                    <div class="kpi-value">7</div>
+                    <i class="fa-solid fa-chart-column kpi-icon"></i>
+                </div>
+                <div class="kpi-card purple">
+                    <div class="kpi-title">Estudiantes en riesgo</div>
+                    <div class="kpi-value">4</div>
+                    <i class="fa-solid fa-arrow-trend-up kpi-icon"></i>
+                </div>
+                <div class="kpi-card blue">
+                    <div class="kpi-title">Personas en institución:</div>
+                    <div class="kpi-value">112</div>
+                    <i class="fa-solid fa-users kpi-icon"></i>
+                </div>
+            </div>
+
+            <!-- Middle Section (Image 1) -->
+            <div class="middle-grid">
+                <!-- Charts Area -->
+                <div class="charts-container white-card">
+                    <div class="charts-top">
+                        <!-- Donut Chart placeholder via CSS -->
+                        <div class="donut-chart">
+                            <svg viewBox="0 0 36 36" class="circular-chart">
+                                <path class="circle-bg"
+                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                <path class="circle-purple" stroke-dasharray="60, 100"
+                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                <path class="circle-blue" stroke-dasharray="25, 100"
+                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            </svg>
+                        </div>
+                        <div class="chart-legend">
+                            <div class="legend-item"><span class="dot" style="background: #4f46e5;"></span></div>
+                            <div class="legend-item"><span class="dot" style="background: #818cf8;"></span></div>
+                            <div class="legend-item"><span class="dot" style="background: #93c5fd;"></span></div>
+                        </div>
+                    </div>
+
+                    <!-- Bar Chart via Canvas -->
+                    <div class="bar-chart-container">
+                        <canvas id="myBarChart" height="150"></canvas>
+                    </div>
+                </div>
+
+                <!-- Riesgo List -->
+                <div class="riesgo-container white-card">
+                    <h3 class="card-title">Estudiantes en riesgo</h3>
+                    <div class="riesgo-list">
+                        <!-- Item -->
+                        <div class="riesgo-item">
+                            <div class="riesgo-user">
+                                <div class="avatar-ph">
+                                    <div class="dot-red"></div>
+                                </div>
+                                <span>Notificar padres</span>
+                            </div>
+                            <button class="btn-purp">Notificar padres</button>
+                        </div>
+                        <!-- Item -->
+                        <div class="riesgo-item">
+                            <div class="riesgo-user">
+                                <div class="avatar-ph">
+                                    <div class="dot-red"></div>
+                                </div>
+                                <span>Notificar padres</span>
+                            </div>
+                            <button class="btn-purp outline">Iniciar proceso</button>
+                        </div>
+                        <!-- Item -->
+                        <div class="riesgo-item">
+                            <div class="riesgo-user">
+                                <div class="avatar-ph">
+                                    <div class="dot-red"></div>
+                                </div>
+                                <span>Notificar padres</span>
+                            </div>
+                            <button class="btn-purp outline">Iniciar proceso</button>
+                        </div>
+                        <!-- Item -->
+                        <div class="riesgo-item">
+                            <div class="riesgo-user">
+                                <div class="avatar-ph">
+                                    <div class="dot-red"></div>
+                                </div>
+                                <span>Notificar padres</span>
+                            </div>
+                            <button class="btn-purp outline">Iniciar proceso</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Section - Data Table (Image 2 theme adapted) -->
+            <div class="table-container dark-card">
+                <div class="table-controls">
+                    <div class="controls-left">
+                        <div class="search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" placeholder="Buscar">
+                        </div>
+                        <div class="select-box">
+                            <select id="statusFilter">
+                                <option value="All">Todos los estados</option>
+                                <option value="Puntual">Puntual</option>
+                                <option value="Retrasado">Retrasado</option>
+                                <option value="Inasistencia">Inasistencia</option>
+                            </select>
+                        </div>
+                        <button class="btn-filter"><i class="fa-solid fa-bars-staggered"></i> Filtros</button>
+                    </div>
+                    <div class="controls-right">
+                        <button class="btn-action outline-btn"><i class="fa-solid fa-download"></i> Import</button>
+                        <button class="btn-action outline-btn"><i class="fa-solid fa-upload"></i> Exportar</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="selectAll">
+                                        <span class="checkmark"></span>
+                                        NOMBRE ESTUDIANTE
+                                    </label>
+                                </th>
+                                <th>GRADO</th>
+                                <th>HORA DE INGRESO</th>
+                                <th>HORA DE SALIDA</th>
+                                <th>FECHA</th>
+                                <th>ESTADO</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Row 1 -->
+                            <tr>
+                                <td>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" checked>
+                                        <span class="checkmark"></span>
+                                        José Vargas
+                                    </label>
+                                </td>
+                                <td>10°A</td>
+                                <td>07:05</td>
+                                <td>12:30</td>
+                                <td>11/03/2026</td>
+                                <td><span class="status st-success">Puntual</span></td>
+                                <td class="actions">
+                                    <i class="fa-solid fa-pen"></i>
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </td>
+                            </tr>
+                            <!-- Row 2 -->
+                            <tr>
+                                <td>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" checked>
+                                        <span class="checkmark"></span>
+                                        María Escobedo
+                                    </label>
+                                </td>
+                                <td>7°B</td>
+                                <td>07:10</td>
+                                <td>12:25</td>
+                                <td>11/03/2026</td>
+                                <td><span class="status st-success">Puntual</span></td>
+                                <td class="actions">
+                                    <i class="fa-solid fa-pen"></i>
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </td>
+                            </tr>
+                            <!-- Row 3 -->
+                            <tr>
+                                <td>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" checked>
+                                        <span class="checkmark"></span>
+                                        Mónica Tovar
+                                    </label>
+                                </td>
+                                <td>7°B</td>
+                                <td>07:15</td>
+                                <td>12:20</td>
+                                <td>11/03/2026</td>
+                                <td><span class="status st-success">Puntual</span></td>
+                                <td class="actions">
+                                    <i class="fa-solid fa-pen"></i>
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </td>
+                            </tr>
+                            <!-- Row 4 -->
+                            <tr>
+                                <td>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" checked>
+                                        <span class="checkmark"></span>
+                                        Rodrigo Grajales
+                                    </label>
+                                </td>
+                                <td>9°A</td>
+                                <td>08:15</td>
+                                <td>12:10</td>
+                                <td>11/03/2026</td>
+                                <td><span class="status st-warning">Retrasado</span></td>
+                                <td class="actions">
+                                    <i class="fa-solid fa-pen"></i>
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </td>
+                            </tr>
+                            <!-- Row 5 -->
+                            <tr>
+                                <td>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" checked>
+                                        <span class="checkmark"></span>
+                                        Francisco Orozco
+                                    </label>
+                                </td>
+                                <td>9°B</td>
+                                <td>07:08</td>
+                                <td>12:28</td>
+                                <td>11/03/2026</td>
+                                <td><span class="status st-success">Puntual</span></td>
+                                <td class="actions">
+                                    <i class="fa-solid fa-pen"></i>
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </td>
+                            </tr>
+                            <!-- Row 6 -->
+                            <tr>
+                                <td>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                        Fabián Palomino
+                                    </label>
+                                </td>
+                                <td>11°B</td>
+                                <td>09:30</td>
+                                <td>12:00</td>
+                                <td>11/03/2026</td>
+                                <td><span class="status st-danger">Inasistencia</span></td>
+                                <td class="actions">
+                                    <i class="fa-solid fa-pen"></i>
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </td>
+                            </tr>
+                            <!-- Row 7 -->
+                            <tr>
+                                <td>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                        Lucas Esteban
+                                    </label>
+                                </td>
+                                <td>9°A</td>
+                                <td>08:20</td>
+                                <td>12:05</td>
+                                <td>11/03/2025</td>
+                                <td><span class="status st-warning">Retrasado</span></td>
+                                <td class="actions">
+                                    <i class="fa-solid fa-pen"></i>
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-footer">
+                    <div class="total-box">
+                        Total en institución <br> ahora: <strong>94</strong>
+                    </div>
+                    <div class="pagination">
+                        <span><i class="fa-solid fa-chevron-left"></i></span>
+                        <span class="active">1</span>
+                        <span>2</span>
+                        <span>3</span>
+                        <span>4</span>
+                        <span>...</span>
+                        <span>10</span>
+                        <span>11</span>
+                        <span><i class="fa-solid fa-chevron-right"></i></span>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <footer class="dashboard-footer" style="padding: 24px 0; text-align: center; color: var(--text-gray); font-size: 13px; margin-top: 40px; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 8px;">
+                <div>&copy; <script>document.write(new Date().getFullYear())</script> PREZEN. TODOS LOS DERECHOS RESERVADOS.</div>
+                <div style="display: flex; justify-content: center; gap: 15px; margin-top: 4px;">
+                    <a href="#" style="color: var(--text-gray); text-decoration: none; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='var(--blue-primary)'" onmouseout="this.style.color='var(--text-gray)'">TÉRMINOS</a>
+                    <a href="#" style="color: var(--text-gray); text-decoration: none; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='var(--blue-primary)'" onmouseout="this.style.color='var(--text-gray)'">PRIVACIDAD</a>
+                    <a href="#" style="color: var(--text-gray); text-decoration: none; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='var(--blue-primary)'" onmouseout="this.style.color='var(--text-gray)'">Tus Opciones de Privacidad</a>
+                </div>
+            </footer>
+            </div>
+
+            <!-- Vista de Asistencias -->
+            <div id="attendanceView" style="display: none; padding: 20px 0;">
+                <div class="table-container white-card">
+                    <div class="table-header">
+                        <div>
+                            <h3 style="margin-bottom: 5px;">Control de Asistencia General</h3>
+                            <div style="color: var(--text-gray); font-size: 13px;">Vista detallada de ingresos y salidas del día de hoy.</div>
+                        </div>
+                        <div style="display:flex; gap:10px;">
+                            <div class="search-box">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" placeholder="Filtrar por nombre o DNI...">
+                            </div>
+                            <button class="btn btn-outline"><i class="fa-solid fa-calendar-days"></i> Hoy</button>
+                        </div>
+                    </div>
+
+                    <div style="overflow-x: auto;">
+                        <table class="report-table">
+                            <thead>
+                                <tr>
+                                    <th>ESTUDIANTE (DNI)</th>
+                                    <th>CURSO / SECCIÓN</th>
+                                    <th>ESTADO</th>
+                                    <th>HORA DE ENTRADA</th>
+                                    <th>ACCIONES</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Datos de ejemplo generados -->
+                                <tr>
+                                    <td>
+                                        <div style="display:flex; align-items:center; gap:12px;">
+                                            <div class="avatar-placeholder" style="background: #e2e8f0; color: #475569; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold;">JA</div>
+                                            <div style="font-weight: 500;">Juan Arboleda<br><span style="font-size:11px; color:var(--text-gray); font-weight: normal;">1002333444</span></div>
+                                        </div>
+                                    </td>
+                                    <td>10° A - Mañana</td>
+                                    <td><span class="tag tag-blue">Puntual</span></td>
+                                    <td><i class="fa-regular fa-clock" style="margin-right: 5px;"></i> 06:10 AM</td>
+                                    <td><button class="btn btn-outline" style="padding: 5px 10px; font-size: 12px;">Editar</button></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="display:flex; align-items:center; gap:12px;">
+                                            <div class="avatar-placeholder" style="background: #e2e8f0; color: #475569; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold;">ME</div>
+                                            <div style="font-weight: 500;">María Escobedo<br><span style="font-size:11px; color:var(--text-gray); font-weight: normal;">1099998887</span></div>
+                                        </div>
+                                    </td>
+                                    <td>11° B - Mañana</td>
+                                    <td><span class="tag tag-green">Justificado</span></td>
+                                    <td><i class="fa-solid fa-plane-arrival" style="margin-right: 5px;"></i> --:--</td>
+                                    <td><button class="btn btn-outline" style="padding: 5px 10px; font-size: 12px;">Ver nota</button></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="display:flex; align-items:center; gap:12px;">
+                                            <div class="avatar-placeholder" style="background: #e2e8f0; color: #475569; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold;">PG</div>
+                                            <div style="font-weight: 500;">Pedro Gómez<br><span style="font-size:11px; color:var(--text-gray); font-weight: normal;">1005666777</span></div>
+                                        </div>
+                                    </td>
+                                    <td>10° A - Mañana</td>
+                                    <td><span class="tag tag-purple" style="background: #fff7ed; color: #c2410c; border: 1px solid #ffedd5;">Tarde</span></td>
+                                    <td><i class="fa-regular fa-clock" style="margin-right: 5px;"></i> 07:15 AM</td>
+                                    <td><button class="btn btn-notify" style="padding: 5px 10px; font-size: 12px; background: #3b82f6;">Notificar</button></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="display:flex; align-items:center; gap:12px;">
+                                            <div class="avatar-placeholder" style="background: #e2e8f0; color: #475569; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold;">SR</div>
+                                            <div style="font-weight: 500;">Sara Restrepo<br><span style="font-size:11px; color:var(--text-gray); font-weight: normal;">1008777999</span></div>
+                                        </div>
+                                    </td>
+                                    <td>9° C - Tarde</td>
+                                    <td><span class="tag tag-red" style="background: #fef2f2; color: #dc2626; border: 1px solid #fee2e2;">Inasistencia</span></td>
+                                    <td><i class="fa-solid fa-xmark" style="margin-right: 5px;"></i> --:--</td>
+                                    <td><button class="btn btn-notify" style="padding: 5px 10px; font-size: 12px; background: #ef4444;">Llamar acudiente</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Vista Genérica (En Construcción) para laterales incompletos -->
+            <div id="genericView" style="display: none; padding: 60px 40px; text-align: center; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh;">
+                <div style="width: 120px; height: 120px; background: #f8fafc; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px auto; box-shadow: 0 4px 6px rgba(0,0,0,0.05); color: #94a3b8; font-size: 48px;">
+                    <i class="fa-solid fa-person-digging"></i>
+                </div>
+                <h2 style="font-size: 28px; color: #1e293b; margin-bottom: 15px;" id="genericViewTitle">Módulo en Construcción</h2>
+                <p style="color: #64748b; font-size: 16px; max-width: 500px; margin: 0 auto; line-height: 1.6;">Esta sección que corresponde a <strong id="genericViewModule"></strong> aún está en desarrollo. Estará disponible en futuras actualizaciones.</p>
+            </div>
+            
+        </main>
+    </div>
+
+    <!-- ChartJS Initialization -->
+    <script>
+        const ctx = document.getElementById('myBarChart').getContext('2d');
+        const gradientBlue = ctx.createLinearGradient(0, 0, 0, 150);
+        gradientBlue.addColorStop(0, '#3b82f6');
+        gradientBlue.addColorStop(1, '#93c5fd');
+
+        const gradientLight = ctx.createLinearGradient(0, 0, 0, 150);
+        gradientLight.addColorStop(0, '#93c5fd');
+        gradientLight.addColorStop(1, '#dbeafe');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Man 14', 'Ma 17', 'Ju 0', 'Mi 19', 'Jun 19', 'Ju 0', 'Au 0', 'Ng 0', 'Au 5'],
+                datasets: [
+                    {
+                        data: [140, 140, 320, 160, 170, 120, 380, 85, 270],
+                        backgroundColor: gradientBlue,
+                        borderRadius: 4,
+                        barPercentage: 0.6,
+                        categoryPercentage: 0.8
+                    },
+                    {
+                        data: [70, 60, 110, 80, 90, 60, 200, 45, 130],
+                        backgroundColor: gradientLight,
+                        borderRadius: 4,
+                        barPercentage: 0.6,
+                        categoryPercentage: 0.8
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        titleFont: { size: 13, family: 'Inter' },
+                        bodyFont: { size: 14, family: 'Inter' },
+                        padding: 12,
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.datasetIndex === 0 ? ' Asistencia regular: ' : ' Eventos inusuales: ';
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y;
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 300,
+                        grid: {
+                            color: '#e2e8f0',
+                            drawBorder: false,
+                            borderDash: [5, 5]
+                        },
+                        ticks: {
+                            stepSize: 50,
+                            color: '#64748b',
+                            font: { size: 10 }
+                        }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: {
+                            color: '#64748b',
+                            font: { size: 9 }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    <!-- Add Report Modal -->
+    <div id="addReportModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15,23,42,0.6); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(4px);">
+        <div style="background: white; border-radius: 16px; width: 90%; max-width: 500px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); overflow: hidden; transform: scale(0.95); transition: transform 0.2s;">
+            <div style="padding: 20px 25px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
+                <h3 style="margin: 0; color: #1e293b; font-size: 16px; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-file-circle-plus" style="color: #3b82f6;"></i> Generar Nuevo Reporte
+                </h3>
+                <button id="closeAddReportBtn" style="background: none; border: none; font-size: 20px; color: #64748b; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#64748b'">&times;</button>
+            </div>
+            <div style="padding: 25px;">
+                <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 8px;">Tipo de Reporte</label>
+                <select style="width: 100%; padding: 10px 15px; border: 1px solid #cbd5e1; border-radius: 8px; background: white; color: #1e293b; margin-bottom: 15px; font-family: inherit; font-size: 14px;">
+                    <option>Reporte de Asistencia Diaria</option>
+                    <option>Reporte de Retrasos Acumulados</option>
+                    <option>Incitación de Disciplina</option>
+                    <option>Rendimiento Académico</option>
+                </select>
+
+                <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 8px;">Estudiante(s) / Grupo Aplicable</label>
+                <input type="text" placeholder="Ej. Grado 10°A, Juan Pérez, etc." style="width: 100%; padding: 10px 15px; border: 1px solid #cbd5e1; border-radius: 8px; color: #1e293b; margin-bottom: 15px; box-sizing: border-box; font-family: inherit; font-size: 14px; outline: none;">
+
+                <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 8px;">Observaciones Adicionales</label>
+                <textarea placeholder="Detalles o parámetros adicionales para generar el reporte..." style="width: 100%; padding: 12px 15px; border: 1px solid #cbd5e1; border-radius: 8px; height: 90px; resize: none; box-sizing: border-box; font-family: inherit; color: #1e293b; line-height: 1.5; font-size: 14px; outline: none;"></textarea>
+            </div>
+            <div style="padding: 15px 25px; border-top: 1px solid #e2e8f0; background: #f8fafc; display: flex; justify-content: flex-end; gap: 10px;">
+                <button id="cancelAddReportBtn" style="padding: 10px 20px; background: white; border: 1px solid #cbd5e1; color: #475569; border-radius: 8px; font-weight: 600; font-family: inherit; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='white'">Cancelar</button>
+                <button id="createReportBtn" style="padding: 10px 20px; background: #3b82f6; border: none; color: white; border-radius: 8px; font-weight: 600; font-family: inherit; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">Generar y Descargar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Success Modal -->
+    <div id="reportSuccessModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15,23,42,0.6); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(4px);">
+        <div style="background: white; border-radius: 16px; width: 90%; max-width: 400px; padding: 30px; text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); transform: scale(0.95); transition: transform 0.2s;">
+            <div style="font-size: 48px; color: #22c55e; margin-bottom: 20px;">
+                <i class="fa-regular fa-circle-check"></i>
+            </div>
+            <h3 style="margin: 0 0 10px 0; color: #1e293b; font-size: 20px;">¡Reporte Generado!</h3>
+            <p style="color: #64748b; font-size: 15px; margin-bottom: 25px; line-height: 1.5; font-weight: 500;">El reporte se generó satisfactoriamente.</p>
+            <button id="closeReportSuccessBtn" style="width: 100%; padding: 12px; background: #3b82f6; border: none; color: white; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s;">Aceptar</button>
+        </div>
+    </div>
+
+    <!-- Custom JS Dashboard interactivity -->
+    <script src="assets/js/dashboard.js"></script>
+</body>
+
+</html>

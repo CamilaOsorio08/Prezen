@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Estudiante - PREZEN</title>
+    <!-- FontAwesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="mainSidebar">
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div class="logo-container">
+                <div class="logo-box">
+                    <span class="logo-z">Z</span>
+                    <span class="logo-text">COLEGIO</span>
+                </div>
+            </div>
+
+            <div class="brand-btn-container">
+                <button class="brand-btn">
+                    <span class="z-purple">Z</span> <span class="brand-text">PREZEN</span>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active">
+                        <a href="#" class="nav-link" data-target="view-inicio">
+                            <i class="fa-solid fa-house"></i> <span>Inicio</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" data-target="view-asistencia">
+                            <i class="fa-regular fa-calendar-check"></i> <span>Asistencia</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" data-target="view-reportes">
+                            <i class="fa-regular fa-calendar"></i> <span>Reportes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" data-target="view-horario">
+                            <i class="fa-regular fa-clock"></i> <span>Horario</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" data-target="view-reportes-detallados">
+                            <i class="fa-solid fa-chart-line"></i> <span>Reportes Detallados</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" data-target="view-profesores">
+                            <i class="fa-solid fa-chalkboard-user"></i> <span>Profesores</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="btn btn-invite">
+                    <i class="fa-solid fa-plus"></i> <span>Solicitar Permiso</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <div id="view-inicio" class="view-section active">
+                <header class="top-header">
+                    <!-- Row 1 -->
+                    <div style="width: 100%; margin-bottom: 8px;">
+                        <h1 class="page-title-main">PANEL DEL ESTUDIANTE</h1>
+                    </div>
+                    <!-- Row 2 -->
+                    <div style="width: 100%; display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <h2 class="page-subtitle">Mi Asistencia</h2>
+                            <div class="badge-update">
+                                <i class="fa-solid fa-droplet" style="color: #22c55e;"></i> Actualizado hace 12 seg
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <div class="text-progreso">Mi progreso hoy</div>
+                            <button class="btn btn-primary btn-add-report">
+                                <i class="fa-solid fa-plus"></i> Nuevo Reporte
+                            </button>
+
+                            <div class="profile-dropdown-container" style="position: relative;">
+                                <div class="user-profile" id="userProfileBtn" style="cursor:pointer;">
+                                    <img src="https://ui-avatars.com/api/?name=Maria+Escobedo&background=random&color=fff"
+                                        alt="Perfil" class="avatar">
+                                    <div class="user-info">
+                                        <span class="user-name">María Escobedo -</span>
+                                        <span class="user-role">Estudiante 7°B</span>
+                                    </div>
+                                    <div class="chevron-box">
+                                        <i class="fa-solid fa-chevron-down profile-chevron"></i>
+                                        <span class="notification-dot">1</span>
+                                    </div>
+                                    <div class="school-crest">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Escudo_nacional_de_Colombia.svg/100px-Escudo_nacional_de_Colombia.svg.png"
+                                            alt="Escudo" style="width: 24px; height: auto;">
+                                    </div>
+                                </div>
+                                <div class="profile-dropdown-menu" id="profileDropdown"
+                                    style="position:absolute; top:calc(100% + 10px); right:0; background:white; min-width:200px; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.1); padding:10px 0; opacity:0; visibility:hidden; transform:translateY(-10px); transition:all 0.3s cubic-bezier(0.175,0.885,0.32,1.275); z-index:100;">
+                                    <a href="#" class="dropdown-item nav-link" data-target="view-perfil"
+                                        style="display:flex; align-items:center; gap:12px; padding:10px 20px; color:#1e293b; text-decoration:none; font-size:0.9rem; font-weight:500; transition:background 0.2s;"
+                                        onmouseover="this.style.background=\'#f1f5f9\'"
+                                        onmouseout="this.style.background=\'transparent\'">
+                                        <i class="fa-regular fa-user" style="color:#64748b; width:20px;"></i> Mi Perfil
+                                    </a>
+                                    <a href="#" class="dropdown-item nav-link" data-target="view-configuraciones"
+                                        style="display:flex; align-items:center; gap:12px; padding:10px 20px; color:#1e293b; text-decoration:none; font-size:0.9rem; font-weight:500; transition:background 0.2s;"
+                                        onmouseover="this.style.background=\'#f1f5f9\'"
+                                        onmouseout="this.style.background=\'transparent\'">
+                                        <i class="fa-solid fa-gear" style="color:#64748b; width:20px;"></i>
+                                        Configuración
+                                    </a>
+                                    <div style="height:1px; background:#e2e8f0; margin:8px 0;"></div>
+                                    <a href="../../auth/index.html" class="dropdown-item"
+                                        style="display:flex; align-items:center; gap:12px; padding:10px 20px; color:#ef4444; text-decoration:none; font-size:0.9rem; font-weight:500; transition:background 0.2s;"
+                                        onmouseover="this.style.background='#f1f5f9'"
+                                        onmouseout="this.style.background='transparent'">
+                                        <i class="fa-solid fa-right-from-bracket"
+                                            style="color:#ef4444; width:20px;"></i> Cerrar Sesión
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- 4 Top Cards -->
+                <div class="kpi-grid">
+                    <!-- Card 1 -->
+                    <div class="kpi-card card-purple-blue">
+                        <div class="kpi-title">Tardanzas este mes</div>
+                        <div class="kpi-value">2</div>
+                        <i class="fa-solid fa-users kpi-bg-icon"></i>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="kpi-card card-bright-blue">
+                        <div class="kpi-title">Inasistencias</div>
+                        <div class="kpi-value">1</div>
+                        <div class="kpi-bg-shape fade-shape"></div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="kpi-card card-deep-purple">
+                        <div class="kpi-title">Nivel de Asistencia</div>
+                        <div class="kpi-value" style="font-size: 28px;">Bajo</div>
+                        <div class="kpi-bg-shape large-circle"></div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="kpi-card card-blue-solid">
+                        <div class="kpi-title">Tasa puntualidad</div>
+                        <div class="kpi-value">92%</div>
+                        <i class="fa-solid fa-users kpi-bg-icon"></i>
+                    </div>
+                </div>
+
+                <!-- Bottom Content: Graph & Stats -->
+                <div class="bottom-grid">
+                    <!-- Left: Heatmap -->
+                    <div class="content-card heatmap-card">
+                        <div class="heatmap-legend">
+                            <div class="legend-item"><span class="color-box bg-green"></span> green puntual</div>
+                            <div class="legend-item"><span class="color-box bg-yellow"></span> yellow retraso</div>
+                            <div class="legend-item"><span class="color-box bg-red"></span> red inasistencia</div>
+                        </div>
+
+                        <div class="heatmap-container">
+                            <!-- Header row -->
+                            <div class="hm-col-headers">
+                                <div class="hm-header-empty"></div>
+                                <div class="hm-col">M</div>
+                                <div class="hm-col">M</div>
+                                <div class="hm-col">F</div>
+                                <div class="hm-col">G</div>
+                                <div class="hm-col">U</div>
+                                <div class="hm-col">P</div>
+                                <div class="hm-col">P</div>
+                                <div class="hm-col">B</div>
+                                <div class="hm-col">Sz</div>
+                            </div>
+
+                            <!-- Row 1 -->
+                            <div class="hm-row">
+                                <div class="hm-row-label">4</div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-red"></div>
+                                <div class="hm-cell bg-green"></div>
+                            </div>
+
+                            <!-- Row 2 -->
+                            <div class="hm-row">
+                                <div class="hm-row-label">8</div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-red"></div>
+                                <div class="hm-cell bg-red"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                            </div>
+
+                            <!-- Row 3 -->
+                            <div class="hm-row">
+                                <div class="hm-row-label">11</div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-red"></div>
+                                <div class="hm-cell bg-red"></div>
+                            </div>
+
+                            <!-- Row 4 -->
+                            <div class="hm-row">
+                                <div class="hm-row-label">26</div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-red"></div>
+                                <div class="hm-cell bg-red"></div>
+                                <div class="hm-cell bg-red"></div>
+                            </div>
+
+                            <!-- Row 5 -->
+                            <div class="hm-row">
+                                <div class="hm-row-label">24</div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-green"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-red"></div>
+                                <div class="hm-cell bg-red"></div>
+                                <div class="hm-cell bg-yellow"></div>
+                                <div class="hm-cell bg-green"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Chart and actions -->
+                    <div class="content-card right-panel">
+                        <!-- Line Chart Canvas -->
+                        <div class="chart-wrapper">
+                            <canvas id="trendChart" height="120"></canvas>
+                        </div>
+
+                        <!-- 3 Stat Pickers -->
+                        <div class="stat-pickers">
+                            <div class="picker-box">
+                                <div class="picker-val">13</div>
+                                <div class="picker-lbl">Numeros</div>
+                                <i class="fa-solid fa-chevron-down flex-end"></i>
+                            </div>
+                            <div class="picker-box">
+                                <div class="picker-val">33</div>
+                                <div class="picker-lbl">Inasistencias</div>
+                                <i class="fa-solid fa-chevron-down flex-end"></i>
+                            </div>
+                            <div class="picker-box">
+                                <div class="picker-val">223</div>
+                                <div class="picker-lbl">Asistencias</div>
+                                <i class="fa-solid fa-chevron-down flex-end"></i>
+                            </div>
+                        </div>
+
+                        <!-- Banner Call to action -->
+                        <div class="motivation-banner">
+                            <p>¡Sigue así! Tu puntualidad mejora tu historial de asistencia 👍</p>
+                            <button class="btn btn-banner">Mis reportes</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Additional Views Container -->
+            <!-- PERFIL -->
+            <div id="view-perfil" class="view-section" style="display: none;">
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>MI PERFIL</h1>
+                        <h2>Información personal y de contacto</h2>
+                    </div>
+                </header>
+                <div class="tables-container" style="grid-template-columns: 1fr; margin-top:20px;">
+                    <div class="table-card">
+                        <h3 class="card-title">Datos Personales</h3>
+                        <div style="display:flex; flex-direction:column; gap:20px;">
+                            <div style="display:flex; align-items:center; gap:24px; margin-bottom:10px;">
+                                <img src="https://ui-avatars.com/api/?name=Maria+Escobedo&background=random&color=fff"
+                                    alt="Perfil"
+                                    style="width:80px; height:80px; border-radius:50%; object-fit:cover; box-shadow:0 4px 6px rgba(0,0,0,0.1);">
+                                <button class="btn"
+                                    style="background:#f1f5f9; border:1px solid #cbd5e1; color:#334155;">Cambiar
+                                    Foto</button>
+                            </div>
+                            <div>
+                                <label
+                                    style="display:block; font-size:13px; font-weight:600; color:#475569; margin-bottom:8px;">Nombre
+                                    Completo</label>
+                                <input type="text" value="María Escobedo"
+                                    style="width:100%; padding:12px 15px; border-radius:8px; border:1px solid #cbd5e1; font-family:inherit; color:var(--text-dark); background:#f8fafc; outline:none;">
+                            </div>
+                            <div>
+                                <label
+                                    style="display:block; font-size:13px; font-weight:600; color:#475569; margin-bottom:8px;">Correo
+                                    Electrónico</label>
+                                <input type="email" value="maria.escobedo@colegio.edu.co"
+                                    style="width:100%; padding:12px 15px; border-radius:8px; border:1px solid #cbd5e1; font-family:inherit; color:var(--text-dark); background:#f8fafc; outline:none;">
+                            </div>
+                            <div>
+                                <label
+                                    style="display:block; font-size:13px; font-weight:600; color:#475569; margin-bottom:8px;">Curso</label>
+                                <input type="text" value="7°B" disabled
+                                    style="width:100%; padding:12px 15px; border-radius:8px; border:1px solid #cbd5e1; font-family:inherit; color:var(--text-gray); background:#f1f5f9; outline:none;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONFIGURACION -->
+            <div id="view-configuraciones" class="view-section" style="display: none;">
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>CONFIGURACIONES</h1>
+                        <h2>Ajustes de notificaciones y seguridad</h2>
+                    </div>
+                    <button class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar Cambios</button>
+                </header>
+                <div class="tables-container" style="grid-template-columns: 1fr; margin-top:20px; align-items: start;">
+                    <div class="table-card">
+                        <h3 class="card-title">Preferencias de Notificación</h3>
+                        <div style="display:flex; flex-direction:column; gap:28px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <div>
+                                    <div style="font-weight:600; color:#1e293b; margin-bottom:6px;">Alertas de
+                                        Asistencia</div>
+                                    <div style="font-size:13px; color:var(--text-gray); line-height:1.4;">Recibir
+                                        alertas sobre mis inasistencias o llegadas tarde.</div>
+                                </div>
+                                <label
+                                    style="position:relative; display:inline-block; width:50px; height:26px; flex-shrink:0;"><input
+                                        type="checkbox" checked style="opacity:0; width:0; height:0;"><span
+                                        style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:var(--blue-primary); border-radius:34px; transition:.4s;"><span
+                                            style="position:absolute; content:''; height:20px; width:20px; left:27px; bottom:3px; background-color:white; border-radius:50%; transition:.4s; box-shadow:0 2px 4px rgba(0,0,0,0.2);"></span></span></label>
+                            </div>
+
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <div>
+                                    <div style="font-weight:600; color:#1e293b; margin-bottom:6px;">Reportes Semanales
+                                    </div>
+                                    <div style="font-size:13px; color:var(--text-gray); line-height:1.4;">Enviar resumen
+                                        semanal a mi correo electrónico.</div>
+                                </div>
+                                <label
+                                    style="position:relative; display:inline-block; width:50px; height:26px; flex-shrink:0;"><input
+                                        type="checkbox" checked style="opacity:0; width:0; height:0;"><span
+                                        style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:var(--blue-primary); border-radius:34px; transition:.4s;"><span
+                                            style="position:absolute; content:''; height:20px; width:20px; left:27px; bottom:3px; background-color:white; border-radius:50%; transition:.4s; box-shadow:0 2px 4px rgba(0,0,0,0.2);"></span></span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PLACEHOLDER VIEWS FOR SIDEBAR -->
+            <div id="view-asistencia" class="view-section" style="display: none;">
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>MI ASISTENCIA HISTÓRICA</h1>
+                        <h2>Detalle de mis asistencias e inasistencias</h2>
+                    </div>
+                </header>
+                <div style="padding: 40px; text-align: center; color: var(--text-gray);"><i
+                        class="fa-regular fa-calendar-check"
+                        style="font-size: 48px; margin-bottom: 20px; opacity: 0.5;"></i>
+                    <p>Tu historial de asistencia detallado aparecerá aquí.</p>
+                </div>
+            </div>
+
+            <div id="view-reportes" class="view-section" style="display: none;">
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>MIS REPORTES</h1>
+                        <h2>Reportes generados por el coordinador y sistema</h2>
+                    </div>
+                </header>
+                <div style="padding: 40px; text-align: center; color: var(--text-gray);"><i
+                        class="fa-regular fa-calendar" style="font-size: 48px; margin-bottom: 20px; opacity: 0.5;"></i>
+                    <p>Tus reportes aparecerán aquí.</p>
+                </div>
+            </div>
+
+            <div id="view-horario" class="view-section" style="display: none;">
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>MI HORARIO</h1>
+                        <h2>Horario de clases del curso 7°B</h2>
+                    </div>
+                </header>
+                <div style="padding: 40px; text-align: center; color: var(--text-gray);"><i class="fa-regular fa-clock"
+                        style="font-size: 48px; margin-bottom: 20px; opacity: 0.5;"></i>
+                    <p>La vista interactiva de tu horario aparecerá aquí.</p>
+                </div>
+            </div>
+
+            <div id="view-reportes-detallados" class="view-section" style="display: none;">
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>REPORTES DETALLADOS</h1>
+                        <h2>Gráficos de rendimiento académico y disciplinario</h2>
+                    </div>
+                </header>
+                <div style="padding: 40px; text-align: center; color: var(--text-gray);"><i
+                        class="fa-solid fa-chart-line" style="font-size: 48px; margin-bottom: 20px; opacity: 0.5;"></i>
+                    <p>Los gráficos analíticos avanzados aparecerán aquí.</p>
+                </div>
+            </div>
+
+            <div id="view-profesores" class="view-section" style="display: none;">
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>MIS PROFESORES</h1>
+                        <h2>Directorio y contacto de mis docentes</h2>
+                    </div>
+                </header>
+                <div style="padding: 40px; text-align: center; color: var(--text-gray);"><i
+                        class="fa-solid fa-chalkboard-user"
+                        style="font-size: 48px; margin-bottom: 20px; opacity: 0.5;"></i>
+                    <p>El listado de tus profesores aparecerá aquí.</p>
+                </div>
+            </div>
+
+            <footer class="dashboard-footer">
+                <div>&copy;
+                    <script>document.write(new Date().getFullYear())</script> PREZEN. TODOS LOS DERECHOS RESERVADOS.
+                </div>
+                <div class="footer-links">
+                    <a href="#">TÉRMINOS</a>
+                    <a href="#">PRIVACIDAD</a>
+                    <a href="#">Tus Opciones de Privacidad</a>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Init line chart based on image
+        const ctx = document.getElementById('trendChart').getContext('2d');
+
+        let gradientFill = ctx.createLinearGradient(0, 0, 0, 150);
+        gradientFill.addColorStop(0, 'rgba(81, 68, 217, 0.2)');
+        gradientFill.addColorStop(1, 'rgba(81, 68, 217, 0)');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+                datasets: [{
+                    label: 'Trend',
+                    data: [0, 5, 5.2, 8, 7.5, 12, 12.5, 11, 19, 18, 20],
+                    borderColor: '#5c4def',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#5c4def',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 1.5,
+                    pointRadius: 4,
+                    fill: true,
+                    backgroundColor: gradientFill,
+                    tension: 0.2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        display: false
+                    },
+                    y: {
+                        beginAtZero: true,
+                        max: 30,
+                        ticks: {
+                            stepSize: 10,
+                            color: '#a0aec0',
+                            font: { size: 10 }
+                        },
+                        grid: {
+                            color: '#e2e8f0',
+                            drawBorder: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Sidebar Collapse Logic
+        document.getElementById('sidebarToggle').addEventListener('click', function () {
+            const sidebar = document.getElementById('mainSidebar');
+            sidebar.classList.toggle('collapsed');
+            const icon = this.querySelector('i');
+            if (sidebar.classList.contains('collapsed')) {
+                icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+            } else {
+                icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+            }
+        });
+
+        // Navigation logic (SPA style derived from coordinadores)
+        const navLinks = document.querySelectorAll('.nav-link[data-target]');
+        const viewSections = document.querySelectorAll('.view-section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // If it's a sidebar link, update active states
+                if (link.closest('.sidebar-nav')) {
+                    document.querySelectorAll('.sidebar-nav li').forEach(l => l.classList.remove('active'));
+                    link.parentElement.classList.add('active');
+                }
+
+                // Hide Profile Dropdown if open
+                if (profileDropdown) {
+                    profileDropdown.style.opacity = '0';
+                    profileDropdown.style.visibility = 'hidden';
+                    profileDropdown.style.transform = 'translateY(-10px)';
+                }
+
+                // Hide all sections
+                viewSections.forEach(section => {
+                    section.style.display = 'none';
+                    section.classList.remove('active');
+                });
+
+                // Show corresponding section
+                const targetId = link.getAttribute('data-target');
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.style.display = 'block';
+                    setTimeout(() => targetSection.classList.add('active'), 10);
+                }
+
+                // On mobile, close sidebar after clicking
+                if (window.innerWidth <= 768 && document.getElementById('mainSidebar') && !document.getElementById('mainSidebar').classList.contains('collapsed')) {
+                    document.getElementById('mainSidebar').classList.add('collapsed');
+                }
+            });
+        });
+
+        // Profile Dropdown
+        const userProfileBtn = document.getElementById('userProfileBtn');
+        const profileDropdown = document.getElementById('profileDropdown');
+        if (userProfileBtn && profileDropdown) {
+            userProfileBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = profileDropdown.style.opacity === '1';
+                profileDropdown.style.opacity = isOpen ? '0' : '1';
+                profileDropdown.style.visibility = isOpen ? 'hidden' : 'visible';
+                profileDropdown.style.transform = isOpen ? 'translateY(-10px)' : 'translateY(0)';
+            });
+            document.addEventListener('click', (e) => {
+                if (!userProfileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+                    profileDropdown.style.opacity = '0';
+                    profileDropdown.style.visibility = 'hidden';
+                    profileDropdown.style.transform = 'translateY(-10px)';
+                }
+            });
+        }
+
+        // Button Interactions
+        document.querySelector('.btn-add-report')?.addEventListener('click', () => alert('Abriendo formulario para nuevo reporte de asistencia...'));
+        document.querySelector('.btn-invite')?.addEventListener('click', () => alert('Enviando solicitud de permiso al director de grupo...'));
+        document.querySelector('.btn-banner')?.addEventListener('click', () => alert('Mostrando reportes de asistencia completos...'));
+
+        // Live Update Timer
+        const updateBadge = document.querySelector('.badge-update');
+        if (updateBadge) {
+            let seconds = 12;
+            setInterval(() => {
+                seconds++;
+                updateBadge.innerHTML = `<i class="fa-solid fa-droplet" style="color: #22c55e;"></i> Actualizado hace ${seconds} seg`;
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>
