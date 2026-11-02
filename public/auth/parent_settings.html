@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración de Padres - PREZEN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <style>
+        .setting-row { display:flex; justify-content:space-between; align-items:center; gap:25px; padding:20px 0; border-bottom:1px solid #f1f5f9; }
+        .setting-row:last-child { border-bottom:0; }
+        .setting-row strong { color:var(--text-main); font-size:1.05rem; }
+        .setting-row p { color:var(--text-muted); font-size:.9rem; margin-top:5px; }
+        .switch { position:relative; display:inline-block; width:50px; height:26px; flex-shrink:0; }
+        .switch input { opacity:0; width:0; height:0; }
+        .slider { position:absolute; inset:0; cursor:pointer; background:#cbd5e1; transition:.3s; border-radius:34px; }
+        .slider:before { content:""; position:absolute; width:18px; height:18px; left:4px; bottom:4px; background:white; transition:.3s; border-radius:50%; }
+        input:checked + .slider { background:var(--purple-main); }
+        input:checked + .slider:before { transform:translateX(24px); }
+
+        .theme-selector {
+            display:inline-flex;
+            background:#f1f5f9;
+            border:1px solid #e2e8f0;
+            border-radius:12px;
+            padding:4px;
+            gap:4px;
+            margin-top:12px;
+        }
+
+        .theme-option {
+            border:none;
+            background:transparent;
+            color:var(--text-muted);
+            font-weight:600;
+            font-size:0.9rem;
+            padding:10px 18px;
+            border-radius:10px;
+            cursor:pointer;
+            transition:all 0.2s ease;
+        }
+
+        .theme-option.active {
+            background:var(--purple-main);
+            color:white;
+            box-shadow:0 6px 14px rgba(79, 70, 229, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box"><h2 class="logo-text">Z</h2><span class="logo-subtext">COLEGIO</span></div>
+                <div class="brand"><span class="brand-z">Z</span> PREZEN</div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="../panel_control/padres_familia/index.html#view-panel" class="nav-item"><i class="fa-solid fa-house"></i> Hijos</a>
+                <a href="../panel_control/padres_familia/index.html#view-asistencia" class="nav-item"><i class="fa-regular fa-calendar-check"></i> Asistencia y Reportes</a>
+                <a href="parent_profile.html" class="nav-item"><i class="fa-regular fa-id-card"></i> Mi Perfil</a>
+                <a href="parent_settings.html" class="nav-item active"><i class="fa-solid fa-gear"></i> Configuración</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left"><h1 class="page-title">Configuración<br><span style="font-size:1.5rem;font-weight:500;">de Padres</span></h1></div>
+                <div class="header-right">
+                    <div class="badge-update"><i class="fa-solid fa-droplet" style="color:#22c55e;"></i> Actualizado hace 1 seg</div>
+                </div>
+            </header>
+
+            <div class="middle-grid" style="grid-template-columns:1fr;max-width:850px;">
+                <div class="white-card">
+                    <h3 style="margin-bottom:8px;">Preferencias del acudiente</h3>
+                    <p style="color:var(--text-muted);font-size:.9rem;margin-bottom:20px;">Controla la información y las alertas relacionadas con tu hijo.</p>
+                    <div class="setting-row"><div><strong>Alertas de asistencia</strong><p>Recibir avisos sobre llegadas tarde y ausencias.</p></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+                    <div class="setting-row"><div><strong>Resumen semanal</strong><p>Enviar un resumen semanal del comportamiento de asistencia.</p></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+                    <div class="setting-row"><div><strong>Comunicados del colegio</strong><p>Recibir novedades y mensajes de la institución.</p></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+                    <div class="setting-row"><div><strong>Mostrar información del hijo</strong><p>Definir si el resumen aparece al abrir el panel.</p></div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+                    <div style="margin-top:25px;border-top:1px solid #e2e8f0;padding-top:20px;">
+                        <h3 style="margin-bottom:8px;">Apariencia</h3>
+                        <div class="setting-row" style="padding-bottom:12px; border-bottom:0;">
+                            <div>
+                                <strong>Tema</strong>
+                                <p>Selecciona la apariencia del panel para padres.</p>
+                            </div>
+                            <div class="theme-selector" role="tablist" aria-label="Tema de la interfaz">
+                                <button type="button" class="theme-option active" data-theme="light" aria-pressed="true">Claro</button>
+                                <button type="button" class="theme-option" data-theme="dark" aria-pressed="false">Oscuro</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeButtons = document.querySelectorAll('.theme-option');
+            const applyTheme = (theme) => {
+                const isDark = theme === 'dark';
+                document.body.classList.toggle('dark-theme', isDark);
+                localStorage.setItem('prezen-theme', theme);
+
+                themeButtons.forEach((button) => {
+                    const isActive = button.dataset.theme === theme;
+                    button.classList.toggle('active', isActive);
+                    button.setAttribute('aria-pressed', String(isActive));
+                });
+            };
+
+            const currentTheme = localStorage.getItem('prezen-theme') || 'light';
+            applyTheme(currentTheme);
+
+            themeButtons.forEach((button) => {
+                button.addEventListener('click', () => applyTheme(button.dataset.theme));
+            });
+        });
+    </script>
+</body>
+</html>

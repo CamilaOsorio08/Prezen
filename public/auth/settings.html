@@ -91,7 +91,7 @@
             </div>
 
             <nav class="sidebar-nav">
-                <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-house"></i> Inicio</a>
+                <a href="dashboard.html" class="nav-item" id="settingsHomeLink"><i class="fa-solid fa-house"></i> Inicio</a>
                 <a href="#" class="nav-item"><i class="fa-regular fa-user"></i> Asistencia</a>
                 <a href="#" class="nav-item"><i class="fa-regular fa-calendar"></i> Reportes</a>
                 <div class="nav-divider"></div>
@@ -215,6 +215,14 @@
         </main>
     </div>
     <script src="assets/js/dashboard.js"></script>
+    <script>
+        const returnPath = new URLSearchParams(window.location.search).get('return');
+        const settingsHomeLink = document.getElementById('settingsHomeLink');
+
+        if (settingsHomeLink && returnPath === '../panel_control/padres_familia/index.html') {
+            settingsHomeLink.href = returnPath;
+        }
+    </script>
 </body>
 
 </html>

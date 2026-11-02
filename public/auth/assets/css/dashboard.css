@@ -27,6 +27,60 @@ body {
     color: var(--text-main);
 }
 
+body.dark-theme {
+    --bg-light: #0f172a;
+    --sidebar-dark: #170d33;
+    --card-white: #111827;
+    --text-main: #e2e8f0;
+    --text-muted: #cbd5e1;
+    --dark-card: #0f172a;
+    --dark-border: #334155;
+}
+
+body.dark-theme {
+    background: var(--bg-light);
+    color: var(--text-main);
+}
+
+body.dark-theme .badge-update,
+body.dark-theme .user-profile,
+body.dark-theme .white-card,
+body.dark-theme .profile-dropdown-menu,
+body.dark-theme .dropdown-item:hover,
+body.dark-theme .theme-selector {
+    background: rgba(15, 23, 42, 0.9);
+    color: var(--text-main);
+    border-color: var(--dark-border);
+}
+
+body.dark-theme .page-title,
+body.dark-theme .setting-row strong,
+body.dark-theme .dropdown-item,
+body.dark-theme .user-name,
+body.dark-theme .user-role,
+body.dark-theme .theme-option {
+    color: var(--text-main);
+}
+
+body.dark-theme .setting-row p,
+body.dark-theme .dropdown-item i,
+body.dark-theme .user-role,
+body.dark-theme .theme-option:not(.active) {
+    color: var(--text-muted);
+}
+
+body.dark-theme .theme-option.active {
+    color: white;
+}
+
+body.dark-theme .white-card {
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.35);
+}
+
+body.dark-theme .sidebar {
+    background: linear-gradient(180deg, #2a1b4d 0%, #170d33 100%);
+}
+
 .dashboard-wrapper {
     display: flex;
     height: 100vh;

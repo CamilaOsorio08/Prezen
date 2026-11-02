@@ -22,6 +22,118 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        .parent-profile-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            padding: 24px;
+            background: rgba(15, 23, 42, .36);
+        }
+        .parent-profile-overlay.open { display: flex; }
+        .parent-profile-dialog {
+            width: min(650px, 100%);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, .75);
+            border-radius: 18px;
+            background: #1e293b;
+            box-shadow: 0 24px 70px rgba(15, 23, 42, .3);
+        }
+        .parent-profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 98px;
+            padding: 20px 26px;
+            background: #f8fafc;
+        }
+        .parent-profile-eyebrow { color: #5c4def; font-size: 12px; font-weight: 800; letter-spacing: .08em; }
+        .parent-profile-title { margin-top: 6px; color: #1e293b; font-size: 25px; font-weight: 750; }
+        .parent-profile-close {
+            display: grid;
+            place-items: center;
+            width: 40px;
+            height: 40px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background: transparent;
+            color: #1e293b;
+            font-size: 17px;
+            cursor: pointer;
+        }
+        .parent-profile-close:hover { background: #e2e8f0; }
+        .parent-profile-body { display: grid; gap: 16px; padding: 24px 25px; }
+        .parent-profile-identity,
+        .parent-profile-info,
+        .parent-profile-edit {
+            color: #1e293b;
+            background: #f8fafc;
+            border-radius: 14px;
+        }
+        .parent-profile-identity { display: flex; align-items: center; gap: 18px; min-height: 104px; padding: 16px 20px; }
+        .parent-profile-avatar { width: 68px; height: 68px; flex: 0 0 68px; border: 3px solid #fff; border-radius: 50%; object-fit: cover; }
+        .parent-profile-name { color: #1e293b; font-size: 19px; font-weight: 750; overflow-wrap: anywhere; }
+        .parent-profile-role { margin-top: 4px; color: #64748b; font-size: 14px; }
+        .parent-profile-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+        .parent-profile-info { min-height: 68px; padding: 12px 14px; }
+        .parent-profile-label { color: #64748b; font-size: 11px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+        .parent-profile-value { margin-top: 5px; color: #1e293b; font-size: 14px; font-weight: 700; overflow-wrap: anywhere; }
+        .parent-profile-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 4px; }
+        .parent-profile-action {
+            min-height: 42px;
+            padding: 0 18px;
+            border: 1px solid #94a3b8;
+            border-radius: 10px;
+            background: transparent;
+            color: #fff;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .parent-profile-action:hover { background: rgba(255, 255, 255, .08); }
+        .parent-profile-action.primary { border-color: #5c4def; background: #5c4def; }
+        .parent-profile-action.primary:hover { background: #4f42dc; }
+        .parent-profile-edit { display: grid; gap: 16px; padding: 18px; }
+        .parent-profile-edit[hidden], #parentProfileSummary[hidden] { display: none; }
+        .parent-profile-edit-title { color: #1e293b; font-size: 17px; font-weight: 750; }
+        .parent-profile-edit-layout { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 18px; }
+        .parent-profile-photo { display: grid; justify-items: center; align-content: start; gap: 10px; }
+        .parent-profile-photo .parent-profile-avatar { width: 82px; height: 82px; }
+        .parent-profile-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+        .parent-profile-fields .wide { grid-column: 1 / -1; }
+        .parent-profile-fields label { display: block; color: #64748b; font-size: 12px; font-weight: 700; }
+        .parent-profile-fields input {
+            width: 100%;
+            min-height: 40px;
+            margin-top: 5px;
+            padding: 9px 11px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            outline: none;
+            background: #fff;
+            color: #1e293b;
+            font: inherit;
+            font-size: 14px;
+        }
+        .parent-profile-fields input:focus { border-color: #5c4def; box-shadow: 0 0 0 3px rgba(79, 70, 229, .12); }
+        .parent-profile-status { min-height: 18px; margin: 0; color: #64748b; font-size: 13px; }
+        .parent-profile-status[data-state="success"] { color: #15803d; }
+        .parent-profile-status[data-state="error"] { color: #b91c1c; }
+        @media (max-width: 560px) {
+            .parent-profile-overlay { align-items: flex-start; padding: 12px; }
+            .parent-profile-header { min-height: 82px; padding: 15px 18px; }
+            .parent-profile-body { gap: 12px; padding: 14px; }
+            .parent-profile-edit-layout { grid-template-columns: 1fr; }
+            .parent-profile-photo { grid-template-columns: auto 1fr; justify-items: start; align-items: center; }
+            .parent-profile-photo .parent-profile-avatar { width: 64px; height: 64px; }
+        }
+        @media (max-width: 380px) {
+            .parent-profile-grid, .parent-profile-fields { grid-template-columns: 1fr; }
+            .parent-profile-fields .wide { grid-column: auto; }
+        }
     </style>
 </head>
 
@@ -34,14 +146,21 @@
             </button>
             <div class="logo-container">
                 <div class="logo-box">
-                    <span class="logo-z">Z</span>
+                    <svg class="prezen-logo-mark" viewBox="0 0 100 100" role="img" aria-label="Símbolo Z">
+                        <path d="M8 8h84v19L48 77h44v15H8V73l44-50H8z" fill="#fff" stroke="#fff" stroke-width="7" stroke-linejoin="miter"/>
+                        <path d="M8 8h84v19L48 77h44v15H8V73l44-50H8z" fill="#fff" stroke="#111827" stroke-width="2.5" stroke-linejoin="miter"/>
+                    </svg>
                     <span class="logo-text">COLEGIO</span>
                 </div>
             </div>
 
             <div class="brand-btn-container">
-                <button class="brand-btn">
-                    <span class="z-purple">Z</span> <span class="brand-text">PREZEN</span>
+                <button type="button" class="brand-btn" id="brandHomeButton" aria-label="Volver al panel principal">
+                    <svg class="prezen-logo-mark compact" viewBox="0 0 100 100" aria-hidden="true">
+                        <path d="M8 8h84v19L48 77h44v15H8V73l44-50H8z" fill="#fff" stroke="#fff" stroke-width="7" stroke-linejoin="miter"/>
+                        <path d="M8 8h84v19L48 77h44v15H8V73l44-50H8z" fill="#fff" stroke="#111827" stroke-width="2.5" stroke-linejoin="miter"/>
+                    </svg>
+                    <span class="brand-text">PREZEN</span>
                 </button>
             </div>
 
@@ -49,12 +168,7 @@
                 <ul>
                     <li class="active" data-view="view-panel">
                         <a href="#" class="nav-link">
-                            <i class="fa-solid fa-house"></i> <span>Inicio</span>
-                        </a>
-                    </li>
-                    <li data-view="view-hijo">
-                        <a href="#" class="nav-link">
-                            <i class="fa-regular fa-user"></i> <span>Mi Hijo</span>
+                            <i class="fa-solid fa-house"></i> <span>Hijos</span>
                         </a>
                     </li>
                     <li data-view="view-asistencia">
@@ -62,27 +176,17 @@
                             <i class="fa-regular fa-calendar-check"></i> <span>Asistencia y Reportes</span>
                         </a>
                     </li>
-                    <li data-view="view-reportes">
-                        <a href="#" class="nav-link">
-                            <i class="fa-regular fa-clock"></i> <span>Asistencia</span>
-                        </a>
-                    </li>
                     <li data-view="view-comunicaciones">
                         <a href="#" class="nav-link">
                             <i class="fa-solid fa-briefcase"></i> <span>Comunicados</span>
-                        </a>
-                    </li>
-                    <li data-view="view-configuraciones">
-                        <a href="#" class="nav-link">
-                            <i class="fa-solid fa-chalkboard-user"></i> <span>Configuración</span>
                         </a>
                     </li>
                 </ul>
             </nav>
 
             <div class="sidebar-footer">
-                <button class="btn btn-invite">
-                    <i class="fa-solid fa-plus"></i> <span id="sidebarBtnText">Agregar comentario</span>
+                <button type="button" class="theme-toggle" id="themeToggle" aria-pressed="false">
+                    <i class="fa-solid fa-moon"></i> <span>Modo oscuro</span>
                 </button>
             </div>
         </aside>
@@ -98,7 +202,7 @@
                     </div>
                     <div style="width: 100%; display: flex; align-items: center; justify-content: space-between;">
                         <div style="display: flex; align-items: center; gap: 20px;">
-                            <h2 class="page-subtitle">Mi Hijo - 7°B</h2>
+                            <h2 class="page-subtitle" id="selectedChildTitle">Mi Hijo - 7°B</h2>
                             <div class="badge-update" style="margin-left: 20px;">
                                 <i class="fa-solid fa-droplet" style="color: #22c55e;"></i> Actualizado hace 12 seg
                             </div>
@@ -114,19 +218,19 @@
                                     </div>
                                     <div class="chevron-box" style="margin-right: 8px;">
                                         <i class="fa-solid fa-chevron-down profile-chevron"></i>
-                                        <span class="notification-dot">1</span>
                                     </div>
-                                    <div class="school-crest">
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Escudo_nacional_de_Colombia.svg/100px-Escudo_nacional_de_Colombia.svg.png" alt="Escudo" style="width: 24px; height: auto;">
+                                    <div class="school-crest app-account-logo" aria-label="Logo de PREZEN">
+                                        <svg class="prezen-logo-mark compact" viewBox="0 0 100 100" aria-hidden="true">
+                                            <path d="M8 8h84v19L48 77h44v15H8V73l44-50H8z" fill="#fff" stroke="#fff" stroke-width="7" stroke-linejoin="miter"/>
+                                            <path d="M8 8h84v19L48 77h44v15H8V73l44-50H8z" fill="#fff" stroke="#111827" stroke-width="2.5" stroke-linejoin="miter"/>
+                                        </svg>
+                                        <span class="app-account-logo-text">PREZEN</span>
                                     </div>
                                 </div>
                                 <div class="profile-dropdown-menu" id="profileDropdown1" style="position:absolute; top:calc(100% + 10px); right:0; background:white; min-width:200px; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.1); padding:10px 0; opacity:0; visibility:hidden; transform:translateY(-10px); transition:all 0.3s cubic-bezier(0.175,0.885,0.32,1.275); z-index:100;">
-                                    <a href="#" class="dropdown-item" style="display:flex; align-items:center; gap:12px; padding:10px 20px; color:#1e293b; text-decoration:none; font-size:0.9rem; font-weight:500; transition:background 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">
+                                    <button type="button" class="dropdown-item" data-open-parent-profile style="width:100%; display:flex; align-items:center; gap:12px; padding:10px 20px; border:0; background:transparent; color:#1e293b; text-align:left; text-decoration:none; font-size:0.9rem; font-weight:500; cursor:pointer; transition:background 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">
                                         <i class="fa-regular fa-user" style="color:#64748b; width:20px;"></i> Mi Perfil
-                                    </a>
-                                    <a href="#" class="dropdown-item" style="display:flex; align-items:center; gap:12px; padding:10px 20px; color:#1e293b; text-decoration:none; font-size:0.9rem; font-weight:500; transition:background 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">
-                                        <i class="fa-solid fa-gear" style="color:#64748b; width:20px;"></i> Configuración
-                                    </a>
+                                    </button>
                                     <div style="height:1px; background:#e2e8f0; margin:8px 0;"></div>
                                     <a href="../../auth/index.html" class="dropdown-item" style="display:flex; align-items:center; gap:12px; padding:10px 20px; color:#ef4444; text-decoration:none; font-size:0.9rem; font-weight:500; transition:background 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">
                                         <i class="fa-solid fa-right-from-bracket" style="color:#ef4444; width:20px;"></i> Cerrar Sesión
@@ -137,118 +241,102 @@
                     </div>
                 </header>
 
+                <div class="children-tabs" role="tablist" aria-label="Seleccionar hijo">
+                    <button type="button" class="child-tab active" role="tab" aria-selected="true" data-child="maria">
+                        <i class="fa-regular fa-user"></i> María Escobedo
+                    </button>
+                    <button type="button" class="child-tab" role="tab" aria-selected="false" data-child="ana">
+                        <i class="fa-regular fa-user"></i> Ana López
+                    </button>
+                </div>
+
+                <section class="dashboard-intro">
+                    <div class="intro-copy">
+                        <span class="intro-tag">Inicio</span>
+                        <h3>Bienvenido a tu panel de asistencias</h3>
+                        <p>
+                            Aquí puedes revisar de forma rápida la asistencia de tus hijos, identificar patrones de puntualidad,
+                            consultar inasistencias y mantenerte informado sobre novedades de la institución.
+                        </p>
+                    </div>
+                    <div class="intro-features">
+                        <div class="feature-item">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            <div>
+                                <strong>Seguimiento escolar</strong>
+                                <span>Consulta días presentes, retrasos y ausencias.</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <div>
+                                <strong>Indicadores claros</strong>
+                                <span>Visualiza asistencia, puntualidad y rendimiento.</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fa-solid fa-bell"></i>
+                            <div>
+                                <strong>Comunicaciones</strong>
+                                <span>Recibe informes y novedades importantes del colegio.</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 <div class="kpi-grid">
                     <div class="kpi-card card-purple-blue">
                         <div class="kpi-title">Tardanzas del curso</div>
-                        <div class="kpi-value">15</div>
+                        <div class="kpi-value" data-stat="tardanzas">15</div>
                         <i class="fa-solid fa-users kpi-bg-icon"></i>
                     </div>
                     
                     <div class="kpi-card card-bright-blue">
                         <div class="kpi-title">Inasistencias totales</div>
-                        <div class="kpi-value">8</div>
+                        <div class="kpi-value" data-stat="inasistencias">8</div>
                         <div class="kpi-bg-shape fade-shape"></div>
                     </div>
                     
                     <div class="kpi-card card-deep-purple">
                         <div class="kpi-title">Puntualidad del curso</div>
-                        <div class="kpi-value">94.5%</div>
+                        <div class="kpi-value" data-stat="puntualidad">94.5%</div>
                         <div class="kpi-bg-shape large-circle"></div>
                     </div>
                     
                     <div class="kpi-card card-blue-solid">
                         <div class="kpi-title">Asistencia promedio</div>
-                        <div class="kpi-value">88%</div>
+                        <div class="kpi-value" data-stat="asistencia">88%</div>
                         <i class="fa-solid fa-users kpi-bg-icon"></i>
                     </div>
                 </div>
 
                 <div class="bottom-grid-mihijo">
                     <div class="content-card heatmap-card">
-                        <div class="heatmap-legend">
-                            <div class="legend-item"><span class="color-box bg-green"></span> green presente</div>
-                            <div class="legend-item"><span class="color-box bg-yellow"></span> yellow retraso</div>
-                            <div class="legend-item"><span class="color-box bg-red"></span> red ausencia</div>
+                        <div class="calendar-heading">
+                            <h3>Calendario de asistencia</h3>
+                            <div class="calendar-month-controls">
+                                <button type="button" class="calendar-month-button" id="previousMonth" aria-label="Mes anterior">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
+                                <span id="calendarMonthLabel">Septiembre 2026</span>
+                                <button type="button" class="calendar-month-button" id="nextMonth" aria-label="Mes siguiente">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
                         </div>
                         
-                        <div class="heatmap-container">
-                            <div class="hm-col-headers">
-                                <div class="hm-header-empty"></div>
-                                <div class="hm-col">A.P.</div>
-                                <div class="hm-col">J.L.</div>
-                                <div class="hm-col">M.S.</div>
-                                <div class="hm-col">R.G.</div>
-                                <div class="hm-col">L.M.</div>
-                                <div class="hm-col">C.T.</div>
-                                <div class="hm-col">D.H.</div>
-                                <div class="hm-col">P.V.</div>
-                                <div class="hm-col">S.Z.</div>
-                            </div>
+                        <div class="calendar-legend">
+                            <div class="legend-item"><span class="color-box bg-green"></span> Presente</div>
+                            <div class="legend-item"><span class="color-box bg-yellow"></span> Retraso</div>
+                            <div class="legend-item"><span class="color-box bg-red"></span> Ausencia</div>
+                            <div class="legend-item"><span class="color-box bg-inactive"></span> Festivo</div>
+                        </div>
 
-                            <div class="hm-row">
-                                <div class="hm-row-label">5</div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-red"></div>
-                                <div class="hm-cell bg-green"></div>
+                        <div class="attendance-calendar" id="attendanceCalendar" aria-live="polite" aria-label="Calendario de asistencia">
+                            <div class="calendar-weekdays">
+                                <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
                             </div>
-                            
-                            <div class="hm-row">
-                                <div class="hm-row-label">6</div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-red"></div>
-                                <div class="hm-cell bg-red"></div>
-                                <div class="hm-cell bg-yellow"></div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-yellow"></div>
-                                <div class="hm-cell bg-yellow"></div>
-                            </div>
-                            
-                            <div class="hm-row">
-                                <div class="hm-row-label">8</div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-yellow"></div>
-                                <div class="hm-cell bg-yellow"></div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-yellow"></div>
-                                <div class="hm-cell bg-red"></div>
-                                <div class="hm-cell bg-red"></div>
-                            </div>
-                            
-                            <div class="hm-row">
-                                <div class="hm-row-label">7</div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-yellow"></div>
-                                <div class="hm-cell bg-yellow"></div>
-                                <div class="hm-cell bg-yellow"></div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-red"></div>
-                                <div class="hm-cell bg-red"></div>
-                                <div class="hm-cell bg-red"></div>
-                            </div>
-                            
-                            <div class="hm-row">
-                                <div class="hm-row-label">26</div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-green"></div>
-                                <div class="hm-cell bg-yellow"></div>
-                                <div class="hm-cell bg-yellow"></div>
-                                <div class="hm-cell bg-yellow"></div>
-                                <div class="hm-cell bg-red"></div>
-                                <div class="hm-cell bg-red"></div>
-                                <div class="hm-cell bg-yellow"></div>
-                                <div class="hm-cell bg-green"></div>
-                            </div>
+                            <div class="calendar-days" id="calendarDays"></div>
                         </div>
                     </div>
 
@@ -258,25 +346,25 @@
                         </div>
 
                         <div class="stat-pickers">
-                            <div class="picker-box">
-                                <div class="picker-val">15</div>
+                            <button type="button" class="picker-box" data-trend-metric="alumnos" aria-pressed="false" aria-label="Mostrar alumnos presentes en el gráfico">
+                                <span class="picker-val" data-picker-value="alumnos">2</span>
                                 <div class="picker-lbl">Alumnos</div>
                                 <i class="fa-solid fa-chevron-down flex-end"></i>
-                            </div>
-                            <div class="picker-box">
-                                <div class="picker-val">8</div>
+                            </button>
+                            <button type="button" class="picker-box" data-trend-metric="inasistencias" aria-pressed="false" aria-label="Mostrar inasistencias en el gráfico">
+                                <span class="picker-val" data-picker-value="inasistencias">3</span>
                                 <div class="picker-lbl">Inasistencias</div>
                                 <i class="fa-solid fa-chevron-down flex-end"></i>
-                            </div>
-                            <div class="picker-box">
-                                <div class="picker-val">88%</div>
+                            </button>
+                            <button type="button" class="picker-box active" data-trend-metric="asistencia" aria-pressed="true" aria-label="Mostrar porcentaje de asistencia en el gráfico">
+                                <span class="picker-val" data-picker-value="asistencia">85%</span>
                                 <div class="picker-lbl">Asistencia</div>
                                 <i class="fa-solid fa-chevron-down flex-end"></i>
-                            </div>
+                            </button>
                         </div>
 
                         <div class="motivation-banner">
-                            <p style="color: var(--purple-primary); font-weight: 600; font-size: 14px; margin-bottom: 16px;">¡Felicitaciones! La asistencia de tu hijo está mejorando 👍</p>
+                            <p id="childMotivation" style="color: var(--purple-primary); font-weight: 600; font-size: 14px; margin-bottom: 16px;">¡Felicitaciones! La asistencia de María está mejorando 👍</p>
                             <button class="btn btn-banner" style="width: 100%;">Ver detalles de mi hijo</button>
                         </div>
                     </div>
@@ -292,15 +380,10 @@
                     </div>
                     <div style="width: 100%; display: flex; align-items: center; justify-content: space-between;">
                         <div style="display: flex; align-items: center;">
-                            <h2 class="page-subtitle">Mi Hijo: María Escobedo - 7°B</h2>
+                            <h2 class="page-subtitle" id="detailChildTitle">Mi Hijo: María Escobedo - 7°B</h2>
                         </div>
 
                         <div style="display: flex; align-items: center; gap: 20px;">
-                            <span class="text-progreso" style="color: var(--text-gray);">Nuevo Reporte</span>
-                            <button class="btn btn-primary btn-add-nuevo">
-                                <i class="fa-solid fa-plus"></i> Nuevo Reporte
-                            </button>
-
                             <div class="user-profile">
                                 <img src="https://ui-avatars.com/api/?name=Laura+Escobedo&background=random&color=fff" alt="Perfil" class="avatar">
                                 <div class="user-info">
@@ -309,42 +392,50 @@
                                 </div>
                                 <div class="chevron-box" style="margin-right: 8px;">
                                     <i class="fa-solid fa-chevron-down profile-chevron"></i>
-                                    <span class="notification-dot">5</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </header>
 
+                <div class="children-tabs" role="tablist" aria-label="Seleccionar hijo">
+                    <button type="button" class="child-tab" role="tab" aria-selected="false" data-child="maria">
+                        <i class="fa-regular fa-user"></i> María Escobedo
+                    </button>
+                    <button type="button" class="child-tab" role="tab" aria-selected="false" data-child="ana">
+                        <i class="fa-regular fa-user"></i> Ana López
+                    </button>
+                </div>
+
                 <div class="kpi-grid">
                     <div class="kpi-card card-purple-blue">
                         <div class="kpi-title">Asistencia de Mi Hija</div>
-                        <div class="kpi-value">92%</div>
+                        <div class="kpi-value" data-detail-stat="asistencia">92%</div>
                         <i class="fa-solid fa-square-check kpi-bg-icon icon-green" style="opacity: 1; color: #34d399; font-size: 40px; right: 20px; bottom: 20px; z-index: 5;"></i>
                     </div>
                     
                     <div class="kpi-card card-bright-blue">
                         <div class="kpi-title">Tardanzas del Mes</div>
-                        <div class="kpi-value">2</div>
+                        <div class="kpi-value" data-detail-stat="tardanzas">2</div>
                         <i class="fa-regular fa-clock kpi-bg-icon" style="opacity: 0.8; font-size: 50px; right: 15px; bottom: 15px;"></i>
                     </div>
                     
                     <div class="kpi-card card-deep-purple">
                         <div class="kpi-title">Inasistencias</div>
-                        <div class="kpi-value">1</div>
+                        <div class="kpi-value" data-detail-stat="inasistencias">1</div>
                         <i class="fa-solid fa-triangle-exclamation kpi-bg-icon" style="opacity: 0.8; font-size: 50px; color: #fbbf24; right: 15px; bottom: 15px;"></i>
                     </div>
                     
                     <div class="kpi-card card-blue-solid" style="background: linear-gradient(135deg, #6254ea 0%, #4f42dc 100%);">
                         <div class="kpi-title">Puntualidad General</div>
-                        <div class="kpi-value">94%</div>
+                        <div class="kpi-value" data-detail-stat="puntualidad">94%</div>
                         <i class="fa-solid fa-square-check kpi-bg-icon" style="opacity: 0.8; font-size: 50px; color: #a5b4fc; right: 15px; bottom: 15px;"></i>
                     </div>
                 </div>
 
                 <div class="bottom-grid-mihijo">
                     <div class="content-card">
-                        <h3 class="card-title-mihijo">Mi Hija - María Escobedo</h3>
+                        <h3 class="card-title-mihijo" id="detailChildCardTitle">Mi Hija - María Escobedo</h3>
                         
                         <div class="table-container">
                             <table class="data-table">
@@ -359,20 +450,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>María Escobedo</td>
+                                    <tr data-child-row="maria">
+                                        <td data-child-field="nombre">María Escobedo</td>
                                         <td><span class="badge-curso">7°B</span></td>
-                                        <td>92%</td>
-                                        <td>2</td>
-                                        <td>1</td>
+                                        <td data-child-field="asistencia">88%</td>
+                                        <td data-child-field="tardanzas">15</td>
+                                        <td data-child-field="inasistencias">8</td>
                                         <td><span class="badge-excelente">Excelente</span></td>
                                     </tr>
-                                    <tr>
-                                        <td>Ana López</td>
+                                    <tr data-child-row="ana">
+                                        <td data-child-field="nombre">Ana López</td>
                                         <td><span class="badge-curso">7°B</span></td>
-                                        <td>78%</td>
-                                        <td>4</td>
-                                        <td>1</td>
+                                        <td data-child-field="asistencia">92%</td>
+                                        <td data-child-field="tardanzas">4</td>
+                                        <td data-child-field="inasistencias">1</td>
                                         <td><span class="badge-excelente">Excelente</span></td>
                                     </tr>
                                 </tbody>
@@ -387,11 +478,151 @@
                         </div>
 
                         <div class="motivation-banner-rendimiento">
-                            <button class="btn btn-banner">Ver Detalles Completos</button>
-                            <p>Consulta el historial completo de María</p>
+                            <p id="detailPerformanceDescription">Consulta el historial completo de María</p>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="view-content" id="view-asistencia">
+                <header class="top-header">
+                    <div>
+                        <h1 class="page-title-main">ASISTENCIA Y REPORTES</h1>
+                        <h2 class="page-subtitle">Historial de asistencia de tu hijo</h2>
+                    </div>
+                </header>
+                <div class="content-card">
+                    <h3 class="card-title-mihijo">Registro de asistencia</h3>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead><tr><th>Fecha</th><th>Estado</th><th>Observación</th></tr></thead>
+                            <tbody>
+                                <tr><td>17 de septiembre de 2026</td><td><span class="badge-excelente">Presente</span></td><td>Ingreso registrado</td></tr>
+                                <tr><td>15 de septiembre de 2026</td><td><span class="badge-curso" style="background:#fee2e2;color:#b91c1c;">Ausencia</span></td><td>Pendiente de justificación</td></tr>
+                                <tr><td>8 de septiembre de 2026</td><td><span class="badge-curso" style="background:#fef3c7;color:#92400e;">Retraso</span></td><td>Ingreso a las 7:12 a. m.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="view-content" id="view-comunicaciones">
+                <header class="top-header">
+                    <div>
+                        <h1 class="page-title-main">COMUNICADOS</h1>
+                        <h2 class="page-subtitle">Novedades de la institución</h2>
+                    </div>
+                </header>
+                <div class="communications-layout">
+                    <div class="content-card communications-card">
+                        <div class="communications-header">
+                            <h3 class="card-title-mihijo">Comunicados recientes</h3>
+                            <a class="contact-link" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=coordinacion%40prezen.edu.co&amp;su=Consulta%20de%20padres&amp;body=Hola%2C%20quiero%20consultar%20sobre%20mi%20hijo." target="_blank" rel="noopener noreferrer">
+                                <i class="fa-solid fa-envelope"></i> Correo electrónico
+                            </a>
+                        </div>
+                        <div class="setting-row">
+                            <div>
+                                <strong>Reunión de acudientes</strong>
+                                <p>La próxima reunión será el viernes a las 4:00 p. m.</p>
+                            </div>
+                            <span class="badge-excelente">Nuevo</span>
+                        </div>
+                        <div class="setting-row">
+                            <div>
+                                <strong>Actualización del calendario</strong>
+                                <p>Consulta las fechas de actividades del curso 7°B.</p>
+                            </div>
+                            <span class="badge-curso">Publicado</span>
+                        </div>
+                    </div>
+
+                    <div class="content-card contact-card">
+                        <h3 class="card-title-mihijo">Contacto directo</h3>
+                        <p class="contact-description">Si necesitas comunicarte con la institución, puedes escribirnos directamente a la coordinación.</p>
+                        <div class="contact-actions">
+                            <a class="contact-btn" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=coordinacion%40prezen.edu.co&amp;su=Consulta%20de%20padres&amp;body=Estimados%20coordinadores%2C%0A%0A" target="_blank" rel="noopener noreferrer">
+                                <i class="fa-solid fa-paper-plane"></i> Enviar correo
+                            </a>
+                            <a class="contact-btn secondary" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=soporte%40prezen.edu.co&amp;su=Soporte%20PREZEN&amp;body=Hola%2C%20necesito%20ayuda%20con%20PREZEN." target="_blank" rel="noopener noreferrer">
+                                <i class="fa-solid fa-headset"></i> Soporte
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="parent-profile-overlay" id="parentProfileOverlay" aria-hidden="true">
+                <section class="parent-profile-dialog" role="dialog" aria-modal="true" aria-labelledby="parentProfileTitle">
+                    <header class="parent-profile-header">
+                        <div>
+                            <div class="parent-profile-eyebrow">PERFIL</div>
+                            <h2 class="parent-profile-title" id="parentProfileTitle">Mi perfil</h2>
+                        </div>
+                        <button type="button" class="parent-profile-close" id="closeParentProfile" aria-label="Cerrar perfil">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </header>
+                    <div class="parent-profile-body">
+                        <div id="parentProfileSummary">
+                            <div class="parent-profile-identity">
+                                <img class="parent-profile-avatar" id="parentProfileSummaryAvatar" src="https://ui-avatars.com/api/?name=Padres+de+Familia&background=5c4def&color=fff" alt="Foto del acudiente">
+                                <div>
+                                    <h3 class="parent-profile-name" id="parentProfileSummaryName">Padre de familia</h3>
+                                    <p class="parent-profile-role">Padre de familia</p>
+                                </div>
+                            </div>
+                            <div class="parent-profile-grid" style="margin-top:16px;">
+                                <div class="parent-profile-info">
+                                    <div class="parent-profile-label">Correo</div>
+                                    <div class="parent-profile-value" id="parentProfileSummaryEmail">-</div>
+                                </div>
+                                <div class="parent-profile-info">
+                                    <div class="parent-profile-label">Teléfono</div>
+                                    <div class="parent-profile-value" id="parentProfileSummaryPhone">-</div>
+                                </div>
+                                <div class="parent-profile-info">
+                                    <div class="parent-profile-label">Sesión</div>
+                                    <div class="parent-profile-value">Activa</div>
+                                </div>
+                            </div>
+                            <div class="parent-profile-actions" style="margin-top:20px;">
+                                <button type="button" class="parent-profile-action primary" id="editParentProfile">Editar perfil</button>
+                                <button type="button" class="parent-profile-action" data-close-parent-profile>Cerrar</button>
+                            </div>
+                            <p class="parent-profile-status" id="parentProfileSavedStatus" role="status" aria-live="polite"></p>
+                        </div>
+                        <form class="parent-profile-edit" id="parentProfileEditForm" hidden>
+                            <h3 class="parent-profile-edit-title">Editar información</h3>
+                            <div class="parent-profile-edit-layout">
+                                <div class="parent-profile-photo">
+                                    <input type="file" id="parentProfilePhotoInput" accept="image/*" aria-label="Seleccionar foto de perfil" hidden>
+                                    <img class="parent-profile-avatar" id="parentProfileEditAvatar" src="https://ui-avatars.com/api/?name=Padres+de+Familia&background=5c4def&color=fff" alt="Vista previa de la foto del acudiente">
+                                    <button type="button" class="parent-profile-action primary" id="changeParentProfilePhoto">Cambiar foto</button>
+                                </div>
+                                <div class="parent-profile-fields">
+                                    <div class="wide parent-profile-info">
+                                        <div class="parent-profile-label">Nombre</div>
+                                        <div class="parent-profile-value" id="parentProfileEditName">-</div>
+                                    </div>
+                                    <div class="wide parent-profile-info">
+                                        <div class="parent-profile-label">Correo</div>
+                                        <div class="parent-profile-value" id="parentProfileEditEmail">-</div>
+                                    </div>
+                                    <div>
+                                        <label for="parentProfilePhone">Teléfono</label>
+                                        <input type="tel" id="parentProfilePhone" name="telefono" autocomplete="tel" required maxlength="30">
+                                    </div>
+                                    <p class="parent-profile-status wide" id="parentProfileEditStatus" role="status" aria-live="polite"></p>
+                                </div>
+                            </div>
+                            <div class="parent-profile-actions">
+                                <button type="button" class="parent-profile-action" id="cancelParentProfileEdit">Cancelar</button>
+                                <button type="submit" class="parent-profile-action primary">Guardar cambios</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
             </div>
 
             <!-- Footer Global -->
@@ -409,19 +640,228 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Init line chart for Panel Principal (View 1)
-        const ctx1 = document.getElementById('trendChart1').getContext('2d');
-        let gradientFill1 = ctx1.createLinearGradient(0, 0, 0, 150);
-        gradientFill1.addColorStop(0, 'rgba(81, 68, 217, 0.2)');
-        gradientFill1.addColorStop(1, 'rgba(81, 68, 217, 0)');
+        // Carga la personalizacion propia de la sesion de padres.
+        try {
+            const savedSession = JSON.parse(localStorage.getItem('prezenSession') || '{}');
+            const savedProfile = JSON.parse(localStorage.getItem('parentProfileData') || '{}');
+            const parentProfile = { ...savedSession, ...savedProfile };
+            const parentAvatars = document.querySelectorAll('.user-profile .avatar');
+            const parentNames = document.querySelectorAll('.user-profile .user-name');
+            const parentRoles = document.querySelectorAll('.user-profile .user-role');
 
-        new Chart(ctx1, {
+            if (parentProfile.fotoBase64 && parentProfile.fotoBase64.startsWith('data:image')) {
+                parentAvatars.forEach(avatar => avatar.src = parentProfile.fotoBase64);
+            }
+            if (parentProfile.nombre) parentNames.forEach(name => name.textContent = parentProfile.nombre);
+            if (parentProfile.rol) parentRoles.forEach(role => role.textContent = parentProfile.rol);
+        } catch (error) {
+            console.error('No se pudo cargar la personalizacion de padres:', error);
+        }
+
+        const parentProfileOverlay = document.getElementById('parentProfileOverlay');
+        const parentProfileForm = document.getElementById('parentProfileEditForm');
+        const parentProfilePhotoInput = document.getElementById('parentProfilePhotoInput');
+        const parentProfileEditAvatar = document.getElementById('parentProfileEditAvatar');
+        let parentProfileImage = '';
+        let parentProfileData = {};
+
+        function readParentProfileData() {
+            try {
+                const profile = JSON.parse(localStorage.getItem('parentProfileData') || '{}');
+                const session = JSON.parse(localStorage.getItem('prezenSession') || '{}');
+                if (!profile || Array.isArray(profile) || typeof profile !== 'object') {
+                    throw new Error('Los datos del perfil no tienen un formato válido.');
+                }
+
+                parentProfileData = {
+                    nombre: profile.nombre || (session.nombre && session.nombre.toLowerCase() !== 'padre' ? session.nombre : 'Carlos y María López'),
+                    correo: profile.correo || session.email || 'padres@prezen.edu',
+                    telefono: profile.telefono || '+57 300 000 0000',
+                    telefonoRespaldo: profile.telefonoRespaldo || '+57 310 000 0000',
+                    rol: profile.rol || session.rol || 'Padres de Familia',
+                    fotoBase64: profile.fotoBase64 || ''
+                };
+                return parentProfileData;
+            } catch (error) {
+                console.error('No se pudieron cargar los datos del perfil de padres:', error);
+                document.getElementById('parentProfileSavedStatus').textContent = 'No fue posible cargar los datos guardados del perfil.';
+                return parentProfileData;
+            }
+        }
+
+        function renderParentProfile() {
+            const name = parentProfileData.nombre || 'Padre de familia';
+            const avatar = parentProfileData.fotoBase64 && parentProfileData.fotoBase64.startsWith('data:image/')
+                ? parentProfileData.fotoBase64
+                : `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=5c4def&color=fff`;
+            document.getElementById('parentProfileSummaryName').textContent = name;
+            document.getElementById('parentProfileSummaryEmail').textContent = parentProfileData.correo || '-';
+            document.getElementById('parentProfileSummaryPhone').textContent = parentProfileData.telefono || '-';
+            document.getElementById('parentProfileSummaryAvatar').src = avatar;
+            parentProfileEditAvatar.src = avatar;
+            document.querySelectorAll('.user-profile .avatar').forEach(image => image.src = avatar);
+            document.querySelectorAll('.user-profile .user-name').forEach(element => element.textContent = name);
+            document.querySelectorAll('.user-profile .user-role').forEach(element => element.textContent = parentProfileData.rol || 'Padres de Familia');
+        }
+
+        function showParentProfileSummary() {
+            parentProfileForm.hidden = true;
+            document.getElementById('parentProfileSummary').hidden = false;
+        }
+
+        function openParentProfile() {
+            parentProfileData = readParentProfileData();
+            parentProfileImage = parentProfileData.fotoBase64 || '';
+            document.getElementById('parentProfileEditName').textContent = parentProfileData.nombre;
+            document.getElementById('parentProfileEditEmail').textContent = parentProfileData.correo;
+            document.getElementById('parentProfilePhone').value = parentProfileData.telefono;
+            document.getElementById('parentProfileSavedStatus').textContent = '';
+            document.getElementById('parentProfileEditStatus').textContent = '';
+            document.getElementById('parentProfileEditStatus').dataset.state = '';
+            renderParentProfile();
+            parentProfileForm.hidden = true;
+            document.getElementById('parentProfileSummary').hidden = false;
+            parentProfileOverlay.classList.add('open');
+            parentProfileOverlay.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            document.getElementById('closeParentProfile').focus();
+        }
+
+        function closeParentProfile() {
+            parentProfileOverlay.classList.remove('open');
+            parentProfileOverlay.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            document.querySelector('[data-open-parent-profile]')?.focus();
+        }
+
+        function setParentProfileEditStatus(message, state) {
+            const status = document.getElementById('parentProfileEditStatus');
+            status.textContent = message;
+            status.dataset.state = state;
+        }
+
+        document.querySelector('[data-open-parent-profile]').addEventListener('click', event => {
+            event.preventDefault();
+            event.stopPropagation();
+            const dropdown = document.getElementById('profileDropdown1');
+            dropdown.style.opacity = '0';
+            dropdown.style.visibility = 'hidden';
+            dropdown.style.transform = 'translateY(-10px)';
+            openParentProfile();
+        });
+
+        document.getElementById('closeParentProfile').addEventListener('click', closeParentProfile);
+        document.querySelectorAll('[data-close-parent-profile]').forEach(button => button.addEventListener('click', closeParentProfile));
+        parentProfileOverlay.addEventListener('click', event => {
+            if (event.target === parentProfileOverlay) closeParentProfile();
+        });
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && parentProfileOverlay.classList.contains('open')) closeParentProfile();
+        });
+
+        document.getElementById('editParentProfile').addEventListener('click', () => {
+            document.getElementById('parentProfileSummary').hidden = true;
+            parentProfileForm.hidden = false;
+            document.getElementById('parentProfilePhone').focus();
+        });
+
+        document.getElementById('cancelParentProfileEdit').addEventListener('click', () => {
+            parentProfilePhotoInput.value = '';
+            document.getElementById('parentProfileEditStatus').textContent = '';
+            showParentProfileSummary();
+        });
+
+        document.getElementById('changeParentProfilePhoto').addEventListener('click', () => parentProfilePhotoInput.click());
+        parentProfilePhotoInput.addEventListener('change', event => {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+            if (!file.type.startsWith('image/')) {
+                setParentProfileEditStatus('Selecciona un archivo de imagen válido.', 'error');
+                parentProfilePhotoInput.value = '';
+                return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                setParentProfileEditStatus('La foto debe pesar menos de 5 MB.', 'error');
+                parentProfilePhotoInput.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onerror = () => setParentProfileEditStatus('No se pudo leer la foto seleccionada.', 'error');
+            reader.onload = () => {
+                const image = new Image();
+                image.onerror = () => setParentProfileEditStatus('No se pudo procesar la foto seleccionada.', 'error');
+                image.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const scale = Math.min(1, 600 / Math.max(image.width, image.height));
+                    canvas.width = Math.max(1, Math.round(image.width * scale));
+                    canvas.height = Math.max(1, Math.round(image.height * scale));
+                    const context = canvas.getContext('2d');
+                    if (!context) {
+                        setParentProfileEditStatus('El navegador no pudo preparar la foto.', 'error');
+                        return;
+                    }
+                    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+                    parentProfileImage = canvas.toDataURL('image/jpeg', 0.82);
+                    parentProfileEditAvatar.src = parentProfileImage;
+                    setParentProfileEditStatus('Foto lista. Guarda los cambios para conservarla.', 'success');
+                };
+                image.src = reader.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        parentProfileForm.addEventListener('submit', event => {
+            event.preventDefault();
+            if (!parentProfileForm.reportValidity()) return;
+
+            const updatedProfile = {
+                ...parentProfileData,
+                telefono: document.getElementById('parentProfilePhone').value.trim(),
+                fotoBase64: parentProfileImage
+            };
+
+            try {
+                localStorage.setItem('parentProfileData', JSON.stringify(updatedProfile));
+                const session = JSON.parse(localStorage.getItem('prezenSession') || '{}');
+                localStorage.setItem('prezenSession', JSON.stringify({
+                    ...session,
+                    nombre: updatedProfile.nombre,
+                    email: updatedProfile.correo,
+                    rol: updatedProfile.rol
+                }));
+                parentProfileData = updatedProfile;
+                renderParentProfile();
+                document.getElementById('parentProfileSavedStatus').textContent = 'Los cambios del perfil se guardaron correctamente.';
+                showParentProfileSummary();
+            } catch (error) {
+                console.error('No se pudo guardar el perfil del acudiente:', error);
+                setParentProfileEditStatus('No se pudieron guardar los cambios. Libera espacio del navegador e inténtalo de nuevo.', 'error');
+            }
+        });
+
+        let trendChart = null;
+        let rendimientoChart = null;
+        let selectedTrendMetric = 'asistencia';
+
+        try {
+            if (typeof Chart === 'undefined') {
+                throw new Error('Chart.js no está disponible.');
+            }
+
+            // Init line chart for Panel Principal (View 1)
+            const ctx1 = document.getElementById('trendChart1').getContext('2d');
+            const gradientFill1 = ctx1.createLinearGradient(0, 0, 0, 150);
+            gradientFill1.addColorStop(0, 'rgba(81, 68, 217, 0.2)');
+            gradientFill1.addColorStop(1, 'rgba(81, 68, 217, 0)');
+
+            trendChart = new Chart(ctx1, {
             type: 'line',
             data: {
-                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+                labels: [],
                 datasets: [{
-                    label: 'Trend',
-                    data: [0, 5, 5.2, 8, 7.5, 12, 12.5, 11, 19, 18, 20],
+                    label: 'Asistencia',
+                    data: [],
                     borderColor: '#5c4def',
                     borderWidth: 2,
                     pointBackgroundColor: '#5c4def',
@@ -436,22 +876,29 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: context => `${context.dataset.label}: ${context.raw}${selectedTrendMetric === 'asistencia' ? '%' : ''}`
+                        }
+                    }
+                },
                 scales: {
                     x: { display: false },
                     y: {
-                        beginAtZero: true, max: 30,
-                        ticks: { stepSize: 10, color: '#a0aec0', font: { size: 10 } },
+                        beginAtZero: true, max: 100,
+                        ticks: { color: '#a0aec0', font: { size: 10 } },
                         grid: { color: '#e2e8f0', drawBorder: false }
                     }
                 }
             }
-        });
+            });
 
-        // Init bar chart for Mi Hijo (View 2)
-        const ctx2 = document.getElementById('rendimientoChart').getContext('2d');
+            // Init bar chart for Mi Hijo (View 2)
+            const ctx2 = document.getElementById('rendimientoChart').getContext('2d');
         
-        Chart.register({
+            Chart.register({
             id: 'customLabels',
             afterDatasetsDraw(chart, args, options) {
                 if(chart.canvas.id !== 'rendimientoChart') return;
@@ -462,23 +909,23 @@
                 ctx.fillStyle = '#64748b';
                 
                 const meta = chart.getDatasetMeta(0);
-                const labels = ['72%', '15%', '45%', '12%'];
+                const labels = chart.data.datasets[0].data.map((value, index) => index === 0 ? `${value}%` : `${value}`);
                 
                 meta.data.forEach((bar, index) => {
                     ctx.fillText(labels[index], bar.x, bar.y - 10);
                 });
                 ctx.restore();
             }
-        });
+            });
 
-        new Chart(ctx2, {
+            rendimientoChart = new Chart(ctx2, {
             type: 'bar',
             data: {
-                labels: ['Asistencia', 'Tardanzas', 'Tareas', 'Exámenes'],
+                labels: ['Asistencia', 'Tardanzas', 'Ausencias'],
                 datasets: [{
-                    label: 'Rendimiento',
-                    data: [80, 50, 80, 50],
-                    backgroundColor: ['#22c55e', '#facc15', '#ef4444', '#22c55e'],
+                    label: 'Indicadores de asistencia',
+                    data: [88, 15, 8],
+                    backgroundColor: ['#22c55e', '#facc15', '#ef4444'],
                     borderRadius: 4,
                     barPercentage: 0.5,
                     categoryPercentage: 1.0
@@ -487,49 +934,176 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { display: false }, tooltip: { enabled: false } },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: context => context.dataIndex === 0
+                                ? ` Asistencia: ${context.raw}%`
+                                : ` ${context.label}: ${context.raw}`
+                        }
+                    }
+                },
                 scales: {
                     x: { grid: { display: false }, ticks: { color: '#64748b', font: { size: 10 } } },
                     y: {
                         beginAtZero: true, max: 100,
                         ticks: {
-                            callback: function(value, index) {
-                                const mockupLabels = ['0', '200', '40%', '10%', '500', '400'];
-                                return mockupLabels[index] !== undefined ? mockupLabels[index] : '';
-                            },
+                            callback: value => `${value}${value === 0 ? '' : '%'}`,
                             color: '#a0aec0', font: { size: 10 }
                         },
                         grid: { color: '#e2e8f0', drawBorder: false, borderDash: [5, 5] }
                     }
                 }
             }
+            });
+        } catch (error) {
+            console.error('No se pudieron inicializar los gráficos de asistencia:', error);
+        }
+
+        // Renderiza solo dias lectivos y evita mostrar estados para fechas futuras.
+        const calendarDays = document.getElementById('calendarDays');
+        const calendarMonthLabel = document.getElementById('calendarMonthLabel');
+        const previousMonthButton = document.getElementById('previousMonth');
+        const nextMonthButton = document.getElementById('nextMonth');
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const currentYear = today.getFullYear();
+        const currentMonth = today.getMonth();
+        let displayedMonth = currentMonth;
+
+        const monthNames = [
+            'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+        ];
+
+        // Festivos nacionales de Colombia para 2026.
+        const holidays = new Set([
+            '2026-01-01', '2026-01-12', '2026-03-23', '2026-04-02', '2026-04-03',
+            '2026-05-01', '2026-05-18', '2026-06-08', '2026-06-15', '2026-06-29',
+            '2026-07-20', '2026-08-07', '2026-08-17', '2026-10-12', '2026-11-02',
+            '2026-11-16', '2026-12-08', '2026-12-25'
+        ]);
+
+        function dateKey(year, month, day) {
+            return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        }
+
+        const attendancePatterns = {
+            maria: ['bg-green', 'bg-green', 'bg-yellow', 'bg-green', 'bg-red'],
+            ana: ['bg-green', 'bg-green', 'bg-green', 'bg-yellow', 'bg-green']
+        };
+
+        function getAttendanceStatus(key, month, day) {
+            const attendanceMap = typeof attendanceByChild !== 'undefined' ? attendanceByChild : {};
+            const recordedStatus = attendanceMap[selectedChildId]?.[key];
+            if (recordedStatus) return recordedStatus;
+
+            const pattern = attendancePatterns[selectedChildId] || attendancePatterns.maria;
+            return pattern[(day + month * 2 - 1) % pattern.length];
+        }
+
+        function renderAttendanceCalendar() {
+            if (!calendarDays || !calendarMonthLabel) return;
+
+            const daysInMonth = new Date(currentYear, displayedMonth + 1, 0).getDate();
+            const firstDay = new Date(currentYear, displayedMonth, 1).getDay();
+            const firstWeekday = firstDay === 0 ? 6 : firstDay - 1;
+            const cells = [];
+
+            for (let index = 0; index < firstWeekday; index++) {
+                cells.push('<span class="calendar-day empty" aria-hidden="true"></span>');
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(currentYear, displayedMonth, day);
+                const weekday = date.getDay();
+                const key = dateKey(currentYear, displayedMonth, day);
+                const isFuture = date > today;
+                const isHoliday = holidays.has(key);
+                const isWeekend = weekday === 0 || weekday === 6;
+                const statusClass = isHoliday ? 'holiday' : isWeekend ? 'weekend' : isFuture ? 'future' : getAttendanceStatus(key, displayedMonth, day);
+                const stateLabel = isHoliday ? 'Festivo: no activo' : isWeekend ? 'Fin de semana: no activo' : isFuture ? 'Sin registro' : statusClass === 'bg-green' ? 'Presente' : statusClass === 'bg-yellow' ? 'Retraso' : statusClass === 'bg-red' ? 'Ausencia' : 'Sin registro';
+                cells.push(`<span class="calendar-day ${statusClass}" title="${day} de ${monthNames[displayedMonth]}: ${stateLabel}">${day}</span>`);
+            }
+
+            calendarDays.innerHTML = cells.join('');
+            calendarMonthLabel.textContent = `${monthNames[displayedMonth]} ${currentYear}`;
+            previousMonthButton.disabled = displayedMonth === 0;
+            nextMonthButton.disabled = displayedMonth === currentMonth;
+        }
+
+        previousMonthButton?.addEventListener('click', () => {
+            if (displayedMonth > 0) {
+                displayedMonth--;
+                renderAttendanceCalendar();
+            }
+        });
+
+        nextMonthButton?.addEventListener('click', () => {
+            if (displayedMonth < currentMonth) {
+                displayedMonth++;
+                renderAttendanceCalendar();
+            }
+        });
+
+        const themeToggle = document.getElementById('themeToggle');
+
+        function applyTheme(theme) {
+            const isDark = theme === 'dark';
+            document.body.classList.toggle('dark-theme', isDark);
+            localStorage.setItem('prezen-theme', theme);
+
+            if (themeToggle) {
+                themeToggle.setAttribute('aria-pressed', String(isDark));
+                themeToggle.innerHTML = isDark
+                    ? '<i class="fa-solid fa-sun"></i> <span>Modo claro</span>'
+                    : '<i class="fa-solid fa-moon"></i> <span>Modo oscuro</span>';
+            }
+        }
+
+        const savedTheme = localStorage.getItem('prezen-theme') || 'light';
+        applyTheme(savedTheme);
+
+        themeToggle?.addEventListener('click', () => {
+            const nextTheme = document.body.classList.contains('dark-theme') ? 'light' : 'dark';
+            applyTheme(nextTheme);
         });
 
         // Toggle Sidebar Nav Logic
         const navLinks = document.querySelectorAll('.sidebar-nav li');
         const viewContents = document.querySelectorAll('.view-content');
 
+        function activateView(viewId) {
+            const targetView = document.getElementById(viewId);
+            if (!targetView) return;
+
+            navLinks.forEach(item => item.classList.toggle('active', item.getAttribute('data-view') === viewId));
+            viewContents.forEach(view => view.classList.toggle('active', view === targetView));
+        }
+
         navLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 
                 // Active Class Swap
-                navLinks.forEach(item => item.classList.remove('active'));
-                this.classList.add('active');
-
                 // View Switch Logic
                 const viewId = this.getAttribute('data-view');
                 if(viewId) {
-                    viewContents.forEach(view => {
-                        view.classList.remove('active');
-                    });
-                    const targetView = document.getElementById(viewId);
-                    if(targetView) {
-                        targetView.classList.add('active');
-                    }
+                    activateView(viewId);
+                    history.replaceState(null, '', `#${viewId}`);
                 }
             });
         });
+
+        document.getElementById('brandHomeButton').addEventListener('click', () => {
+            activateView('view-panel');
+            history.replaceState(null, '', '#view-panel');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        const initialViewId = window.location.hash.slice(1);
+        if (initialViewId) activateView(initialViewId);
 
         // Sidebar Collapse Logic
         document.getElementById('sidebarToggle').addEventListener('click', function() {
@@ -565,12 +1139,271 @@
         }
         setupDropdown('userProfileBtn1', 'profileDropdown1');
 
-        // Button Interactions
-        document.querySelector('.btn-invite')?.addEventListener('click', () => alert('Abriendo formulario para agregar observación...'));
-        document.querySelectorAll('.btn-banner').forEach(btn => {
-            btn.addEventListener('click', () => alert('Mostrando detalles completos del hijo...'));
+        const attendanceStatusMap = {
+            present: 'bg-green',
+            late: 'bg-yellow',
+            absent: 'bg-red'
+        };
+
+        const childAttendanceData = {
+            maria: {
+                nombre: 'María Escobedo',
+                curso: '7°B',
+                records: [
+                    { fecha: '2026-09-01', status: 'present' },
+                    { fecha: '2026-09-02', status: 'present' },
+                    { fecha: '2026-09-03', status: 'late' },
+                    { fecha: '2026-09-04', status: 'present' },
+                    { fecha: '2026-09-07', status: 'present' },
+                    { fecha: '2026-09-08', status: 'late' },
+                    { fecha: '2026-09-09', status: 'present' },
+                    { fecha: '2026-09-10', status: 'absent' },
+                    { fecha: '2026-09-11', status: 'present' },
+                    { fecha: '2026-09-14', status: 'present' },
+                    { fecha: '2026-09-15', status: 'absent' },
+                    { fecha: '2026-09-16', status: 'present' },
+                    { fecha: '2026-09-17', status: 'present' },
+                    { fecha: '2026-09-18', status: 'late' },
+                    { fecha: '2026-09-21', status: 'present' },
+                    { fecha: '2026-09-22', status: 'present' },
+                    { fecha: '2026-09-23', status: 'present' },
+                    { fecha: '2026-09-24', status: 'late' },
+                    { fecha: '2026-09-25', status: 'present' },
+                    { fecha: '2026-09-28', status: 'present' },
+                    { fecha: '2026-09-29', status: 'absent' },
+                    { fecha: '2026-09-30', status: 'present' }
+                ]
+            },
+            ana: {
+                nombre: 'Ana López',
+                curso: '7°B',
+                records: [
+                    { fecha: '2026-09-01', status: 'present' },
+                    { fecha: '2026-09-02', status: 'present' },
+                    { fecha: '2026-09-03', status: 'present' },
+                    { fecha: '2026-09-04', status: 'late' },
+                    { fecha: '2026-09-07', status: 'present' },
+                    { fecha: '2026-09-08', status: 'present' },
+                    { fecha: '2026-09-09', status: 'present' },
+                    { fecha: '2026-09-10', status: 'present' },
+                    { fecha: '2026-09-11', status: 'present' },
+                    { fecha: '2026-09-14', status: 'present' },
+                    { fecha: '2026-09-15', status: 'late' },
+                    { fecha: '2026-09-16', status: 'present' },
+                    { fecha: '2026-09-17', status: 'present' },
+                    { fecha: '2026-09-18', status: 'present' },
+                    { fecha: '2026-09-21', status: 'present' },
+                    { fecha: '2026-09-22', status: 'present' },
+                    { fecha: '2026-09-23', status: 'present' },
+                    { fecha: '2026-09-24', status: 'present' },
+                    { fecha: '2026-09-25', status: 'present' },
+                    { fecha: '2026-09-28', status: 'late' },
+                    { fecha: '2026-09-29', status: 'present' },
+                    { fecha: '2026-09-30', status: 'present' }
+                ]
+            }
+        };
+
+        function calculateStats(records) {
+            const total = records.length || 1;
+            const present = records.filter(item => item.status === 'present').length;
+            const late = records.filter(item => item.status === 'late').length;
+            const absent = records.filter(item => item.status === 'absent').length;
+            const attendance = Math.round(((present + (late * 0.5)) / total) * 100);
+            const puntualidad = Math.round(((present + late) / total) * 100);
+            const trend = [];
+            const chunkSize = Math.max(1, Math.ceil(total / 10));
+
+            for (let index = 0; index < 10; index++) {
+                const chunk = records.slice(index * chunkSize, (index + 1) * chunkSize);
+                if (!chunk.length) {
+                    trend.push(0);
+                    continue;
+                }
+
+                const chunkPresent = chunk.filter(item => item.status === 'present').length;
+                const chunkLate = chunk.filter(item => item.status === 'late').length;
+                const chunkAttendance = Math.round(((chunkPresent + (chunkLate * 0.5)) / chunk.length) * 100);
+                trend.push(chunkAttendance);
+            }
+
+            return {
+                tardanzas: String(late),
+                inasistencias: String(absent),
+                puntualidad: `${puntualidad}%`,
+                asistencia: `${attendance}%`,
+                rendimiento: [attendance, late, absent],
+                trend
+            };
+        }
+
+        const childStats = Object.fromEntries(
+            Object.entries(childAttendanceData).map(([childId, child]) => [
+                childId,
+                {
+                    ...child,
+                    ...calculateStats(child.records)
+                }
+            ])
+        );
+
+        const trendMetrics = {
+            alumnos: { label: 'Alumnos presentes', color: '#5c4def', max: null },
+            inasistencias: { label: 'Inasistencias', color: '#ef4444', max: null },
+            asistencia: { label: 'Asistencia', color: '#5c4def', max: 100 }
+        };
+
+        function getCohortAttendanceByDate() {
+            const recordsByDate = new Map();
+
+            Object.values(childAttendanceData).forEach(child => {
+                child.records.forEach(record => {
+                    if (!recordsByDate.has(record.fecha)) recordsByDate.set(record.fecha, []);
+                    recordsByDate.get(record.fecha).push(record.status);
+                });
+            });
+
+            return [...recordsByDate.entries()]
+                .sort(([firstDate], [secondDate]) => firstDate.localeCompare(secondDate));
+        }
+
+        function updateTrendMetric(metric) {
+            const config = trendMetrics[metric];
+            if (!config) return;
+
+            selectedTrendMetric = metric;
+            const dateRecords = getCohortAttendanceByDate();
+            const values = dateRecords.map(([, statuses]) => {
+                if (metric === 'alumnos') {
+                    return statuses.filter(status => status === 'present' || status === 'late').length;
+                }
+                if (metric === 'inasistencias') {
+                    return statuses.filter(status => status === 'absent').length;
+                }
+
+                const attendanceScore = statuses.reduce((total, status) => (
+                    total + (status === 'present' ? 1 : status === 'late' ? 0.5 : 0)
+                ), 0);
+                return Math.round((attendanceScore / statuses.length) * 100);
+            });
+
+            if (trendChart) {
+                trendChart.data.labels = dateRecords.map(([date]) => {
+                    const [, month, day] = date.split('-');
+                    return `${day}/${month}`;
+                });
+                trendChart.data.datasets[0].label = config.label;
+                trendChart.data.datasets[0].data = values;
+                trendChart.data.datasets[0].borderColor = config.color;
+                trendChart.data.datasets[0].pointBackgroundColor = config.color;
+                trendChart.data.datasets[0].backgroundColor = config.color === '#ef4444'
+                    ? 'rgba(239, 68, 68, 0.12)'
+                    : 'rgba(81, 68, 217, 0.16)';
+                trendChart.options.scales.y.max = config.max || Math.max(1, ...values);
+                trendChart.options.scales.y.ticks.stepSize = metric === 'asistencia'
+                    ? 20
+                    : Math.max(1, Math.ceil(trendChart.options.scales.y.max / 5));
+                trendChart.update();
+            }
+
+            const childCount = Object.keys(childAttendanceData).length;
+            const totalRecords = Object.values(childAttendanceData)
+                .reduce((total, child) => total + child.records.length, 0);
+            const totalAbsences = Object.values(childAttendanceData)
+                .reduce((total, child) => total + child.records.filter(record => record.status === 'absent').length, 0);
+            const totalAttendanceScore = Object.values(childAttendanceData)
+                .flatMap(child => child.records)
+                .reduce((total, record) => total + (record.status === 'present' ? 1 : record.status === 'late' ? 0.5 : 0), 0);
+
+            document.querySelector('[data-picker-value="alumnos"]').textContent = String(childCount);
+            document.querySelector('[data-picker-value="inasistencias"]').textContent = String(totalAbsences);
+            document.querySelector('[data-picker-value="asistencia"]').textContent =
+                `${Math.round((totalAttendanceScore / totalRecords) * 100)}%`;
+            document.querySelectorAll('[data-trend-metric]').forEach(button => {
+                const isSelected = button.dataset.trendMetric === metric;
+                button.classList.toggle('active', isSelected);
+                button.setAttribute('aria-pressed', String(isSelected));
+            });
+        }
+
+        const attendanceByChild = Object.fromEntries(
+            Object.entries(childAttendanceData).map(([childId, child]) => [
+                childId,
+                Object.fromEntries(child.records.map(record => [record.fecha, attendanceStatusMap[record.status]]))
+            ])
+        );
+
+        let selectedChildId = localStorage.getItem('prezen-selected-child') || 'maria';
+
+        function updateSelectedChild(childId) {
+            const child = childStats[childId];
+            if (!child) return;
+
+            selectedChildId = childId;
+            localStorage.setItem('prezen-selected-child', childId);
+
+            document.querySelectorAll('.child-tab').forEach(tab => {
+                const isSelected = tab.dataset.child === childId;
+                tab.classList.toggle('active', isSelected);
+                tab.setAttribute('aria-selected', String(isSelected));
+            });
+
+            document.querySelector('[data-stat="tardanzas"]').textContent = child.tardanzas;
+            document.querySelector('[data-stat="inasistencias"]').textContent = child.inasistencias;
+            document.querySelector('[data-stat="puntualidad"]').textContent = child.puntualidad;
+            document.querySelector('[data-stat="asistencia"]').textContent = child.asistencia;
+            document.querySelector('[data-detail-stat="tardanzas"]').textContent = child.tardanzas;
+            document.querySelector('[data-detail-stat="inasistencias"]').textContent = child.inasistencias;
+            document.querySelector('[data-detail-stat="puntualidad"]').textContent = child.puntualidad;
+            document.querySelector('[data-detail-stat="asistencia"]').textContent = child.asistencia;
+            document.getElementById('selectedChildTitle').textContent = `Mi Hijo - ${child.curso}`;
+            const attendancePercent = Number.parseInt(child.asistencia, 10);
+            document.getElementById('childMotivation').textContent = attendancePercent >= 90
+                ? `¡Excelente! La asistencia de ${child.nombre.split(' ')[0]} está por encima del promedio 👍`
+                : `¡Felicitaciones! La asistencia de ${child.nombre.split(' ')[0]} está mejorando 👍`;
+            document.getElementById('detailChildTitle').textContent = `Mi Hijo: ${child.nombre} - ${child.curso}`;
+            document.getElementById('detailChildCardTitle').textContent = `Mi Hija - ${child.nombre}`;
+            document.getElementById('detailPerformanceDescription').textContent = `Consulta el historial completo de ${child.nombre.split(' ')[0]}`;
+            document.querySelectorAll('[data-child-row]').forEach(row => {
+                const isSelected = row.dataset.childRow === childId;
+                row.hidden = !isSelected;
+                if (isSelected) {
+                    row.querySelector('[data-child-field="nombre"]').textContent = child.nombre;
+                    row.querySelector('[data-child-field="asistencia"]').textContent = child.asistencia;
+                    row.querySelector('[data-child-field="tardanzas"]').textContent = child.tardanzas;
+                    row.querySelector('[data-child-field="inasistencias"]').textContent = child.inasistencias;
+                }
+            });
+
+            if (rendimientoChart) {
+                rendimientoChart.data.datasets[0].data = child.rendimiento;
+                rendimientoChart.update();
+            }
+
+            renderAttendanceCalendar();
+        }
+
+        document.querySelectorAll('.child-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                updateSelectedChild(tab.dataset.child);
+            });
         });
-        document.querySelector('.btn-add-nuevo')?.addEventListener('click', () => alert('Abriendo formulario para nuevo reporte...'));
+
+        updateSelectedChild(selectedChildId);
+
+        // Button Interactions
+        document.querySelectorAll('.btn-banner').forEach(btn => {
+            btn.addEventListener('click', () => {
+                activateView('view-hijo');
+                history.replaceState(null, '', '#view-hijo');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+        document.querySelectorAll('[data-trend-metric]').forEach(button => {
+            button.addEventListener('click', () => updateTrendMetric(button.dataset.trendMetric));
+        });
+
+        updateTrendMetric(selectedTrendMetric);
 
         // Live Update Timer
         const updateBadge = document.querySelector('.badge-update');

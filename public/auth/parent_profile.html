@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - Padres - PREZEN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <style>
+        :root {
+            --profile-ink: #1e293b;
+            --profile-muted: #64748b;
+            --profile-panel: #1e293b;
+            --profile-paper: #f8fafc;
+        }
+        body {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 28px;
+            background: linear-gradient(125deg, #626d80 0%, #667186 52%, #5d6685 100%);
+        }
+        .dashboard-wrapper { width: 100%; height: auto; min-height: 0; justify-content: center; overflow: visible; }
+        .sidebar { display: none; }
+        .main-content {
+            flex: 0 1 620px;
+            gap: 0;
+            padding: 0;
+            overflow: visible;
+            border: 1px solid rgba(255, 255, 255, .75);
+            border-radius: 20px;
+            box-shadow: 0 24px 70px rgba(15, 23, 42, .3);
+            background: var(--profile-panel);
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 108px;
+            padding: 25px 27px 20px;
+            background: var(--profile-paper);
+            border-radius: 19px 19px 0 0;
+        }
+        .profile-eyebrow { color: #5c4def; font-size: .78rem; font-weight: 800; letter-spacing: .08em; }
+        .profile-title { margin-top: 8px; color: var(--profile-ink); font-size: 1.55rem; font-weight: 750; }
+        .profile-close {
+            display: grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            background: transparent;
+            color: var(--profile-ink);
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+        .profile-close:hover { background: #e2e8f0; }
+        .profile-content { display: grid; gap: 20px; padding: 24px 25px 25px; }
+        .profile-identity, .profile-info-card {
+            color: var(--profile-ink);
+            background: var(--profile-paper);
+            border-radius: 15px;
+        }
+        .profile-identity { display: flex; align-items: center; gap: 20px; min-height: 110px; padding: 18px 22px; }
+        .parent-avatar { width: 68px; height: 68px; flex: 0 0 68px; border: 3px solid white; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 8px rgba(15, 23, 42, .15); }
+        .profile-name { color: var(--profile-ink); font-size: 1.2rem; font-weight: 750; }
+        .profile-role { margin-top: 5px; color: var(--profile-muted); font-size: .95rem; }
+        .profile-info-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+        .profile-info-card { min-height: 68px; padding: 14px; }
+        .profile-info-label { color: var(--profile-muted); font-size: .69rem; font-weight: 800; letter-spacing: .055em; text-transform: uppercase; }
+        .profile-info-value { overflow-wrap: anywhere; margin-top: 6px; color: var(--profile-ink); font-size: .93rem; font-weight: 700; }
+        .profile-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 4px; }
+        .profile-action {
+            min-height: 42px;
+            padding: 0 19px;
+            border: 1px solid #94a3b8;
+            border-radius: 10px;
+            background: transparent;
+            color: white;
+            font-size: .95rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .profile-action:hover { background: rgba(255, 255, 255, .08); }
+        .profile-action.primary { border-color: #5c4def; background: #5c4def; }
+        .profile-action.primary:hover { background: #4f42dc; }
+        .profile-edit { display: grid; gap: 18px; padding: 20px; border-radius: 15px; background: var(--profile-paper); }
+        .profile-edit[hidden] { display: none; }
+        .profile-edit-heading { color: var(--profile-ink); font-size: 1.05rem; font-weight: 750; }
+        .profile-edit-layout { display: grid; grid-template-columns: 130px minmax(0, 1fr); align-items: start; gap: 22px; }
+        .profile-photo-controls { display: grid; justify-items: center; gap: 10px; text-align: center; }
+        .profile-photo-controls .parent-avatar { width: 96px; height: 96px; }
+        .profile-input { width: 100%; min-height: 42px; margin-top: 5px; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; outline: none; background: white; color: var(--profile-ink); }
+        .profile-input:focus { border-color: #5c4def; box-shadow: 0 0 0 3px rgba(79, 70, 229, .12); }
+        .profile-label { color: var(--profile-muted); font-size: .78rem; font-weight: 700; }
+        .profile-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+        .profile-fields .wide { grid-column: 1 / -1; }
+        .profile-status { min-height: 1.3em; margin: 0; color: var(--profile-muted); font-size: .85rem; }
+        .profile-status[data-state="success"] { color: #15803d; }
+        .profile-status[data-state="error"] { color: #b91c1c; }
+        @media (max-width: 560px) {
+            body { padding: 14px; }
+            .profile-header { min-height: 96px; padding: 20px; }
+            .profile-content { gap: 14px; padding: 16px; }
+            .profile-identity { gap: 14px; padding: 16px; }
+            .profile-name { font-size: 1.05rem; }
+            .profile-info-grid { gap: 10px; }
+            .profile-info-card { padding: 12px; }
+            .profile-edit-layout { grid-template-columns: 1fr; }
+            .profile-photo-controls { justify-items: start; grid-template-columns: auto 1fr; align-items: center; }
+            .profile-photo-controls .parent-avatar { width: 70px; height: 70px; }
+        }
+        @media (max-width: 380px) {
+            .profile-info-grid, .profile-fields { grid-template-columns: 1fr; }
+            .profile-fields .wide { grid-column: auto; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-wrapper">
+        <main class="main-content">
+            <header class="profile-header">
+                <div>
+                    <div class="profile-eyebrow">PERFIL</div>
+                    <h1 class="profile-title">Mi perfil</h1>
+                </div>
+                <button type="button" class="profile-close" id="closeProfile" aria-label="Cerrar perfil"><i class="fa-solid fa-xmark"></i></button>
+            </header>
+
+            <section class="profile-content" aria-label="Perfil del acudiente">
+                <div id="profileSummary">
+                    <div class="profile-identity">
+                        <img src="https://ui-avatars.com/api/?name=Padres+de+Familia&background=5c4def&color=fff" id="summaryProfileImage" class="parent-avatar" alt="Foto del acudiente">
+                        <div>
+                            <h2 class="profile-name" id="summaryProfileName">Padre de familia</h2>
+                            <p class="profile-role">Padre de familia</p>
+                        </div>
+                    </div>
+                    <div class="profile-info-grid" style="margin-top:20px;">
+                        <div class="profile-info-card">
+                            <div class="profile-info-label">Correo</div>
+                            <div class="profile-info-value" id="summaryProfileEmail">-</div>
+                        </div>
+                        <div class="profile-info-card">
+                            <div class="profile-info-label">Teléfono</div>
+                            <div class="profile-info-value" id="summaryProfilePhone">-</div>
+                        </div>
+                        <div class="profile-info-card">
+                            <div class="profile-info-label">Área</div>
+                            <div class="profile-info-value">Grupo 7°B</div>
+                        </div>
+                        <div class="profile-info-card">
+                            <div class="profile-info-label">Sesión</div>
+                            <div class="profile-info-value">Activa</div>
+                        </div>
+                    </div>
+                    <div class="profile-actions" style="margin-top:24px;">
+                        <button type="button" class="profile-action primary" id="editProfile">Editar perfil</button>
+                        <button type="button" class="profile-action" id="closeProfileFooter">Cerrar</button>
+                    </div>
+                    <p id="summaryProfileStatus" class="profile-status" role="status" aria-live="polite"></p>
+                </div>
+
+                <form id="parentProfileForm" class="profile-edit" hidden>
+                    <h2 class="profile-edit-heading">Editar información</h2>
+                    <div class="profile-edit-layout">
+                        <div class="profile-photo-controls">
+                            <input type="file" id="profileImageInput" accept="image/*" aria-label="Seleccionar foto de perfil" hidden>
+                            <img src="https://ui-avatars.com/api/?name=Padres+de+Familia&background=5c4def&color=fff" id="profileImagePreview" class="parent-avatar" alt="Foto del acudiente">
+                            <button type="button" class="profile-action primary" id="btnChangePhoto">Cambiar foto</button>
+                        </div>
+                        <div class="profile-fields">
+                            <div class="wide">
+                                <label class="profile-label" for="profileNameInput">Nombre completo</label>
+                                <input class="profile-input" id="profileNameInput" name="nombre" autocomplete="name" required maxlength="120">
+                            </div>
+                            <div class="wide">
+                                <label class="profile-label" for="profileEmailInput">Correo electrónico</label>
+                                <input type="email" class="profile-input" id="profileEmailInput" name="correo" autocomplete="email" required maxlength="254">
+                            </div>
+                            <div>
+                                <label class="profile-label" for="profilePhoneInput">Teléfono de contacto</label>
+                                <input type="tel" class="profile-input" id="profilePhoneInput" name="telefono" autocomplete="tel" required maxlength="30">
+                            </div>
+                            <div>
+                                <label class="profile-label" for="profileBackupPhoneInput">Teléfono de respaldo</label>
+                                <input type="tel" class="profile-input" id="profileBackupPhoneInput" name="telefonoRespaldo" autocomplete="tel" maxlength="30">
+                            </div>
+                            <p id="profileStatus" class="profile-status wide" role="status" aria-live="polite"></p>
+                        </div>
+                    </div>
+                    <div class="profile-actions">
+                        <button type="button" class="profile-action" id="cancelEdit">Cancelar</button>
+                        <button type="submit" class="profile-action primary" id="btnSaveChanges">Guardar cambios</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const storageKey = 'parentProfileData';
+            const profileForm = document.getElementById('parentProfileForm');
+            const profileStatus = document.getElementById('profileStatus');
+            const profileImageInput = document.getElementById('profileImageInput');
+            const profileImagePreview = document.getElementById('profileImagePreview');
+            const maxImageBytes = 5 * 1024 * 1024;
+            let selectedPhoto = '';
+            let storedProfile = {};
+            let session = {};
+
+            function readStoredObject(key) {
+                try {
+                    const value = JSON.parse(localStorage.getItem(key) || '{}');
+                    return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+                } catch (error) {
+                    console.error(`No se pudo leer ${key}:`, error);
+                    return {};
+                }
+            }
+
+            function showStatus(message, state) {
+                profileStatus.textContent = message;
+                profileStatus.dataset.state = state;
+            }
+
+            function renderProfile(profile) {
+                const name = profile.nombre || 'Padre de familia';
+                document.getElementById('summaryProfileName').textContent = name;
+                document.getElementById('summaryProfileEmail').textContent = profile.correo || '-';
+                document.getElementById('summaryProfilePhone').textContent = profile.telefono || '-';
+
+                const avatar = profile.fotoBase64 && profile.fotoBase64.startsWith('data:image/')
+                    ? profile.fotoBase64
+                    : `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=5c4def&color=fff`;
+                document.getElementById('summaryProfileImage').src = avatar;
+                profileImagePreview.src = avatar;
+            }
+
+            function showSummary() {
+                profileForm.hidden = true;
+                document.getElementById('profileSummary').hidden = false;
+            }
+
+            function showEditor() {
+                document.getElementById('profileSummary').hidden = true;
+                profileForm.hidden = false;
+                document.getElementById('profileNameInput').focus();
+            }
+
+            function closeProfile() {
+                window.location.href = '../panel_control/padres_familia/index.html#view-panel';
+            }
+
+            storedProfile = readStoredObject(storageKey);
+            session = readStoredObject('prezenSession');
+            const defaultName = session.nombre && session.nombre.toLowerCase() !== 'padre'
+                ? session.nombre
+                : 'Carlos y María López';
+            const defaults = {
+                nombre: defaultName,
+                correo: session.email || 'padres@prezen.edu',
+                telefono: '+57 300 000 0000',
+                telefonoRespaldo: '+57 310 000 0000'
+            };
+            const profileValues = { ...defaults, ...storedProfile };
+            const fields = {
+                nombre: 'profileNameInput',
+                correo: 'profileEmailInput',
+                telefono: 'profilePhoneInput',
+                telefonoRespaldo: 'profileBackupPhoneInput'
+            };
+            Object.entries(fields).forEach(([key, id]) => {
+                document.getElementById(id).value = profileValues[key] || '';
+            });
+            selectedPhoto = storedProfile.fotoBase64 && storedProfile.fotoBase64.startsWith('data:image/')
+                ? storedProfile.fotoBase64
+                : '';
+            renderProfile({ ...profileValues, ...storedProfile });
+
+            document.getElementById('editProfile').addEventListener('click', showEditor);
+            document.getElementById('cancelEdit').addEventListener('click', () => {
+                Object.entries(fields).forEach(([key, id]) => {
+                    document.getElementById(id).value = profileValues[key] || '';
+                });
+                selectedPhoto = storedProfile.fotoBase64 && storedProfile.fotoBase64.startsWith('data:image/')
+                    ? storedProfile.fotoBase64
+                    : '';
+                renderProfile({ ...profileValues, ...storedProfile });
+                profileImageInput.value = '';
+                showStatus('', '');
+                showSummary();
+            });
+            document.getElementById('closeProfile').addEventListener('click', closeProfile);
+            document.getElementById('closeProfileFooter').addEventListener('click', closeProfile);
+
+            document.getElementById('btnChangePhoto').addEventListener('click', () => document.getElementById('profileImageInput').click());
+            profileImageInput.addEventListener('change', event => {
+                const file = event.target.files && event.target.files[0];
+                if (!file) return;
+
+                if (!file.type.startsWith('image/')) {
+                    showStatus('Selecciona un archivo de imagen válido.', 'error');
+                    profileImageInput.value = '';
+                    return;
+                }
+                if (file.size > maxImageBytes) {
+                    showStatus('La foto debe pesar menos de 5 MB.', 'error');
+                    profileImageInput.value = '';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onerror = () => showStatus('No se pudo leer la foto seleccionada.', 'error');
+                reader.onload = () => {
+                    const image = new Image();
+                    image.onerror = () => showStatus('No se pudo procesar la foto seleccionada.', 'error');
+                    image.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const scale = Math.min(1, 600 / Math.max(image.width, image.height));
+                        canvas.width = Math.max(1, Math.round(image.width * scale));
+                        canvas.height = Math.max(1, Math.round(image.height * scale));
+                        const context = canvas.getContext('2d');
+                        if (!context) {
+                            showStatus('El navegador no pudo preparar la foto.', 'error');
+                            return;
+                        }
+                        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+                        selectedPhoto = canvas.toDataURL('image/jpeg', 0.82);
+                        profileImagePreview.src = selectedPhoto;
+                        showStatus('Foto lista. Guarda los cambios para conservarla.', 'success');
+                    };
+                    image.src = reader.result;
+                };
+                reader.readAsDataURL(file);
+            });
+
+            profileForm.addEventListener('submit', event => {
+                event.preventDefault();
+                if (!profileForm.reportValidity()) return;
+
+                const data = {
+                    ...storedProfile,
+                    nombre: document.getElementById('profileNameInput').value.trim(),
+                    correo: document.getElementById('profileEmailInput').value.trim(),
+                    telefono: document.getElementById('profilePhoneInput').value.trim(),
+                    telefonoRespaldo: document.getElementById('profileBackupPhoneInput').value.trim(),
+                    rol: storedProfile.rol || 'Padres de Familia'
+                };
+                if (selectedPhoto) data.fotoBase64 = selectedPhoto;
+
+                try {
+                    localStorage.setItem(storageKey, JSON.stringify(data));
+                    localStorage.setItem('prezenSession', JSON.stringify({
+                        ...session,
+                        nombre: data.nombre,
+                        email: data.correo,
+                        rol: data.rol
+                    }));
+                    storedProfile = data;
+                    session = { ...session, nombre: data.nombre, email: data.correo, rol: data.rol };
+                    Object.assign(profileValues, data);
+                    renderProfile(data);
+                    document.getElementById('summaryProfileStatus').textContent = 'Los cambios del perfil se guardaron correctamente.';
+                    showSummary();
+                } catch (error) {
+                    console.error('No se pudo guardar el perfil del acudiente:', error);
+                    showStatus('No se pudieron guardar los cambios. Libera espacio del navegador e inténtalo de nuevo.', 'error');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
