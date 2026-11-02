@@ -3,6 +3,7 @@ import { AuthModel } from '../models/auth.model.js';
 import { ProfileAvatarModel } from '../models/profile-avatar.model.js';
 import { UserModel } from '../models/user.model.js';
 import { AppError } from '../../lib/appError.js';
+import { env } from '../config/env.js';
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -55,6 +56,55 @@ export async function refresh(req, res, next) {
         expires_at: data.session.expires_at,
       },
     });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function requestPasswordReset(req, res, next) {
+  try {
+    const email = z.object({ email: z.string().email() }).parse(req.body).email;
+    const { error } = await AuthModel.requestPasswordReset(email, env.PASSWORD_RESET_REDIRECT_URL);
+    if (error) throw new AppError(503, 'ERROR_RECUPERAR_CONTRASENA', 'No se pudieron enviar las instrucciones. Intenta de nuevo más tarde.');
+    res.json({
+      success: true,
+      data: { mensaje: 'Si el correo está registrado, recibirás instrucciones para restablecer la contraseña.' },
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function resetPassword(req, res, next) {
+  try {
+    const input = z.object({
+      token_hash: z.string().min(1).max(2048),
+      password: z.string().min(8).max(128),
+    }).parse(req.body);
+    const { error, stage } = await AuthModel.resetPasswordWithRecoveryToken(input.token_hash, input.password);
+    if (error && stage === 'password') {
+      throw new AppError(422, 'CONTRASENA_RECHAZADA', 'La nueva contraseña no cumple las políticas configuradas en Supabase.');
+    }
+    if (error) throw new AppError(400, 'ENLACE_RECUPERACION_INVALIDO', 'El enlace de recuperación es inválido o expiró. Solicita uno nuevo.');
+    res.json({ success: true, data: { mensaje: 'La contraseña se actualizó correctamente.' } });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function changePassword(req, res, next) {
+  try {
+    const { current_password: currentPassword, password } = z.object({
+      current_password: z.string().min(1),
+      password: z.string().min(8).max(128),
+    }).parse(req.body);
+    const { data, error } = await AuthModel.signIn({ email: req.user.email, password: currentPassword });
+    if (error || data.user?.id !== req.user.id) {
+      throw new AppError(401, 'CONTRASENA_ACTUAL_INVALIDA', 'La contraseña actual es incorrecta.');
+    }
+    const { error: updateError } = await AuthModel.updatePassword(req.user.id, password);
+    if (updateError) throw new AppError(503, 'ERROR_CAMBIAR_CONTRASENA', 'No se pudo actualizar la contraseña.');
+    res.json({ success: true, data: { mensaje: 'La contraseña se actualizó correctamente.' } });
   } catch (error) {
     next(error);
   }
