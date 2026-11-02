@@ -36,10 +36,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---- Prevención de envío de form (Mockup) ----
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
+        const rememberedEmail = localStorage.getItem('prezenRememberedEmail');
+        if (rememberedEmail) {
+            document.getElementById('email').value = rememberedEmail;
+            document.getElementById('remember').checked = true;
+        }
+
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
             const emailInput = document.getElementById('email').value.trim() || '';
+            const rememberInput = document.getElementById('remember');
+
+            if (rememberInput?.checked) {
+                localStorage.setItem('prezenRememberedEmail', emailInput);
+            } else {
+                localStorage.removeItem('prezenRememberedEmail');
+            }
             
             // Define users and roles
             const users = {
@@ -61,6 +74,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (namePart) {
                     userName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
                 }
+            }
+
+            const sessionData = {
+                email: emailInput,
+                nombre: userName,
+                rol: emailInput === 'padre@gmail.com' ? 'Padres de Familia' : 'Usuario',
+                redirect: redirectUrl,
+                loggedAt: new Date().toISOString()
+            };
+            localStorage.setItem('prezenSession', JSON.stringify(sessionData));
+
+            if (emailInput === 'padre@gmail.com' && !localStorage.getItem('parentProfileData')) {
+                localStorage.setItem('parentProfileData', JSON.stringify({
+                    nombre: userName,
+                    rol: 'Padres de Familia'
+                }));
             }
 
             // Mostrar spinner cinematográfico
