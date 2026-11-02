@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coordinador - Vista Estudiantes</title>
+    <title>Panel Coordinador - PREZEN</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -23,8 +23,7 @@
             </button>
             <div class="logo-container">
                 <div class="logo-box">
-                    <span class="logo-z">Z</span>
-                    <span class="logo-text">COLEGIO</span>
+                    <img src="./assets/image/prezen-logo.svg" alt="Logo de PREZEN">
                 </div>
             </div>
 
@@ -36,13 +35,13 @@
 
             <nav class="sidebar-nav">
                 <ul>
-                    <li>
+                    <li class="active">
                         <a href="#" class="nav-link" data-target="view-panel">
                             <i class="fa-solid fa-table-cells-large"></i>
                             <span>Panel Coordinador</span>
                         </a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="#" class="nav-link" data-target="view-estudiantes">
                             <i class="fa-regular fa-user"></i>
                             <span>Estudiantes</span>
@@ -52,12 +51,6 @@
                         <a href="#" class="nav-link" data-target="view-tomar-asistencia">
                             <i class="fa-solid fa-clipboard-check"></i>
                             <span>Tomar Asistencia</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link" data-target="view-asistencia">
-                            <i class="fa-regular fa-calendar-check"></i>
-                            <span>Asistencia General</span>
                         </a>
                     </li>
                     <li>
@@ -72,47 +65,43 @@
                             <span>Comunicaciones</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="nav-link" data-target="view-configuraciones">
-                            <i class="fa-solid fa-gear"></i>
-                            <span>Configuraciones</span>
-                        </a>
-                    </li>
                 </ul>
             </nav>
 
             <div class="sidebar-footer">
-                <button class="btn btn-add-student">
+                <button class="btn btn-add-student" id="addStudentBtn" type="button">
                     <i class="fa-solid fa-plus"></i> <span>Agregar Estudiante</span>
+                </button>
+                <button class="theme-toggle" id="themeToggle" type="button">
+                    <i class="fa-solid fa-moon"></i> <span>Modo oscuro</span>
                 </button>
             </div>
         </aside>
 
         <!-- Main Content -->
         <main class="main-content">
-            <div id="view-estudiantes" class="view-section active">
+            <div id="view-estudiantes" class="view-section" style="display: none;">
                 <!-- Header -->
                 <header class="top-header">
                     <div class="header-titles">
                         <h1>COORDINADOR - VISTA ESTUDIANTES</h1>
-                        <h2>Lista de Estudiantes 7°B</h2>
+                        <h2>Lista de Estudiantes de todos los grados</h2>
                     </div>
 
                     <div class="header-actions">
-                        <a href="#" class="text-link">Nuevo Reporte</a>
                         <button class="btn btn-primary btn-new-report">
                             <i class="fa-solid fa-plus"></i> Nuevo Reporte
                         </button>
 
                         <!-- Botón de notificaciones -->
-                        <div class="notifications-dropdown-container" style="position: relative; margin-right: 15px;">
+                        <div class="notifications-dropdown-container" style="position: relative; z-index: 1101; margin-right: 15px;">
                             <div class="notification-btn" id="notificationBtn" style="cursor: pointer; position: relative; padding: 5px;">
                                 <i class="fa-regular fa-bell" style="font-size: 20px; color: var(--text-gray);"></i>
-                                <span class="notification-badge" id="notificationCountBadge" style="position: absolute; top: -2px; right: -5px; background: #ef4444; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold;">5</span>
+                                <span class="notification-badge" id="notificationCountBadge">5</span>
                             </div>
 
                             <!-- Dropdown Menu de Notificaciones -->
-                            <div class="notifications-dropdown-menu" id="notificationsDropdown" style="display: none; position: absolute; right: 0; top: 40px; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 320px; z-index: 100; border: 1px solid var(--border-color); overflow: hidden;">
+                            <div class="notifications-dropdown-menu" id="notificationsDropdown" style="display: none; position: absolute; right: -60px; top: 40px; background: #ffffff; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 380px; z-index: 1000; border: 1px solid var(--border-color); overflow: hidden; isolation: isolate;">
                                 <div style="padding: 15px 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
                                     <h4 style="margin: 0; font-size: 15px; color: var(--text-dark);">Notificaciones</h4>
                                     <span style="font-size: 12px; color: var(--blue-primary); cursor: pointer; font-weight: 600;" id="markAllReadBtn">Marcar todas como leídas</span>
@@ -133,20 +122,17 @@
                                         alt="Perfil">
                                 </div>
                                 <div class="user-info">
-                                    <span class="user-name">Lic. Carlos Ruiz -</span>
-                                    <span class="user-role">Coordinador 7°B</span>
+                                    <span class="user-name" id="coordinatorHeaderName">Lic. Carlos Ruiz</span>
+                                    <span class="user-role">Coordinador académico</span>
                                 </div>
                                 <i class="fa-solid fa-chevron-down text-gray profile-chevron"></i>
                             </div>
 
                             <!-- Dropdown Menu -->
                             <div class="profile-dropdown-menu" id="profileDropdown">
-                                <a href="#" class="dropdown-item">
+                                <button type="button" class="dropdown-item profile-menu-item" id="profileMenuItem">
                                     <i class="fa-regular fa-user"></i> Mi Perfil
-                                </a>
-                                <a href="#" class="dropdown-item">
-                                    <i class="fa-solid fa-gear"></i> Configuración
-                                </a>
+                                </button>
                                 <div class="dropdown-divider"></div>
                                 <a href="../../auth/index.html" class="dropdown-item text-danger">
                                     <i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar Sesión
@@ -156,54 +142,280 @@
                     </div>
                 </header>
 
-                <!-- Stats/KPIs -->
-                <div class="stats-grid">
-                    <!-- Card 1 -->
-                    <div class="stat-card" style="background: linear-gradient(135deg, #7b68ee 0%, #614de6 100%);">
-                        <div class="stat-info">
-                            <h3>Total Estudiantes</h3>
-                            <div class="stat-value">28</div>
-                        </div>
-                        <div class="stat-icon op-60">
-                            <i class="fa-solid fa-users"></i>
+                <div class="student-filters" aria-label="Filtros de estudiantes">
+                    <div class="filter-field">
+                        <label for="filterGrade">Grado</label>
+                        <select id="filterGrade">
+                            <option value="">Todos los grados</option>
+                            <option value="6°A">6°A</option>
+                            <option value="6°B">6°B</option>
+                            <option value="7°A">7°A</option>
+                            <option value="7°B">7°B</option>
+                            <option value="8°A">8°A</option>
+                            <option value="8°B">8°B</option>
+                            <option value="9°A">9°A</option>
+                            <option value="9°B">9°B</option>
+                            <option value="10°A">10°A</option>
+                            <option value="10°B">10°B</option>
+                            <option value="11°A">11°A</option>
+                            <option value="11°B">11°B</option>
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <label for="filterFirstName">Nombre</label>
+                        <input id="filterFirstName" type="search" placeholder="Buscar nombre">
+                    </div>
+                    <div class="filter-field">
+                        <label for="filterLastName">Apellido</label>
+                        <input id="filterLastName" type="search" placeholder="Buscar apellido">
+                    </div>
+                    <div class="filter-field">
+                        <label for="filterDocument">Documento de identidad</label>
+                        <input id="filterDocument" type="search" inputmode="numeric" placeholder="Buscar documento">
+                    </div>
+                    <button id="clearStudentFilters" class="btn btn-secondary filter-clear" type="button">Limpiar</button>
+                </div>
+
+                <!-- Tables Section -->
+                <div class="tables-container">
+                    <!-- Left Table -->
+                    <div class="table-card">
+                        <h3 class="card-title">Listado de Estudiantes</h3>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Curso</th>
+                                        <th>Asistencia %</th>
+                                        <th>Tardanzas</th>
+                                        <th>Inasistencias</th>
+                                    </try>
+                                </thead>
+                                <tbody id="studentsTableBody">
+                                    <tr class="student-row" data-grade="6°A" data-first-name="Ana" data-last-name="López" data-document="1001001001">
+                                        <td>Ana López</td>
+                                        <td>6°A</td>
+                                        <td>78%</td>
+                                        <td>5</td>
+                                        <td>3</td>
+                                    </try>
+                                    <tr class="student-row" data-grade="6°B" data-first-name="Samuel" data-last-name="Vargas" data-document="1001001012">
+                                        <td>Samuel Vargas</td>
+                                        <td>6°B</td>
+                                        <td>90%</td>
+                                        <td>2</td>
+                                        <td>1</td>
+                                    </try>
+                                    <tr class="student-row" data-grade="7°A" data-first-name="Juan" data-last-name="Pérez" data-document="1001001002">
+                                        <td>Juan Pérez</td>
+                                        <td>7°A</td>
+                                        <td>85%</td>
+                                        <td>5</td>
+                                        <td>3</td>
+                                    </try>
+                                    <tr class="student-row" data-grade="7°B" data-first-name="Juan" data-last-name="Pérez" data-document="1001001003">
+                                        <td>Juan Pérez</td>
+                                        <td>7°B</td>
+                                        <td>85%</td>
+                                        <td>5</td>
+                                        <td>3</td>
+                                    </try>
+                                    <tr class="student-row" data-grade="8°A" data-first-name="María" data-last-name="Escobedo" data-document="1001001004">
+                                        <td>María Escobedo</td>
+                                        <td>8°A</td>
+                                        <td>85%</td>
+                                        <td>4</td>
+                                        <td>2</td>
+                                    </try>
+                                    <tr class="student-row" data-grade="8°B" data-first-name="Diego" data-last-name="Martínez" data-document="1001001005">
+                                        <td>Diego Martínez</td>
+                                        <td>8°B</td>
+                                        <td>95%</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                    </try>
+                                    <tr class="student-row" data-grade="9°A" data-first-name="Sofía" data-last-name="Ramírez" data-document="1001001006">
+                                        <td>Sofía Ramírez</td>
+                                        <td>9°A</td>
+                                        <td>91%</td>
+                                        <td>2</td>
+                                        <td>1</td>
+                                    </try>
+                                    <tr class="student-row" data-grade="9°B" data-first-name="Carlos" data-last-name="Gómez" data-document="1001001007">
+                                        <td>Carlos Gómez</td>
+                                        <td>9°B</td>
+                                        <td>87%</td>
+                                        <td>3</td>
+                                        <td>2</td>
+                                    </try>
+                                    <tr class="student-row" data-grade="10°A" data-first-name="Valentina" data-last-name="Torres" data-document="1001001008">
+                                        <td>Valentina Torres</td>
+                                        <td>10°A</td>
+                                        <td>94%</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                    </try>
+                                    <tr class="student-row" data-grade="10°B" data-first-name="Mateo" data-last-name="Rojas" data-document="1001001009">
+                                        <td>Mateo Rojas</td>
+                                        <td>10°B</td>
+                                        <td>82%</td>
+                                        <td>4</td>
+                                        <td>3</td>
+                                    </try>
+                                    <tr class="student-row" data-grade="11°A" data-first-name="Camila" data-last-name="Herrera" data-document="1001001010">
+                                        <td>Camila Herrera</td>
+                                        <td>11°A</td>
+                                        <td>96%</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                    </try>
+                                    <tr class="student-row" data-grade="11°B" data-first-name="Nicolás" data-last-name="Castro" data-document="1001001011">
+                                        <td>Nicolás Castro</td>
+                                        <td>11°B</td>
+                                        <td>89%</td>
+                                        <td>2</td>
+                                        <td>1</td>
+                                    </try>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
-                    <!-- Card 2 -->
-                    <div class="stat-card" style="background: linear-gradient(135deg, #4285f4 0%, #3070df 100%);">
-                        <div class="stat-info">
-                            <h3>Asistencia Promedio</h3>
-                            <div class="stat-value">88%</div>
+                    <!-- Right Table -->
+                    <div class="table-card">
+                        <h3 class="card-title">Tabla de Estudiantes en Riesgo</h3>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Curso</th>
+                                        <th>Asistencia %</th>
+                                        <th>Tardanzas</th>
+                                        <th>Inasistencias</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="risk-student-row" data-risk-student="Juan Pérez" data-risk-grade="7°A" data-risk-reason="Falta de Asistencia" data-risk-document="1001001002">
+                                        <td>Juan Pérez</td>
+                                        <td>7°A</td>
+                                        <td>85%</td>
+                                        <td>5</td>
+                                        <td>3</td>
+                                        <td><select class="risk-status-select badge-critical" aria-label="Cambiar estado de Juan Pérez"><option selected>Falta de Asistencia</option><option>Rendimiento Irregular</option><option>En Riesgo</option><option>Sin Riesgo</option></select></td>
+                                    </tr>
+                                    <tr class="risk-student-row" data-risk-student="María Escobedo" data-risk-grade="8°A" data-risk-reason="Rendimiento Irregular" data-risk-document="1001001004">
+                                        <td>María Escobedo</td>
+                                        <td>8°A</td>
+                                        <td>85%</td>
+                                        <td>4</td>
+                                        <td>2</td>
+                                        <td><select class="risk-status-select badge-performance" aria-label="Cambiar estado de María Escobedo"><option>Falta de Asistencia</option><option selected>Rendimiento Irregular</option><option>En Riesgo</option><option>Sin Riesgo</option></select></td>
+                                    </tr>
+                                    <tr class="risk-student-row" data-risk-student="Diego Martínez" data-risk-grade="8°B" data-risk-reason="Sin Riesgo" data-risk-document="1001001005">
+                                        <td>Diego Martínez</td>
+                                        <td>8°B</td>
+                                        <td>95%</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td><select class="risk-status-select badge-safe" aria-label="Cambiar estado de Diego Martínez"><option>Falta de Asistencia</option><option>Rendimiento Irregular</option><option>En Riesgo</option><option selected>Sin Riesgo</option></select></td>
+                                    </tr>
+                                    <tr class="risk-student-row" data-risk-student="Carlos Gómez" data-risk-grade="9°B" data-risk-reason="En Riesgo" data-risk-document="1001001007">
+                                        <td>Carlos Gómez</td>
+                                        <td>9°B</td>
+                                        <td>87%</td>
+                                        <td>3</td>
+                                        <td>2</td>
+                                        <td><select class="risk-status-select badge-alert" aria-label="Cambiar estado de Carlos Gómez"><option>Falta de Asistencia</option><option>Rendimiento Irregular</option><option selected>En Riesgo</option><option>Sin Riesgo</option></select></td>
+                                    </tr>
+                                    <tr class="risk-student-row" data-risk-student="Mateo Rojas" data-risk-grade="10°B" data-risk-reason="Falta de Asistencia" data-risk-document="1001001009">
+                                        <td>Mateo Rojas</td>
+                                        <td>10°B</td>
+                                        <td>82%</td>
+                                        <td>4</td>
+                                        <td>3</td>
+                                        <td><select class="risk-status-select badge-critical" aria-label="Cambiar estado de Mateo Rojas"><option selected>Falta de Asistencia</option><option>Rendimiento Irregular</option><option>En Riesgo</option><option>Sin Riesgo</option></select></td>
+                                    </tr>
+                                    <tr class="risk-student-row" data-risk-student="Camila Herrera" data-risk-grade="11°A" data-risk-reason="Rendimiento Irregular" data-risk-document="1001001010">
+                                        <td>Camila Herrera</td>
+                                        <td>11°A</td>
+                                        <td>96%</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td><select class="risk-status-select badge-performance" aria-label="Cambiar estado de Camila Herrera"><option>Falta de Asistencia</option><option selected>Rendimiento Irregular</option><option>En Riesgo</option><option>Sin Riesgo</option></select></td>
+                                    </tr>
+                                    <tr class="risk-student-row" data-risk-student="Samuel Vargas" data-risk-grade="6°B" data-risk-reason="En Riesgo" data-risk-document="1001001012">
+                                        <td>Samuel Vargas</td>
+                                        <td>6°B</td>
+                                        <td>90%</td>
+                                        <td>2</td>
+                                        <td>1</td>
+                                        <td><select class="risk-status-select badge-alert" aria-label="Cambiar estado de Samuel Vargas"><option>Falta de Asistencia</option><option>Rendimiento Irregular</option><option selected>En Riesgo</option><option>Sin Riesgo</option></select></td>
+                                    </tr>
+                                    <tr class="risk-student-row" data-risk-student="Laura Gómez" data-risk-grade="6°A" data-risk-reason="Sin Riesgo" data-risk-document="1001001013">
+                                        <td>Laura Gómez</td>
+                                        <td>6°A</td>
+                                        <td>93%</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td><select class="risk-status-select badge-safe" aria-label="Cambiar estado de Laura Gómez"><option>Falta de Asistencia</option><option>Rendimiento Irregular</option><option>En Riesgo</option><option selected>Sin Riesgo</option></select></td>
+                                    </tr>
+                                    <tr class="risk-student-row" data-risk-student="Natalia Ruiz" data-risk-grade="7°B" data-risk-reason="En Riesgo" data-risk-document="1001001014">
+                                        <td>Natalia Ruiz</td>
+                                        <td>7°B</td>
+                                        <td>84%</td>
+                                        <td>3</td>
+                                        <td>2</td>
+                                        <td><select class="risk-status-select badge-alert" aria-label="Cambiar estado de Natalia Ruiz"><option>Falta de Asistencia</option><option>Rendimiento Irregular</option><option selected>En Riesgo</option><option>Sin Riesgo</option></select></td>
+                                    </tr>
+                                    <tr class="risk-student-row" data-risk-student="Andrés Molina" data-risk-grade="9°A" data-risk-reason="Rendimiento Irregular" data-risk-document="1001001015">
+                                        <td>Andrés Molina</td>
+                                        <td>9°A</td>
+                                        <td>86%</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td><select class="risk-status-select badge-performance" aria-label="Cambiar estado de Andrés Molina"><option>Falta de Asistencia</option><option selected>Rendimiento Irregular</option><option>En Riesgo</option><option>Sin Riesgo</option></select></td>
+                                    </tr>
+                                    <tr class="risk-student-row" data-risk-student="Valeria Díaz" data-risk-grade="10°A" data-risk-reason="Falta de Asistencia" data-risk-document="1001001016">
+                                        <td>Valeria Díaz</td>
+                                        <td>10°A</td>
+                                        <td>79%</td>
+                                        <td>5</td>
+                                        <td>4</td>
+                                        <td><select class="risk-status-select badge-critical" aria-label="Cambiar estado de Valeria Díaz"><option selected>Falta de Asistencia</option><option>Rendimiento Irregular</option><option>En Riesgo</option><option>Sin Riesgo</option></select></td>
+                                    </tr>
+                                    <tr class="risk-student-row" data-risk-student="Sebastián León" data-risk-grade="11°B" data-risk-reason="Sin Riesgo" data-risk-document="1001001017">
+                                        <td>Sebastián León</td>
+                                        <td>11°B</td>
+                                        <td>91%</td>
+                                        <td>1</td>
+                                        <td>1</td>
+                                        <td><select class="risk-status-select badge-safe" aria-label="Cambiar estado de Sebastián León"><option>Falta de Asistencia</option><option>Rendimiento Irregular</option><option>En Riesgo</option><option selected>Sin Riesgo</option></select></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="stat-icon stat-icon-green">
-                            <i class="fa-solid fa-check"></i>
-                        </div>
-                    </div>
 
-                    <!-- Card 3 -->
-                    <div class="stat-card" style="background: linear-gradient(135deg, #6c5ce7 0%, #5746db 100%);">
-                        <div class="stat-info">
-                            <h3>Tardanzas del Mes</h3>
-                            <div class="stat-value">15</div>
-                        </div>
-                        <div class="stat-icon op-60">
-                            <i class="fa-regular fa-clock"></i>
-                        </div>
-                    </div>
-
-                    <!-- Card 4 -->
-                    <div class="stat-card" style="background: linear-gradient(135deg, #635bff 0%, #534be8 100%);">
-                        <div class="stat-info">
-                            <h3>Inasistencias</h3>
-                            <div class="stat-value">8</div>
-                        </div>
-                        <div class="stat-icon stat-icon-warning">
-                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        <div class="card-actions text-center mt-3">
+                            <button id="viewRiskStudentsBtn" class="btn btn-primary btn-block">Ver Detalles de Estudiante en Riesgo</button>
+                            <p class="action-hint">Selecciona un estudiante para ver su plan de acción</p>
                         </div>
                     </div>
                 </div>
+            </div> <!-- End view-estudiantes -->
 
-                <!-- Attendance Actions (QR, Huella, Manual) -->
+            <!-- VISTA: TOMAR ASISTENCIA -->
+            <div id="view-tomar-asistencia" class="view-section" style="display: none;">
+                <!-- Header -->
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>CONTROL DE ASISTENCIA</h1>
+                        <h2>Registro y Monitoreo en Tiempo Real</h2>
+                    </div>
+                </header>
+
                 <div class="attendance-actions-card">
                     <h3 class="card-title" style="margin-bottom: 20px; font-size: 18px; font-weight: 800;">TOMAR ASISTENCIA</h3>
                     <div class="attendance-btn-grid">
@@ -221,127 +433,6 @@
                         </button>
                     </div>
                 </div>
-
-                <!-- Tables Section -->
-                <div class="tables-container">
-                    <!-- Left Table -->
-                    <div class="table-card">
-                        <h3 class="card-title">Listado de Estudiantes</h3>
-                        <div class="table-responsive">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Curso</th>
-                                        <th>Asistencia %</th>
-                                        <th>Tardanzas</th>
-                                        <th>Inasistencias</th>
-                                        <th>Estado</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Ana López</td>
-                                        <td>7°B</td>
-                                        <td>78%</td>
-                                        <td>5</td>
-                                        <td>3</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Juan Pérez</td>
-                                        <td>7°B</td>
-                                        <td>85%</td>
-                                        <td>5</td>
-                                        <td>3</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Juan Pérez</td>
-                                        <td>7°B</td>
-                                        <td>85%</td>
-                                        <td>5</td>
-                                        <td>3</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>María Escobedo</td>
-                                        <td>7°B</td>
-                                        <td>85%</td>
-                                        <td>4</td>
-                                        <td>2</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Diego Martínez</td>
-                                        <td>7°B</td>
-                                        <td>95%</td>
-                                        <td>1</td>
-                                        <td>0</td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- Right Table -->
-                    <div class="table-card">
-                        <h3 class="card-title">Tabla de Estudiantes en Riesgo</h3>
-                        <div class="table-responsive">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Curso</th>
-                                        <th>Asistencia %</th>
-                                        <th>Tardanzas</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Juan Pérez</td>
-                                        <td>7°B</td>
-                                        <td>85%</td>
-                                        <td>5</td>
-                                        <td>3</td>
-                                        <td><span class="badge badge-risk">Falta de Asistencia</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>María Escobo</td>
-                                        <td>7°B</td>
-                                        <td>85%</td>
-                                        <td>4</td>
-                                        <td>2</td>
-                                        <td><span class="badge badge-risk">Rendimiento Irregular</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Diego Martre</td>
-                                        <td>7°B</td>
-                                        <td>95%</td>
-                                        <td>1</td>
-                                        <td>0</td>
-                                        <td><span class="badge badge-safe">Sin Riesgo</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="card-actions text-center mt-3">
-                            <button class="btn btn-primary btn-block">Ver Detalles de Estudiante en Riesgo</button>
-                            <p class="action-hint">Selecciona un estudiante para ver su plan de acción</p>
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- End view-estudiantes -->
-
-            <!-- VISTA: TOMAR ASISTENCIA -->
-            <div id="view-tomar-asistencia" class="view-section" style="display: none;">
-                <!-- Header -->
-                <header class="top-header">
-                    <div class="header-titles">
-                        <h1>CONTROL DE ASISTENCIA</h1>
-                        <h2>Registro y Monitoreo en Tiempo Real</h2>
-                    </div>
-                </header>
 
                 <!-- Last Scan Result Highlight -->
                 <div class="scan-result-card" id="lastScanResult">
@@ -378,9 +469,31 @@
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                         <h3 class="card-title" style="margin-bottom: 0;">Control Asistencia Estudiantes</h3>
                         <div class="table-actions">
-                            <button class="btn btn-outline btn-sm"><i class="fa-solid fa-download"></i> Exportar</button>
-                            <button class="btn btn-primary btn-sm"><i class="fa-solid fa-filter"></i> Filtrar</button>
+                            <button class="btn btn-outline btn-sm" id="exportAttendanceBtn" type="button"><i class="fa-solid fa-download"></i> Exportar</button>
+                            <button class="btn btn-primary btn-sm" id="toggleAttendanceFiltersBtn" type="button" aria-expanded="false"><i class="fa-solid fa-filter"></i> Filtrar</button>
                         </div>
+                    </div>
+                    <div id="attendanceFilterPanel" class="attendance-filter-panel" hidden>
+                        <label>
+                            Grado
+                            <select id="attendanceGradeFilter">
+                                <option value="">Todos</option>
+                            </select>
+                        </label>
+                        <label>
+                            Estado
+                            <select id="attendanceStatusFilter">
+                                <option value="">Todos</option>
+                                <option value="puntual">Puntual</option>
+                                <option value="tarde">Tarde</option>
+                                <option value="ausente">Ausente</option>
+                            </select>
+                        </label>
+                        <label>
+                            Estudiante
+                            <input id="attendanceNameFilter" type="search" placeholder="Buscar estudiante">
+                        </label>
+                        <button class="btn btn-secondary btn-sm" id="clearAttendanceFiltersBtn" type="button">Limpiar</button>
                     </div>
                     <div class="table-responsive">
                         <table class="data-table">
@@ -441,7 +554,7 @@
             </div>
 
             <!-- Panel Coordinador -->
-            <div id="view-panel" class="view-section" style="display: none;">
+            <div id="view-panel" class="view-section active">
                 <header class="top-header">
                     <div class="header-titles">
                         <h1>PANEL DE COORDINADOR</h1>
@@ -449,9 +562,35 @@
                     </div>
                 </header>
 
+                <section class="coordinator-welcome-card coordinator-welcome-panel" aria-labelledby="coordinatorWelcomeTitle">
+                    <span class="coordinator-welcome-dots welcome-dots-left" aria-hidden="true"></span>
+                    <span class="coordinator-welcome-dots welcome-dots-right" aria-hidden="true"></span>
+                    <div class="coordinator-welcome-content">
+                        <span class="coordinator-welcome-badge"><i class="fa-solid fa-users-gear" aria-hidden="true"></i> PANEL DE COORDINADOR</span>
+                        <h2 id="coordinatorWelcomeTitle">Bienvenido a tu<br>panel de <span>coordinación</span></h2>
+                        <span class="coordinator-welcome-rule" aria-hidden="true"></span>
+                        <p>Desde aquí puedes gestionar y supervisar la asistencia de los estudiantes, analizar patrones de puntualidad, atender inasistencias y generar reportes para apoyar la toma de decisiones y el acompañamiento institucional.</p>
+                        <div class="coordinator-welcome-illustration" aria-hidden="true">
+                            <span class="welcome-spark spark-one">✦</span>
+                            <span class="welcome-spark spark-two">✦</span>
+                            <svg viewBox="0 0 120 120" role="presentation">
+                                <circle cx="60" cy="60" r="55" fill="#eeeaff"></circle>
+                                <path d="M39 28h32a5 5 0 0 1 5 5v51a5 5 0 0 1-5 5H39a5 5 0 0 1-5-5V33a5 5 0 0 1 5-5Z" fill="#fff" stroke="#6b55f5" stroke-width="4"></path>
+                                <path d="M48 24h14a5 5 0 0 1 5 5v5H43v-5a5 5 0 0 1 5-5Z" fill="#fff" stroke="#6b55f5" stroke-width="4"></path>
+                                <path d="m43 47 4 4 7-8m-11 20 4 4 7-8m-11 20 4 4 7-8m7-31h12m-12 20h12m-12 20h8" fill="none" stroke="#6b55f5" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"></path>
+                                <circle cx="76" cy="76" r="15" fill="#fff" stroke="#6b55f5" stroke-width="4"></circle>
+                                <circle cx="76" cy="72" r="4" fill="none" stroke="#6b55f5" stroke-width="3"></circle>
+                                <path d="M69 84c1-6 13-6 14 0" fill="none" stroke="#6b55f5" stroke-linecap="round" stroke-width="3"></path>
+                            </svg>
+                            <span class="welcome-spark spark-three">✦</span>
+                        </div>
+                        <p class="coordinator-welcome-tagline"><strong>Tu gestión hace la diferencia.</strong><br>Organiza, analiza y transforma.</p>
+                    </div>
+                </section>
+
                 <!-- KPIs Panel -->
                 <div class="stats-grid">
-                    <div class="stat-card" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);">
+                    <div class="stat-card" style="background: linear-gradient(135deg, #5144d9 0%, #3b82f6 100%);">
                         <div class="stat-info">
                             <h3>Total Estudiantes</h3>
                             <div class="stat-value">1,245</div>
@@ -490,30 +629,36 @@
                         <h3 class="card-title">Tendencia de Asistencia (Semana)</h3>
                         <div class="chart-mockup"
                             style="height: 250px; display: flex; align-items: flex-end; justify-content: space-around; padding-top: 20px; border-bottom: 2px solid var(--border-color);">
-                            <div class="bar"
+                            <div class="bar" data-day="Lunes" data-attendance="92%" data-late-students="Ana López (7°B), Juan Pérez (7°A)"
                                 style="height: 80%; width: 40px; background: var(--blue-primary); border-radius: 4px 4px 0 0; position: relative;">
                                 <span
                                     style="position:absolute; top:-25px; left:50%; transform:translateX(-50%); font-size:12px; font-weight:bold; color:var(--text-gray)">Lun</span>
                             </div>
-                            <div class="bar"
+                            <div class="bar" data-day="Martes" data-attendance="95%" data-late-students="Carlos Gómez (9°B)"
                                 style="height: 95%; width: 40px; background: var(--blue-primary); border-radius: 4px 4px 0 0; position: relative;">
                                 <span
                                     style="position:absolute; top:-25px; left:50%; transform:translateX(-50%); font-size:12px; font-weight:bold; color:var(--text-gray)">Mar</span>
                             </div>
-                            <div class="bar"
+                            <div class="bar" data-day="Miércoles" data-attendance="89%" data-late-students="María Escobedo (8°A), Mateo Rojas (10°B)"
                                 style="height: 85%; width: 40px; background: var(--blue-primary); border-radius: 4px 4px 0 0; position: relative;">
                                 <span
                                     style="position:absolute; top:-25px; left:50%; transform:translateX(-50%); font-size:12px; font-weight:bold; color:var(--text-gray)">Mié</span>
                             </div>
-                            <div class="bar"
+                            <div class="bar" data-day="Jueves" data-attendance="93%" data-late-students="Diego Martínez (8°B)"
                                 style="height: 92%; width: 40px; background: var(--blue-primary); border-radius: 4px 4px 0 0; position: relative;">
                                 <span
                                     style="position:absolute; top:-25px; left:50%; transform:translateX(-50%); font-size:12px; font-weight:bold; color:var(--text-gray)">Jue</span>
                             </div>
-                            <div class="bar"
+                            <div class="bar" data-day="Viernes" data-attendance="86%" data-late-students="Sofía Ramírez (9°A), Juan Pérez (7°B), Nicolás Castro (11°B)"
                                 style="height: 70%; width: 40px; background: #6366f1; border-radius: 4px 4px 0 0; position: relative;">
                                 <span
                                     style="position:absolute; top:-25px; left:50%; transform:translateX(-50%); font-size:12px; font-weight:bold; color:var(--blue-primary)">Vie</span>
+                            </div>
+                            <div id="attendanceBarDialog" class="attendance-bar-dialog" role="status" aria-live="polite" aria-hidden="true">
+                                <button id="closeAttendanceBarDialog" class="attendance-dialog-close" type="button" aria-label="Cerrar detalle">&times;</button>
+                                <strong id="attendanceDialogDay"></strong>
+                                <span id="attendanceDialogPercentage"></span>
+                                <span id="attendanceDialogLate"></span>
                             </div>
                         </div>
                     </div>
@@ -526,7 +671,7 @@
                                 <p style="font-size:13px; color:#7f1d1d; margin:0;">3 estudiantes de 10°A acumularon 5
                                     inasistencias consecutivas.</p>
                             </div>
-                            <div class="alert-item"
+                            <div class="alert-item alert-warning-item"
                                 style="padding:15px; border-left: 4px solid #f59e0b; background:#fffbeb; border-radius:4px;">
                                 <h4 style="color:#b45309; font-size:14px; margin-bottom:5px;">Aumento de Tardanzas</h4>
                                 <p style="font-size:13px; color:#92400e; margin:0;">El curso 8°B presenta un pico
@@ -667,63 +812,147 @@
 
                 <div class="reports-grid"
                     style="display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:24px; margin-top:20px;">
-                    <!-- Report Card 1 -->
-                    <div class="table-card"
-                        style="padding:24px; border-top: 4px solid var(--blue-primary); height:auto;">
-                        <div
-                            style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                    <div class="table-card risk-safe" style="padding:24px; height:auto;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
                             <h3 style="font-size:20px; color:var(--text-dark); margin:0;">Grado 6°A</h3>
-                            <span
-                                style="background:#e0e7ff; color:var(--blue-primary); padding:4px 8px; border-radius:4px; font-size:12px; font-weight:700;">Mensual</span>
+                            <span class="risk-badge">Sin riesgo</span>
                         </div>
-                        <p style="color:var(--text-gray); font-size:14px; margin-bottom:24px; line-height:1.5;">Resumen
-                            consolidado de inasistencias, excusas y llegadas tarde del mes de Marzo.</p>
+                        <p style="color:var(--text-gray); font-size:14px; margin-bottom:24px; line-height:1.5;">Resumen consolidado de inasistencias, excusas y llegadas tarde del mes de Marzo.</p>
                         <div style="display:flex; gap:12px;">
-                            <button class="btn btn-primary" style="flex:1; font-size:13px; justify-content:center;"><i
-                                    class="fa-regular fa-eye"></i> Detalles</button>
-                            <button class="btn"
-                                style="background:#f1f5f9; color:#334155; font-size:13px; border:1px solid #cbd5e1;"><i
-                                    class="fa-solid fa-file-pdf"></i> PDF</button>
+                            <button class="btn btn-primary report-details-btn" data-grade="Grado 6°A" data-status="Sin riesgo" data-summary="El grupo presenta una asistencia estable con 2 ausencias justificadas y una reducción de retrasos respecto al mes anterior." style="flex:1; font-size:13px; justify-content:center;"><i class="fa-regular fa-eye"></i> Detalles</button>
+                            <button class="btn report-pdf-btn" data-grade="Grado 6°A" data-status="Sin riesgo" data-summary="El grupo presenta una asistencia estable con 2 ausencias justificadas y una reducción de retrasos respecto al mes anterior." style="background:#f1f5f9; color:#334155; font-size:13px; border:1px solid #cbd5e1;"><i class="fa-solid fa-file-pdf"></i> PDF</button>
                         </div>
                     </div>
 
-                    <!-- Report Card 2 -->
-                    <div class="table-card"
-                        style="padding:24px; border-top: 4px solid var(--blue-primary); height:auto;">
-                        <div
-                            style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                    <div class="table-card risk-safe" style="padding:24px; height:auto;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <h3 style="font-size:20px; color:var(--text-dark); margin:0;">Grado 6°B</h3>
+                            <span class="risk-badge">Sin riesgo</span>
+                        </div>
+                        <p style="color:var(--text-gray); font-size:14px; margin-bottom:24px; line-height:1.5;">Resumen consolidado de inasistencias, excusas y llegadas tarde del mes de Marzo.</p>
+                        <div style="display:flex; gap:12px;">
+                            <button class="btn btn-primary report-details-btn" data-grade="Grado 6°B" data-status="Sin riesgo" data-summary="El curso mantiene un rendimiento aceptable con asistencia general alta y pocas incidencias por tardanzas durante marzo." style="flex:1; font-size:13px; justify-content:center;"><i class="fa-regular fa-eye"></i> Detalles</button>
+                            <button class="btn report-pdf-btn" data-grade="Grado 6°B" data-status="Sin riesgo" data-summary="El curso mantiene un rendimiento aceptable con asistencia general alta y pocas incidencias por tardanzas durante marzo." style="background:#f1f5f9; color:#334155; font-size:13px; border:1px solid #cbd5e1;"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                        </div>
+                    </div>
+
+                    <div class="table-card risk-safe" style="padding:24px; height:auto;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
                             <h3 style="font-size:20px; color:var(--text-dark); margin:0;">Grado 7°A</h3>
-                            <span
-                                style="background:#e0e7ff; color:var(--blue-primary); padding:4px 8px; border-radius:4px; font-size:12px; font-weight:700;">Mensual</span>
+                            <span class="risk-badge">Sin riesgo</span>
                         </div>
-                        <p style="color:var(--text-gray); font-size:14px; margin-bottom:24px; line-height:1.5;">Resumen
-                            consolidado de inasistencias, excusas y llegadas tarde del mes de Marzo.</p>
+                        <p style="color:var(--text-gray); font-size:14px; margin-bottom:24px; line-height:1.5;">Resumen consolidado de inasistencias, excusas y llegadas tarde del mes de Marzo.</p>
                         <div style="display:flex; gap:12px;">
-                            <button class="btn btn-primary" style="flex:1; font-size:13px; justify-content:center;"><i
-                                    class="fa-regular fa-eye"></i> Detalles</button>
-                            <button class="btn"
-                                style="background:#f1f5f9; color:#334155; font-size:13px; border:1px solid #cbd5e1;"><i
-                                    class="fa-solid fa-file-pdf"></i> PDF</button>
+                            <button class="btn btn-primary report-details-btn" data-grade="Grado 7°A" data-status="Sin riesgo" data-summary="El grupo presenta un promedio de asistencia de 89%, con 3 ausencias y 6 atrasos durante el mes de marzo." style="flex:1; font-size:13px; justify-content:center;"><i class="fa-regular fa-eye"></i> Detalles</button>
+                            <button class="btn report-pdf-btn" data-grade="Grado 7°A" data-status="Sin riesgo" data-summary="El grupo presenta un promedio de asistencia de 89%, con 3 ausencias y 6 atrasos durante el mes de marzo." style="background:#f1f5f9; color:#334155; font-size:13px; border:1px solid #cbd5e1;"><i class="fa-solid fa-file-pdf"></i> PDF</button>
                         </div>
                     </div>
 
-                    <!-- Report Card 3 -->
-                    <div class="table-card" style="padding:24px; border-top: 4px solid #f59e0b; height:auto;">
-                        <div
-                            style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                    <div class="table-card risk-warning" style="padding:24px; height:auto;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
                             <h3 style="font-size:20px; color:var(--text-dark); margin:0;">Grado 7°B</h3>
-                            <span
-                                style="background:#fef3c7; color:#b45309; padding:4px 8px; border-radius:4px; font-size:12px; font-weight:700;">Alerta
-                                Baja</span>
+                            <span class="risk-badge">Riesgo</span>
                         </div>
-                        <p style="color:var(--text-gray); font-size:14px; margin-bottom:24px; line-height:1.5;">Reporte
-                            especial generado por detección de múltiples inasistencias consecutivas.</p>
+                        <p style="color:var(--text-gray); font-size:14px; margin-bottom:24px; line-height:1.5;">Reporte especial generado por detección de múltiples inasistencias consecutivas.</p>
                         <div style="display:flex; gap:12px;">
-                            <button class="btn btn-primary" style="flex:1; font-size:13px; justify-content:center;"><i
-                                    class="fa-regular fa-eye"></i> Detalles</button>
-                            <button class="btn"
-                                style="background:#f1f5f9; color:#334155; font-size:13px; border:1px solid #cbd5e1;"><i
-                                    class="fa-solid fa-file-pdf"></i> PDF</button>
+                            <button class="btn btn-primary report-details-btn" data-grade="Grado 7°B" data-status="Riesgo" data-summary="El curso presenta 7 ausencias acumuladas y un patrón de retrasos repetidos durante la última quincena, por lo que requiere seguimiento inmediato." style="flex:1; font-size:13px; justify-content:center;"><i class="fa-regular fa-eye"></i> Detalles</button>
+                            <button class="btn report-pdf-btn" data-grade="Grado 7°B" data-status="Riesgo" data-summary="El curso presenta 7 ausencias acumuladas y un patrón de retrasos repetidos durante la última quincena, por lo que requiere seguimiento inmediato." style="background:#f1f5f9; color:#334155; font-size:13px; border:1px solid #cbd5e1;"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                        </div>
+                    </div>
+
+                    <div class="table-card risk-safe" style="padding:24px; height:auto;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <h3 style="font-size:20px; color:var(--text-dark); margin:0;">Grado 8°A</h3>
+                            <span class="risk-badge">Sin riesgo</span>
+                        </div>
+                        <p style="color:var(--text-gray); font-size:14px; margin-bottom:24px; line-height:1.5;">Resumen consolidado de inasistencias, excusas y llegadas tarde del mes de Marzo.</p>
+                        <div style="display:flex; gap:12px;">
+                            <button class="btn btn-primary report-details-btn" data-grade="Grado 8°A" data-status="Sin riesgo" data-summary="El grupo mantiene un excelente nivel de asistencia con 96%, aunque se reportan 2 estudiantes con retrasos puntuales en la última semana." style="flex:1; font-size:13px; justify-content:center;"><i class="fa-regular fa-eye"></i> Detalles</button>
+                            <button class="btn report-pdf-btn" data-grade="Grado 8°A" data-status="Sin riesgo" data-summary="El grupo mantiene un excelente nivel de asistencia con 96%, aunque se reportan 2 estudiantes con retrasos puntuales en la última semana." style="background:#f1f5f9; color:#334155; font-size:13px; border:1px solid #cbd5e1;"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                        </div>
+                    </div>
+
+                    <div class="table-card risk-alert" style="padding:24px; height:auto;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <h3 style="font-size:20px; color:var(--text-dark); margin:0;">Grado 8°B</h3>
+                            <span class="risk-badge">Alerta</span>
+                        </div>
+                        <p style="color:var(--text-gray); font-size:14px; margin-bottom:24px; line-height:1.5;">Reporte de atención prioritaria por ausencias y tardanzas fuera del promedio establecido.</p>
+                        <div style="display:flex; gap:12px;">
+                            <button class="btn btn-primary report-details-btn" data-grade="Grado 8°B" data-status="Alerta" data-summary="El grupo requiere atención prioritaria por 11 ausencias durante el mes y 6 retrasos acumulados en los últimos 15 días." style="flex:1; font-size:13px; justify-content:center;"><i class="fa-regular fa-eye"></i> Detalles</button>
+                            <button class="btn report-pdf-btn" data-grade="Grado 8°B" data-status="Alerta" data-summary="El grupo requiere atención prioritaria por 11 ausencias durante el mes y 6 retrasos acumulados en los últimos 15 días." style="background:#f1f5f9; color:#334155; font-size:13px; border:1px solid #cbd5e1;"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                        </div>
+                    </div>
+
+                    <div class="table-card risk-safe" style="padding:24px; height:auto;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <h3 style="font-size:20px; color:var(--text-dark); margin:0;">Grado 9°A</h3>
+                            <span class="risk-badge">Sin riesgo</span>
+                        </div>
+                        <p style="color:var(--text-gray); font-size:14px; margin-bottom:24px; line-height:1.5;">Resumen consolidado de inasistencias, excusas y llegadas tarde del mes de Marzo.</p>
+                        <div style="display:flex; gap:12px;">
+                            <button class="btn btn-primary report-details-btn" data-grade="Grado 9°A" data-status="Sin riesgo" data-summary="El curso presenta un nivel aceptable, con 2 ausencias justificadas y una reducción de retrasos respecto al mes anterior." style="flex:1; font-size:13px; justify-content:center;"><i class="fa-regular fa-eye"></i> Detalles</button>
+                            <button class="btn report-pdf-btn" data-grade="Grado 9°A" data-status="Sin riesgo" data-summary="El curso presenta un nivel aceptable, con 2 ausencias justificadas y una reducción de retrasos respecto al mes anterior." style="background:#f1f5f9; color:#334155; font-size:13px; border:1px solid #cbd5e1;"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                        </div>
+                    </div>
+
+                    <div class="table-card risk-safe" style="padding:24px; height:auto;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <h3 style="font-size:20px; color:var(--text-dark); margin:0;">Grado 9°B</h3>
+                            <span class="risk-badge">Sin riesgo</span>
+                        </div>
+                        <p style="color:var(--text-gray); font-size:14px; margin-bottom:24px; line-height:1.5;">Resumen consolidado de inasistencias, excusas y llegadas tarde del mes de Marzo.</p>
+                        <div style="display:flex; gap:12px;">
+                            <button class="btn btn-primary report-details-btn" data-grade="Grado 9°B" data-status="Sin riesgo" data-summary="Se observa estabilidad del grupo con 3 inasistencias y una leve tendencia al retraso durante los últimos 10 días." style="flex:1; font-size:13px; justify-content:center;"><i class="fa-regular fa-eye"></i> Detalles</button>
+                            <button class="btn report-pdf-btn" data-grade="Grado 9°B" data-status="Sin riesgo" data-summary="Se observa estabilidad del grupo con 3 inasistencias y una leve tendencia al retraso durante los últimos 10 días." style="background:#f1f5f9; color:#334155; font-size:13px; border:1px solid #cbd5e1;"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                        </div>
+                    </div>
+
+                    <div class="table-card risk-warning" style="padding:24px; height:auto;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <h3 style="font-size:20px; color:var(--text-dark); margin:0;">Grado 10°A</h3>
+                            <span class="risk-badge">Riesgo</span>
+                        </div>
+                        <p style="color:var(--text-gray); font-size:14px; margin-bottom:24px; line-height:1.5;">Resumen consolidado de inasistencias, excusas y llegadas tarde del mes de Marzo.</p>
+                        <div style="display:flex; gap:12px;">
+                            <button class="btn btn-primary report-details-btn" data-grade="Grado 10°A" data-status="Riesgo" data-summary="El curso mantiene un balance positivo con seguimiento directo a 4 estudiantes en riesgo por ausencias recurrentes." style="flex:1; font-size:13px; justify-content:center;"><i class="fa-regular fa-eye"></i> Detalles</button>
+                            <button class="btn report-pdf-btn" data-grade="Grado 10°A" data-status="Riesgo" data-summary="El curso mantiene un balance positivo con seguimiento directo a 4 estudiantes en riesgo por ausencias recurrentes." style="background:#f1f5f9; color:#334155; font-size:13px; border:1px solid #cbd5e1;"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                        </div>
+                    </div>
+
+                    <div class="table-card risk-warning" style="padding:24px; height:auto;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <h3 style="font-size:20px; color:var(--text-dark); margin:0;">Grado 10°B</h3>
+                            <span class="risk-badge">Riesgo</span>
+                        </div>
+                        <p style="color:var(--text-gray); font-size:14px; margin-bottom:24px; line-height:1.5;">Reporte especial generado por recuperación de ausencias y control de tardanzas.</p>
+                        <div style="display:flex; gap:12px;">
+                            <button class="btn btn-primary report-details-btn" data-grade="Grado 10°B" data-status="Riesgo" data-summary="El grupo requiere seguimiento de recuperación debido a ausencias repetidas y un promedio general cercano al umbral aceptable." style="flex:1; font-size:13px; justify-content:center;"><i class="fa-regular fa-eye"></i> Detalles</button>
+                            <button class="btn report-pdf-btn" data-grade="Grado 10°B" data-status="Riesgo" data-summary="El grupo requiere seguimiento de recuperación debido a ausencias repetidas y un promedio general cercano al umbral aceptable." style="background:#f1f5f9; color:#334155; font-size:13px; border:1px solid #cbd5e1;"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                        </div>
+                    </div>
+
+                    <div class="table-card risk-safe" style="padding:24px; height:auto;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <h3 style="font-size:20px; color:var(--text-dark); margin:0;">Grado 11°A</h3>
+                            <span class="risk-badge">Sin riesgo</span>
+                        </div>
+                        <p style="color:var(--text-gray); font-size:14px; margin-bottom:24px; line-height:1.5;">Resumen consolidado de inasistencias, excusas y llegadas tarde del mes de Marzo.</p>
+                        <div style="display:flex; gap:12px;">
+                            <button class="btn btn-primary report-details-btn" data-grade="Grado 11°A" data-status="Sin riesgo" data-summary="El curso presenta un excelente comportamiento con asistencia regular y sin incidencias relevantes durante el mes." style="flex:1; font-size:13px; justify-content:center;"><i class="fa-regular fa-eye"></i> Detalles</button>
+                            <button class="btn report-pdf-btn" data-grade="Grado 11°A" data-status="Sin riesgo" data-summary="El curso presenta un excelente comportamiento con asistencia regular y sin incidencias relevantes durante el mes." style="background:#f1f5f9; color:#334155; font-size:13px; border:1px solid #cbd5e1;"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                        </div>
+                    </div>
+
+                    <div class="table-card risk-safe" style="padding:24px; height:auto;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <h3 style="font-size:20px; color:var(--text-dark); margin:0;">Grado 11°B</h3>
+                            <span class="risk-badge">Sin riesgo</span>
+                        </div>
+                        <p style="color:var(--text-gray); font-size:14px; margin-bottom:24px; line-height:1.5;">Resumen consolidado de inasistencias, excusas y llegadas tarde del mes de Marzo.</p>
+                        <div style="display:flex; gap:12px;">
+                            <button class="btn btn-primary report-details-btn" data-grade="Grado 11°B" data-status="Sin riesgo" data-summary="El curso mantiene un patrón estable con buena puntualidad y solo 1 ausencia justificada durante el último mes." style="flex:1; font-size:13px; justify-content:center;"><i class="fa-regular fa-eye"></i> Detalles</button>
+                            <button class="btn report-pdf-btn" data-grade="Grado 11°B" data-status="Sin riesgo" data-summary="El curso mantiene un patrón estable con buena puntualidad y solo 1 ausencia justificada durante el último mes." style="background:#f1f5f9; color:#334155; font-size:13px; border:1px solid #cbd5e1;"><i class="fa-solid fa-file-pdf"></i> PDF</button>
                         </div>
                     </div>
                 </div>
@@ -736,7 +965,7 @@
                         <h1>COMUNICACIONES</h1>
                         <h2>Bandeja de entrada e historial</h2>
                     </div>
-                    <button class="btn btn-primary"><i class="fa-solid fa-pen"></i> Redactar Mensaje</button>
+                    <button class="btn btn-primary" id="composeCommunicationBtn" type="button"><i class="fa-solid fa-pen"></i> Redactar Mensaje</button>
                 </header>
 
                 <div class="tables-container"
@@ -749,7 +978,17 @@
                                 style="width:100%; padding:12px 15px; border-radius:8px; border:1px solid #cbd5e1; outline:none; font-family:inherit;">
                         </div>
                         <div style="overflow-y:auto; flex:1;">
-                            <div class="msg-item"
+                            <div class="msg-item active-message"
+                                data-message-id="maria"
+                                data-title="Justificación de falta médica"
+                                data-sender="María Gómez (Mamá de Ana López)"
+                                data-email="maria.gomez@gmail.com"
+                                data-time="Hoy, 10:30 AM"
+                                data-avatar="Maria"
+                                data-attachment-name="Comprobante médico sobre mesa de madera.png"
+                                data-attachment-type="image"
+                                data-attachment-url="./assets/image/Comprobante%20m%C3%A9dico%20sobre%20mesa%20de%20madera.png"
+                                data-body="Estimado Coordinador,|Me dirijo a usted para justificar la inasistencia de mi hija Ana López (7°B) el día de ayer y de hoy. Ana presentó un cuadro viral y el médico le recomendó reposo absoluto por 48 horas.|Adjunto a este correo el comprobante de urgencias y medicación para que sea anexado a su expediente escolar y se le excusen las fallas.|Agradezco su atención de antemano.|Atentamente, María Gómez."
                                 style="padding:18px 20px; border-bottom:1px solid var(--border-color); cursor:pointer; background:#eff6ff; border-left:4px solid var(--blue-primary); transition:background 0.2s;">
                                 <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
                                     <strong style="font-size:14px;">María (Mamá Ana)</strong>
@@ -764,6 +1003,15 @@
                                 </div>
                             </div>
                             <div class="msg-item"
+                                data-message-id="luis"
+                                data-title="Problema de conducta 8°A"
+                                data-sender="Prof. Luis Rojas"
+                                data-email="luis.rojas@prezen.edu.co"
+                                data-time="Ayer"
+                                data-avatar="Luis+Rojas"
+                                data-attachment-name="reporte_convivencia_8A.pdf"
+                                data-attachment-type="file"
+                                data-body="Estimado Coordinador,|Le informo sobre un incidente de conducta ocurrido en el curso 8°A durante la clase de historia.|El estudiante involucrado ya fue orientado y solicito acompañamiento para realizar el seguimiento correspondiente.|Quedo atento a sus indicaciones.|Atentamente, Prof. Luis Rojas."
                                 style="padding:18px 20px; border-bottom:1px solid var(--border-color); cursor:pointer; transition:background 0.2s; border-left:4px solid transparent;">
                                 <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
                                     <strong style="font-size:14px; color:var(--text-gray);">Prof. Luis Rojas</strong>
@@ -784,55 +1032,58 @@
                         <div
                             style="padding:24px; border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:flex-start;">
                             <div>
-                                <h3 style="font-size:20px; margin-bottom:12px; color:var(--text-dark);">Justificación de
-                                    falta médica</h3>
+                                    <h3 id="communicationDetailTitle" style="font-size:20px; margin-bottom:12px; color:var(--text-dark);">Justificación de
+                                        falta médica</h3>
                                 <div
                                     style="display:flex; align-items:center; gap:12px; font-size:14px; color:var(--text-gray);">
                                     <div class="avatar-wrapper" style="width:36px; height:36px;"><img
+                                            id="communicationDetailAvatar"
                                             src="https://ui-avatars.com/api/?name=Maria&background=random&color=fff"
                                             alt="Avatar" style="border-radius:50%; width:100%; height:100%;"></div>
                                     <div>
-                                        <div style="color:var(--text-dark); font-weight:500;">María Gómez (Mamá de Ana
-                                            López)</div>
-                                        <div style="font-size:12px; margin-top:2px;">maria.gomez@gmail.com</div>
+                                        <div id="communicationDetailSender" style="color:var(--text-dark); font-weight:500;">María Gómez (Mamá de Ana López)</div>
+                                        <div id="communicationDetailEmail" style="font-size:12px; margin-top:2px;">maria.gomez@gmail.com</div>
                                     </div>
                                 </div>
                             </div>
-                            <div style="color:var(--text-gray); font-size:13px; font-weight:500;">Hoy, 10:30 AM</div>
+                            <div id="communicationDetailTime" style="color:var(--text-gray); font-size:13px; font-weight:500;">Hoy, 10:30 AM</div>
                         </div>
                         <div
                             style="padding:24px; flex:1; overflow-y:auto; line-height:1.7; color:#334155; font-size:15px;">
-                            <p>Estimado Coordinador,</p>
-                            <br>
-                            <p>Me dirijo a usted para justificar la inasistencia de mi hija Ana López (7°B) el día de
-                                ayer y de hoy. Ana presentó un cuadro viral y el médico le recomendó reposo absoluto por
-                                48 horas.</p>
-                            <br>
-                            <p>Adjunto a este correo el comprobante de urgencias y medicación para que sea anexado a su
-                                expediente escolar y se le excusen las fallas.</p>
-                            <br>
-                            <p>Agradezco su atención de antemano.</p>
-                            <p>Atentamente,<br>María Gómez.</p>
+                            <div id="communicationDetailBody">
+                                <p>Estimado Coordinador,</p>
+                                <br>
+                                <p>Me dirijo a usted para justificar la inasistencia de mi hija Ana López (7°B) el día de ayer y de hoy. Ana presentó un cuadro viral y el médico le recomendó reposo absoluto por 48 horas.</p>
+                                <br>
+                                <p>Adjunto a este correo el comprobante de urgencias y medicación para que sea anexado a su expediente escolar y se le excusen las fallas.</p>
+                                <br>
+                                <p>Agradezco su atención de antemano.</p>
+                                <p>Atentamente,<br>María Gómez.</p>
+                            </div>
 
-                            <div class="attachment"
+                            <div class="attachment" id="communicationAttachment" role="button" tabindex="0" aria-label="Abrir adjunto"
                                 style="margin-top:40px; padding:15px 20px; border:1px solid #e2e8f0; border-radius:8px; display:inline-flex; align-items:center; gap:15px; cursor:pointer; background:#f8fafc; transition:background 0.2s;">
-                                <i class="fa-solid fa-file-pdf" style="font-size:28px; color:#ef4444;"></i>
+                                    <i id="communicationAttachmentIcon" class="fa-solid fa-file-image" style="font-size:28px; color:#ef4444;"></i>
                                 <div style="display:flex; flex-direction:column; gap:4px;">
                                     <div style="font-size:14px; font-weight:600; color:var(--text-dark);">
-                                        certificado_medico.pdf</div>
-                                    <div style="font-size:12px; color:var(--text-gray);">1.2 MB</div>
+                                        <span id="communicationAttachmentTitle">foto_justificacion_ana.svg</span></div>
+                                    <div id="communicationAttachmentSize" style="font-size:12px; color:var(--text-gray);">Abrir vista previa</div>
                                 </div>
                             </div>
                         </div>
                         <div style="padding:24px; border-top:1px solid var(--border-color); background:#f8fafc;">
-                            <textarea placeholder="Escribe tu respuesta aquí..."
+                            <textarea id="communicationReplyInput" placeholder="Escribe tu respuesta aquí..."
                                 style="width:100%; padding:15px; border-radius:8px; border:1px solid #cbd5e1; resize:none; height:100px; margin-bottom:15px; font-family:inherit; font-size:14px; outline:none;"></textarea>
                             <div style="display:flex; justify-content:space-between; align-items:center;">
                                 <div style="color:var(--text-gray); font-size:20px; display:flex; gap:18px;">
-                                    <i class="fa-solid fa-paperclip" style="cursor:pointer; transition:color 0.2s;"></i>
-                                    <i class="fa-regular fa-image" style="cursor:pointer; transition:color 0.2s;"></i>
+                                    <input id="communicationFileInput" type="file" hidden>
+                                    <input id="communicationImageInput" type="file" accept="image/*" hidden>
+                                    <i id="communicationFileButton" class="fa-solid fa-paperclip" title="Adjuntar archivo" style="cursor:pointer; transition:color 0.2s;"></i>
+                                    <i id="communicationImageButton" class="fa-regular fa-image" title="Adjuntar imagen" style="cursor:pointer; transition:color 0.2s;"></i>
+                                    <span id="communicationAttachmentName" style="font-size:12px; align-self:center;"></span>
+                                    <img id="communicationImagePreview" alt="Vista previa de la imagen" hidden style="width:48px; height:48px; object-fit:cover; border-radius:6px; border:1px solid var(--border-color);">
                                 </div>
-                                <button class="btn btn-primary"><i class="fa-solid fa-paper-plane"
+                                <button id="sendCommunicationReplyBtn" class="btn btn-primary" type="button"><i class="fa-solid fa-paper-plane"
                                         style="margin-right:8px;"></i> Enviar Respuesta</button>
                             </div>
                         </div>
@@ -962,6 +1213,76 @@
 
         </main>
     </div>
+
+    <div id="communicationComposeModal" class="communication-compose-modal" hidden>
+        <form id="communicationComposeForm" class="communication-compose-dialog">
+            <div class="communication-compose-header">
+                <h3>Redactar mensaje</h3>
+                <button id="closeCommunicationComposeBtn" type="button" aria-label="Cerrar">&times;</button>
+            </div>
+            <div class="communication-compose-body">
+                <label>Destinatario<input id="composeRecipientInput" type="text" placeholder="Nombre o correo" required></label>
+                <label>Asunto<input id="composeSubjectInput" type="text" placeholder="Asunto del mensaje" required></label>
+                <label>Mensaje<textarea id="composeBodyInput" placeholder="Escribe el mensaje..." required></textarea></label>
+                <label class="compose-file-label">Adjuntar archivo o imagen<input id="composeAttachmentInput" type="file"></label>
+                <span id="composeAttachmentName"></span>
+            </div>
+            <div class="communication-compose-footer">
+                <button id="cancelCommunicationComposeBtn" class="btn btn-secondary" type="button">Cancelar</button>
+                <button class="btn btn-primary" type="submit"><i class="fa-solid fa-paper-plane"></i> Enviar</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="communicationPreviewModal" class="communication-preview-modal" hidden>
+        <div class="communication-preview-dialog" role="dialog" aria-modal="true" aria-labelledby="communicationPreviewTitle">
+            <div class="communication-preview-header">
+                <h3 id="communicationPreviewTitle">Vista previa del adjunto</h3>
+                <button id="closeCommunicationPreviewBtn" type="button" aria-label="Cerrar vista previa">&times;</button>
+            </div>
+            <div class="communication-preview-body">
+                <img id="communicationPreviewImage" alt="Vista previa del reporte adjunto">
+            </div>
+        </div>
+    </div>
+
+    <div id="addStudentModal" class="communication-compose-modal" hidden>
+        <form id="addStudentForm" class="communication-compose-dialog">
+            <div class="communication-compose-header">
+                <h3>Agregar estudiante</h3>
+                <button id="closeAddStudentBtn" type="button" aria-label="Cerrar">&times;</button>
+            </div>
+            <div class="communication-compose-body">
+                <label>Nombre<input id="newStudentFirstName" type="text" required></label>
+                <label>Apellido<input id="newStudentLastName" type="text" required></label>
+                <label>Grado<select id="newStudentGrade" required>
+                    <option value="6°A">6°A</option><option value="6°B">6°B</option>
+                    <option value="7°A">7°A</option><option value="7°B">7°B</option>
+                    <option value="8°A">8°A</option><option value="8°B">8°B</option>
+                    <option value="9°A">9°A</option><option value="9°B">9°B</option>
+                    <option value="10°A">10°A</option><option value="10°B">10°B</option>
+                    <option value="11°A">11°A</option><option value="11°B">11°B</option>
+                </select></label>
+                <label>Documento<input id="newStudentDocument" type="text" inputmode="numeric" required></label>
+            </div>
+            <div class="communication-compose-footer">
+                <button id="cancelAddStudentBtn" class="btn btn-secondary" type="button">Cancelar</button>
+                <button class="btn btn-primary" type="submit"><i class="fa-solid fa-plus"></i> Agregar</button>
+            </div>
+        </form>
+    </div>
+    <div id="metricDetailModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="metricDetailTitle" aria-hidden="true">
+        <div class="modal-container metric-detail-container">
+            <div class="modal-header">
+                <h3 id="metricDetailTitle"></h3>
+                <button id="closeMetricDetailBtn" class="close-btn" aria-label="Cerrar detalle">&times;</button>
+            </div>
+            <div id="metricDetailBody" class="metric-detail-body"></div>
+            <div class="modal-footer">
+                <button id="closeMetricDetailFooterBtn" class="btn btn-secondary">Cerrar</button>
+            </div>
+        </div>
+    </div>
     <!-- QR Scanner Modal -->
     <div id="qrModal" class="modal-overlay">
         <div class="modal-container">
@@ -985,7 +1306,7 @@
     <!-- Save Success Modal -->
     <div id="saveSuccessModal" class="modal-overlay">
         <div class="modal-container" style="max-width: 400px; text-align: center; padding: 30px;">
-            <div style="font-size: 48px; color: #22c55e; margin-bottom: 20px;">
+            <div style="font-size: 48px; color: #ffffff; margin-bottom: 20px;">
                 <i class="fa-regular fa-circle-check"></i>
             </div>
             <h3 style="margin-bottom: 15px; color: var(--text-dark);">¡Cambios Guardados!</h3>
@@ -994,16 +1315,103 @@
         </div>
     </div>
 
+    <div id="profileModal" style="display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.65); z-index: 10001; justify-content: center; align-items: center; backdrop-filter: blur(4px);" aria-hidden="true">
+        <div style="background: #ffffff; width: min(630px, 90vw); border-radius: 18px; overflow: hidden; box-shadow: 0 25px 55px rgba(15, 23, 42, 0.18); border: 1px solid #e2e8f0;">
+            <div id="profileHeaderView" style="padding: 18px 22px 0; background: #ffffff; border-bottom: 1px solid #eef2f7;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.12em; color: #8b5cf6; font-weight: 800; margin-bottom: 12px; text-align: left;">MI PERFIL</div>
+                    <button id="closeProfileModalBtn" type="button" aria-label="Cerrar" style="width: 42px; height: 42px; border: 1px solid #cbd5e1; border-radius: 10px; background: #f8fafc; color: #475569; font-size: 28px; cursor: pointer; line-height: 1; display: flex; align-items: center; justify-content: center;">&times;</button>
+                </div>
+            </div>
+
+            <div id="profileSummaryView" style="display: block; background: #1f2d3d; padding: 16px 16px 20px;">
+                <div style="background: #1f2d3d; border-radius: 16px; padding: 16px 18px 14px; display: flex; align-items: center; gap: 18px; border: 1px solid rgba(148, 163, 184, 0.25); margin-top: 8px;">
+                    <div style="width: 52px; height: 52px; border-radius: 50%; overflow: hidden; border: 2px solid #dfe7ff; background: #e2e8f0; flex-shrink: 0;">
+                        <img id="profileSummaryAvatar" src="https://ui-avatars.com/api/?name=Carlos+Ruiz&background=4f46e5&color=fff" alt="Foto de perfil" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                    </div>
+                    <div style="text-align: left;">
+                        <div id="profileSummaryName" style="font-size: 22px; font-weight: 800; color: #eaf0ff; line-height: 1.2;">Carlos Ruiz</div>
+                        <div style="font-size: 15px; color: #c7d2ff; margin-top: 4px;">Coordinador</div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 18px;">
+                    <div>
+                        <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #dfe7ff; font-weight: 700; margin-bottom: 6px;">Correo</div>
+                        <div id="profileSummaryEmail" style="background: #f8fafc; color: #0f172a; border-radius: 10px; padding: 12px 14px; border: 1px solid rgba(148, 163, 184, 0.2); font-size: 15px; font-weight: 600; min-height: 48px; display: flex; align-items: center; box-sizing: border-box;">coord.guarin@prezen.edu.co</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #dfe7ff; font-weight: 700; margin-bottom: 6px;">Teléfono</div>
+                        <div id="profileSummaryPhone" style="background: #f8fafc; color: #0f172a; border-radius: 10px; padding: 12px 14px; border: 1px solid rgba(148, 163, 184, 0.2); font-size: 15px; font-weight: 600; min-height: 48px; display: flex; align-items: center; box-sizing: border-box;">+57 3195854419</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #dfe7ff; font-weight: 700; margin-bottom: 6px;">Área</div>
+                        <div id="profileSummaryArea" style="background: #f8fafc; color: #0f172a; border-radius: 10px; padding: 12px 14px; border: 1px solid rgba(148, 163, 184, 0.2); font-size: 15px; font-weight: 600; min-height: 48px; display: flex; align-items: center; box-sizing: border-box;">Grupo 7°B</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #dfe7ff; font-weight: 700; margin-bottom: 6px;">Sesión</div>
+                        <div style="background: #f8fafc; color: #0f172a; border-radius: 10px; padding: 12px 14px; border: 1px solid rgba(148, 163, 184, 0.2); font-size: 15px; font-weight: 600; min-height: 48px; display: flex; align-items: center; box-sizing: border-box;">Activa</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 18px;">
+                    <button id="editProfileBtn" type="button" style="min-width: 150px; padding: 12px 18px; border-radius: 12px; border: none; background: linear-gradient(135deg, #6a5cff 0%, #4f46e5 100%); color: white; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 8px 18px rgba(79, 70, 229, 0.35);">Editar perfil</button>
+                    <button id="closeProfileModalSummaryBtn" type="button" style="min-width: 120px; padding: 12px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.08); color: #f8fafc; font-size: 15px; font-weight: 700; cursor: pointer;">Cerrar</button>
+                </div>
+            </div>
+
+            <div id="profileEditView" style="display: none; background: #1f2d3d; padding: 18px 18px 16px; border-radius: 0 0 18px 18px;">
+                <div style="background: #1f2d3d; border-radius: 16px; padding: 18px 18px 14px; display: flex; align-items: center; justify-content: center; gap: 18px; margin-bottom: 18px; border: 1px solid rgba(148, 163, 184, 0.25); position: relative;">
+                    <div style="position: relative; width: 58px; height: 58px; flex-shrink: 0;">
+                        <div style="width: 52px; height: 52px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(255,255,255,0.7); background: #e2e8f0;">
+                            <img id="profileMiniAvatar" src="https://ui-avatars.com/api/?name=Carlos+Ruiz&background=4f46e5&color=fff" alt="Foto de perfil" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        </div>
+                        <button id="profileCameraBtn" type="button" aria-label="Cambiar foto de perfil" title="Cambiar foto" style="position: absolute; right: 0; bottom: 0; width: 26px; height: 26px; border: 2px solid #1f2d3d; border-radius: 50%; background: #4f46e5; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 6px 14px rgba(79, 70, 229, 0.35); font-size: 12px;"><i class="fa-solid fa-camera" aria-hidden="true"></i></button>
+                    </div>
+                    <div style="text-align: left; margin-right: auto;">
+                        <input id="profileEditNameInput" type="text" value="Carlos Ruiz" maxlength="100" aria-label="Nombre completo" style="width: min(100%, 320px); padding: 8px 10px; border: 1px solid #a5b4fc; border-radius: 8px; background: #f8fafc; color: #172033; font: inherit; font-size: 20px; font-weight: 700;">
+                        <div style="font-size: 12px; color: #c7d2ff; margin-top: 2px;">coordinador</div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-bottom: 20px;">
+                    <div>
+                        <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #dfe7ff; font-weight: 700; margin-bottom: 6px;">Correo</div>
+                        <input id="profileEditEmailInput" type="email" value="coord.guarin@prezen.edu.co" readonly tabindex="-1" style="width: 100%; min-height: 48px; background: #f8fafc; color: #0f172a; border-radius: 10px; border: 1px solid rgba(148, 163, 184, 0.2); padding: 12px 14px; font-size: 15px; font-weight: 600; box-sizing: border-box; outline: none; cursor: not-allowed; pointer-events: none;">
+                    </div>
+                    <div>
+                        <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #dfe7ff; font-weight: 700; margin-bottom: 6px;">Teléfono</div>
+                        <input id="profileEditPhoneInput" type="tel" value="+57 3195854419" readonly tabindex="-1" style="width: 100%; min-height: 48px; background: #f8fafc; color: #0f172a; border-radius: 10px; border: 1px solid rgba(148, 163, 184, 0.2); padding: 12px 14px; font-size: 15px; font-weight: 600; box-sizing: border-box; outline: none; cursor: not-allowed;">
+                    </div>
+                    <div>
+                        <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #dfe7ff; font-weight: 700; margin-bottom: 6px;">Área</div>
+                        <input id="profileEditAreaInput" type="text" value="Grupo 7°B" readonly tabindex="-1" style="width: 100%; min-height: 48px; background: #f8fafc; color: #0f172a; border-radius: 10px; border: 1px solid rgba(148, 163, 184, 0.2); padding: 12px 14px; font-size: 15px; font-weight: 600; box-sizing: border-box; outline: none; cursor: not-allowed; pointer-events: none;">
+                    </div>
+                    <div>
+                        <div style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #dfe7ff; font-weight: 700; margin-bottom: 6px;">Sesión</div>
+                        <input id="profileEditSessionInput" type="text" value="Activa" readonly tabindex="-1" style="width: 100%; min-height: 48px; background: #f8fafc; color: #0f172a; border-radius: 10px; border: 1px solid rgba(148, 163, 184, 0.2); padding: 12px 14px; font-size: 15px; font-weight: 600; box-sizing: border-box; outline: none; cursor: not-allowed; pointer-events: none;">
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 8px;">
+                    <button id="cancelProfileBtn" type="button" style="min-width: 140px; padding: 12px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.3); background: transparent; color: #f8fafc; font-size: 15px; font-weight: 700; cursor: pointer;">Cerrar</button>
+                    <button id="saveProfilePhotoBtn" type="button" style="min-width: 140px; padding: 12px 18px; border-radius: 12px; border: none; background: linear-gradient(135deg, #6a5cff 0%, #4f46e5 100%); color: white; font-size: 15px; font-weight: 700; cursor: pointer; box-shadow: 0 8px 18px rgba(79, 70, 229, 0.35);">Guardar cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input id="profileModalImageInput" type="file" accept="image/*" hidden>
+
     <!-- Add Report Modal -->
     <div id="addReportModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15,23,42,0.6); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(4px);">
-        <div style="background: white; border-radius: 16px; width: 90%; max-width: 500px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); overflow: hidden; transform: scale(0.95); transition: transform 0.2s;">
-            <div style="padding: 20px 25px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
+        <div class="report-modal-container" style="background: white; border-radius: 16px; width: 90%; max-width: 500px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); overflow: hidden; transform: scale(0.95); transition: transform 0.2s;">
+            <div class="report-modal-header" style="padding: 20px 25px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
                 <h3 style="margin: 0; color: #1e293b; font-size: 16px; display: flex; align-items: center; gap: 8px;">
                     <i class="fa-solid fa-file-circle-plus" style="color: #3b82f6;"></i> Generar Nuevo Reporte
                 </h3>
                 <button id="closeAddReportBtn" style="background: none; border: none; font-size: 20px; color: #64748b; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#64748b'">&times;</button>
             </div>
-            <div style="padding: 25px;">
+            <div class="report-modal-body" style="padding: 25px;">
                 <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 8px;">Tipo de Reporte</label>
                 <select style="width: 100%; padding: 10px 15px; border: 1px solid #cbd5e1; border-radius: 8px; background: white; color: #1e293b; margin-bottom: 15px; font-family: inherit; font-size: 14px;">
                     <option>Reporte de Asistencia Diaria</option>
@@ -1018,9 +1426,47 @@
                 <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 8px;">Observaciones Adicionales</label>
                 <textarea placeholder="Detalles o parámetros adicionales para generar el reporte..." style="width: 100%; padding: 12px 15px; border: 1px solid #cbd5e1; border-radius: 8px; height: 90px; resize: none; box-sizing: border-box; font-family: inherit; color: #1e293b; line-height: 1.5; font-size: 14px; outline: none;"></textarea>
             </div>
-            <div style="padding: 15px 25px; border-top: 1px solid #e2e8f0; background: #f8fafc; display: flex; justify-content: flex-end; gap: 10px;">
+            <div class="report-modal-footer" style="padding: 15px 25px; border-top: 1px solid #e2e8f0; background: #f8fafc; display: flex; justify-content: flex-end; gap: 10px;">
                 <button id="cancelAddReportBtn" style="padding: 10px 20px; background: white; border: 1px solid #cbd5e1; color: #475569; border-radius: 8px; font-weight: 600; font-family: inherit; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='white'">Cancelar</button>
                 <button id="createReportBtn" style="padding: 10px 20px; background: #3b82f6; border: none; color: white; border-radius: 8px; font-weight: 600; font-family: inherit; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">Generar y Descargar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="reportDetailModal" style="display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.65); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(4px);">
+        <div style="background: #111827; width: min(540px, 92vw); border-radius: 18px; overflow: hidden; box-shadow: 0 25px 55px rgba(0,0,0,0.45); border: 1px solid #374151;">
+            <div style="padding: 22px 24px; background: linear-gradient(135deg, #1f2937 0%, #111827 100%); border-bottom: 1px solid #374151; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: #a5b4fc; font-weight: 800;">Reporte</div>
+                    <h3 id="reportDetailTitle" style="margin: 8px 0 0; font-size: 24px; color: #f3f4f6;">Grado</h3>
+                </div>
+                <button id="closeReportDetailBtn" type="button" aria-label="Cerrar" style="background: transparent; border: none; color: #cbd5e1; font-size: 28px; cursor: pointer; line-height: 1;">&times;</button>
+            </div>
+            <div style="padding: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <span id="reportDetailBadge" style="display: inline-block; background: #e0e7ff; color: #4338ca; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 800;">Mensual</span>
+                    <span style="font-size: 13px; color: #cbd5e1;">Marzo 2026</span>
+                </div>
+
+                <div style="background: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 18px; margin-bottom: 18px;">
+                    <p id="reportDetailSummary" style="margin: 0; color: #e5e7eb; font-size: 15px; line-height: 1.6;">Resumen del curso.</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-bottom: 20px;">
+                    <div class="report-stat-card attendance-stat" style="background: #edfdf5; border: 1px solid #bbf7d0; border-radius: 10px; padding: 12px;">
+                        <div style="font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #166534; margin-bottom: 5px;">Asistencia</div>
+                        <strong style="font-size: 22px; color: #166534;">92%</strong>
+                    </div>
+                    <div class="report-stat-card delay-stat" style="background: #fff7ed; border: 1px solid #fdba74; border-radius: 10px; padding: 12px;">
+                        <div style="font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #9a4d00; margin-bottom: 5px;">Retrasos</div>
+                        <strong style="font-size: 22px; color: #9a4d00;">6</strong>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px;">
+                    <button id="closeReportDetailSecondaryBtn" type="button" style="padding: 10px 16px; background: #1f2937; border: 1px solid #4b5563; border-radius: 10px; color: #e5e7eb; font-weight: 700; cursor: pointer;">Cerrar</button>
+                    <button type="button" style="padding: 10px 16px; background: #4f46e5; border: none; border-radius: 10px; color: white; font-weight: 700; cursor: pointer;">Exportar PDF</button>
+                </div>
             </div>
         </div>
     </div>
